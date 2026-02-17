@@ -44,7 +44,7 @@
             this.panel1.Controls.Add(this.btnAceptar);
             this.panel1.Controls.Add(this.txtCodigoProducto);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(234, 200);
+            this.panel1.Location = new System.Drawing.Point(270, 200);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(511, 170);
             this.panel1.TabIndex = 1;
