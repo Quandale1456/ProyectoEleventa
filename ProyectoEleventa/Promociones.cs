@@ -10,22 +10,11 @@ using System.Windows.Forms;
 
 namespace ProyectoEleventa
 {
-    public partial class FormularioProductos : Form
+    public partial class Promociones : Form
     {
-        public FormularioProductos()
+        public Promociones()
         {
             InitializeComponent();
-        }
-
-        private void FormularioProductos_Load(object sender, EventArgs e)
-        {
-
-        }
-        
-
-        private void btnModificar_Click(object sender, EventArgs e)
-        {
-            
         }
     }
 }

@@ -52,18 +52,29 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.toolPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnNuevo = new System.Windows.Forms.Button();
-            this.btnModificar = new System.Windows.Forms.Button();
-            this.btnEliminarTool = new System.Windows.Forms.Button();
-            this.btnDepartamentos = new System.Windows.Forms.Button();
-            this.btnVentasPeriodo = new System.Windows.Forms.Button();
-            this.btnPromociones = new System.Windows.Forms.Button();
-            this.btnImportar = new System.Windows.Forms.Button();
-            this.btnCatalogo = new System.Windows.Forms.Button();
+            this.groupboxProducto = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericGanancia)).BeginInit();
-            this.toolPanel.SuspendLayout();
+            this.groupboxProducto.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // labelTitle
@@ -91,7 +102,8 @@
             // 
             this.labelSection.AutoSize = true;
             this.labelSection.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.labelSection.Location = new System.Drawing.Point(5, 75);
+            this.labelSection.ForeColor = System.Drawing.Color.SandyBrown;
+            this.labelSection.Location = new System.Drawing.Point(6, 16);
             this.labelSection.Name = "labelSection";
             this.labelSection.Size = new System.Drawing.Size(174, 20);
             this.labelSection.TabIndex = 1;
@@ -100,7 +112,7 @@
             // labelCodigo
             // 
             this.labelCodigo.AutoSize = true;
-            this.labelCodigo.Location = new System.Drawing.Point(12, 98);
+            this.labelCodigo.Location = new System.Drawing.Point(14, 52);
             this.labelCodigo.Name = "labelCodigo";
             this.labelCodigo.Size = new System.Drawing.Size(88, 13);
             this.labelCodigo.TabIndex = 2;
@@ -108,7 +120,7 @@
             // 
             // textBoxCodigo
             // 
-            this.textBoxCodigo.Location = new System.Drawing.Point(106, 95);
+            this.textBoxCodigo.Location = new System.Drawing.Point(108, 49);
             this.textBoxCodigo.Name = "textBoxCodigo";
             this.textBoxCodigo.Size = new System.Drawing.Size(240, 20);
             this.textBoxCodigo.TabIndex = 3;
@@ -116,7 +128,7 @@
             // labelDescripcion
             // 
             this.labelDescripcion.AutoSize = true;
-            this.labelDescripcion.Location = new System.Drawing.Point(37, 124);
+            this.labelDescripcion.Location = new System.Drawing.Point(35, 78);
             this.labelDescripcion.Name = "labelDescripcion";
             this.labelDescripcion.Size = new System.Drawing.Size(63, 13);
             this.labelDescripcion.TabIndex = 4;
@@ -124,7 +136,7 @@
             // 
             // textBoxDescripcion
             // 
-            this.textBoxDescripcion.Location = new System.Drawing.Point(106, 121);
+            this.textBoxDescripcion.Location = new System.Drawing.Point(108, 75);
             this.textBoxDescripcion.Name = "textBoxDescripcion";
             this.textBoxDescripcion.Size = new System.Drawing.Size(486, 20);
             this.textBoxDescripcion.TabIndex = 5;
@@ -132,7 +144,7 @@
             // labelPrecioCosto
             // 
             this.labelPrecioCosto.AutoSize = true;
-            this.labelPrecioCosto.Location = new System.Drawing.Point(33, 190);
+            this.labelPrecioCosto.Location = new System.Drawing.Point(35, 144);
             this.labelPrecioCosto.Name = "labelPrecioCosto";
             this.labelPrecioCosto.Size = new System.Drawing.Size(67, 13);
             this.labelPrecioCosto.TabIndex = 6;
@@ -140,7 +152,7 @@
             // 
             // textBoxPrecioCosto
             // 
-            this.textBoxPrecioCosto.Location = new System.Drawing.Point(106, 187);
+            this.textBoxPrecioCosto.Location = new System.Drawing.Point(108, 141);
             this.textBoxPrecioCosto.Name = "textBoxPrecioCosto";
             this.textBoxPrecioCosto.Size = new System.Drawing.Size(100, 20);
             this.textBoxPrecioCosto.TabIndex = 7;
@@ -148,7 +160,7 @@
             // labelGanancia
             // 
             this.labelGanancia.AutoSize = true;
-            this.labelGanancia.Location = new System.Drawing.Point(47, 219);
+            this.labelGanancia.Location = new System.Drawing.Point(49, 173);
             this.labelGanancia.Name = "labelGanancia";
             this.labelGanancia.Size = new System.Drawing.Size(53, 13);
             this.labelGanancia.TabIndex = 8;
@@ -156,7 +168,7 @@
             // 
             // numericGanancia
             // 
-            this.numericGanancia.Location = new System.Drawing.Point(107, 217);
+            this.numericGanancia.Location = new System.Drawing.Point(109, 171);
             this.numericGanancia.Name = "numericGanancia";
             this.numericGanancia.Size = new System.Drawing.Size(99, 20);
             this.numericGanancia.TabIndex = 9;
@@ -169,7 +181,7 @@
             // labelPrecioVenta
             // 
             this.labelPrecioVenta.AutoSize = true;
-            this.labelPrecioVenta.Location = new System.Drawing.Point(32, 249);
+            this.labelPrecioVenta.Location = new System.Drawing.Point(34, 203);
             this.labelPrecioVenta.Name = "labelPrecioVenta";
             this.labelPrecioVenta.Size = new System.Drawing.Size(68, 13);
             this.labelPrecioVenta.TabIndex = 10;
@@ -177,7 +189,7 @@
             // 
             // textBoxPrecioVenta
             // 
-            this.textBoxPrecioVenta.Location = new System.Drawing.Point(107, 246);
+            this.textBoxPrecioVenta.Location = new System.Drawing.Point(109, 200);
             this.textBoxPrecioVenta.Name = "textBoxPrecioVenta";
             this.textBoxPrecioVenta.Size = new System.Drawing.Size(100, 20);
             this.textBoxPrecioVenta.TabIndex = 11;
@@ -185,7 +197,7 @@
             // comboDepartamento
             // 
             this.comboDepartamento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboDepartamento.Location = new System.Drawing.Point(106, 311);
+            this.comboDepartamento.Location = new System.Drawing.Point(108, 265);
             this.comboDepartamento.Name = "comboDepartamento";
             this.comboDepartamento.Size = new System.Drawing.Size(240, 21);
             this.comboDepartamento.TabIndex = 13;
@@ -193,7 +205,7 @@
             // labelDepartamento
             // 
             this.labelDepartamento.AutoSize = true;
-            this.labelDepartamento.Location = new System.Drawing.Point(26, 314);
+            this.labelDepartamento.Location = new System.Drawing.Point(28, 268);
             this.labelDepartamento.Name = "labelDepartamento";
             this.labelDepartamento.Size = new System.Drawing.Size(74, 13);
             this.labelDepartamento.TabIndex = 12;
@@ -202,7 +214,7 @@
             // btnGuardar
             // 
             this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnGuardar.Location = new System.Drawing.Point(12, 540);
+            this.btnGuardar.Location = new System.Drawing.Point(12, 682);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(150, 30);
             this.btnGuardar.TabIndex = 16;
@@ -212,7 +224,7 @@
             // btnCancelar
             // 
             this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancelar.Location = new System.Drawing.Point(1310, 540);
+            this.btnCancelar.Location = new System.Drawing.Point(1321, 682);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(150, 30);
             this.btnCancelar.TabIndex = 17;
@@ -221,7 +233,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(107, 278);
+            this.textBox1.Location = new System.Drawing.Point(109, 232);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 19;
@@ -229,7 +241,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 281);
+            this.label1.Location = new System.Drawing.Point(28, 235);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 13);
             this.label1.TabIndex = 18;
@@ -238,7 +250,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(33, 163);
+            this.label2.Location = new System.Drawing.Point(45, 117);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 20;
@@ -247,7 +259,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(107, 163);
+            this.checkBox1.Location = new System.Drawing.Point(109, 117);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(102, 17);
             this.checkBox1.TabIndex = 21;
@@ -257,7 +269,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(215, 163);
+            this.checkBox2.Location = new System.Drawing.Point(217, 117);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(145, 17);
             this.checkBox2.TabIndex = 22;
@@ -267,137 +279,231 @@
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(370, 151);
+            this.checkBox3.Location = new System.Drawing.Point(368, 117);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(116, 17);
             this.checkBox3.TabIndex = 23;
             this.checkBox3.Text = "Como Paquete (kit)";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
-            // toolPanel
+            // groupboxProducto
             // 
-            this.toolPanel.Controls.Add(this.btnNuevo);
-            this.toolPanel.Controls.Add(this.btnModificar);
-            this.toolPanel.Controls.Add(this.btnEliminarTool);
-            this.toolPanel.Controls.Add(this.btnDepartamentos);
-            this.toolPanel.Controls.Add(this.btnVentasPeriodo);
-            this.toolPanel.Controls.Add(this.btnPromociones);
-            this.toolPanel.Controls.Add(this.btnImportar);
-            this.toolPanel.Controls.Add(this.btnCatalogo);
-            this.toolPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.toolPanel.Location = new System.Drawing.Point(0, 36);
-            this.toolPanel.Name = "toolPanel";
-            this.toolPanel.Padding = new System.Windows.Forms.Padding(6);
-            this.toolPanel.Size = new System.Drawing.Size(1483, 36);
-            this.toolPanel.TabIndex = 2;
+            this.groupboxProducto.Controls.Add(this.label7);
+            this.groupboxProducto.Controls.Add(this.label6);
+            this.groupboxProducto.Controls.Add(this.label5);
+            this.groupboxProducto.Controls.Add(this.textBox4);
+            this.groupboxProducto.Controls.Add(this.textBox3);
+            this.groupboxProducto.Controls.Add(this.textBox2);
+            this.groupboxProducto.Controls.Add(this.label4);
+            this.groupboxProducto.Controls.Add(this.checkBox4);
+            this.groupboxProducto.Controls.Add(this.label3);
+            this.groupboxProducto.Controls.Add(this.labelSection);
+            this.groupboxProducto.Controls.Add(this.checkBox3);
+            this.groupboxProducto.Controls.Add(this.labelCodigo);
+            this.groupboxProducto.Controls.Add(this.checkBox2);
+            this.groupboxProducto.Controls.Add(this.textBoxCodigo);
+            this.groupboxProducto.Controls.Add(this.checkBox1);
+            this.groupboxProducto.Controls.Add(this.labelDescripcion);
+            this.groupboxProducto.Controls.Add(this.label2);
+            this.groupboxProducto.Controls.Add(this.textBoxDescripcion);
+            this.groupboxProducto.Controls.Add(this.textBox1);
+            this.groupboxProducto.Controls.Add(this.labelPrecioCosto);
+            this.groupboxProducto.Controls.Add(this.label1);
+            this.groupboxProducto.Controls.Add(this.textBoxPrecioCosto);
+            this.groupboxProducto.Controls.Add(this.labelGanancia);
+            this.groupboxProducto.Controls.Add(this.numericGanancia);
+            this.groupboxProducto.Controls.Add(this.comboDepartamento);
+            this.groupboxProducto.Controls.Add(this.labelPrecioVenta);
+            this.groupboxProducto.Controls.Add(this.labelDepartamento);
+            this.groupboxProducto.Controls.Add(this.textBoxPrecioVenta);
+            this.groupboxProducto.Location = new System.Drawing.Point(12, 85);
+            this.groupboxProducto.Name = "groupboxProducto";
+            this.groupboxProducto.Size = new System.Drawing.Size(1459, 591);
+            this.groupboxProducto.TabIndex = 24;
+            this.groupboxProducto.TabStop = false;
+            this.groupboxProducto.Text = "Producto";
             // 
-            // btnNuevo
+            // panel1
             // 
-            this.btnNuevo.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnNuevo.Location = new System.Drawing.Point(9, 9);
-            this.btnNuevo.Margin = new System.Windows.Forms.Padding(3, 3, 6, 3);
-            this.btnNuevo.Name = "btnNuevo";
-            this.btnNuevo.Size = new System.Drawing.Size(90, 24);
-            this.btnNuevo.TabIndex = 0;
-            this.btnNuevo.Text = "Nuevo";
+            this.panel1.Controls.Add(this.button8);
+            this.panel1.Controls.Add(this.button7);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.button4);
+            this.panel1.Controls.Add(this.button5);
+            this.panel1.Controls.Add(this.button6);
+            this.panel1.Location = new System.Drawing.Point(0, 36);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1483, 43);
+            this.panel1.TabIndex = 25;
             // 
-            // btnModificar
+            // button1
             // 
-            this.btnModificar.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnModificar.Location = new System.Drawing.Point(105, 9);
-            this.btnModificar.Margin = new System.Windows.Forms.Padding(0, 3, 6, 3);
-            this.btnModificar.Name = "btnModificar";
-            this.btnModificar.Size = new System.Drawing.Size(90, 24);
-            this.btnModificar.TabIndex = 1;
-            this.btnModificar.Text = "Modificar";
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Location = new System.Drawing.Point(602, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(128, 30);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "Promociones";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // btnEliminarTool
+            // button2
             // 
-            this.btnEliminarTool.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnEliminarTool.Location = new System.Drawing.Point(201, 9);
-            this.btnEliminarTool.Margin = new System.Windows.Forms.Padding(0, 3, 6, 3);
-            this.btnEliminarTool.Name = "btnEliminarTool";
-            this.btnEliminarTool.Size = new System.Drawing.Size(90, 24);
-            this.btnEliminarTool.TabIndex = 2;
-            this.btnEliminarTool.Text = "Eliminar";
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.Location = new System.Drawing.Point(473, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(123, 30);
+            this.button2.TabIndex = 27;
+            this.button2.Text = "Ventas por Periodo";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // btnDepartamentos
+            // button3
             // 
-            this.btnDepartamentos.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnDepartamentos.Location = new System.Drawing.Point(297, 9);
-            this.btnDepartamentos.Margin = new System.Windows.Forms.Padding(0, 3, 6, 3);
-            this.btnDepartamentos.Name = "btnDepartamentos";
-            this.btnDepartamentos.Size = new System.Drawing.Size(110, 24);
-            this.btnDepartamentos.TabIndex = 3;
-            this.btnDepartamentos.Text = "Departamentos";
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button3.Location = new System.Drawing.Point(341, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(126, 30);
+            this.button3.TabIndex = 28;
+            this.button3.Text = "Departamentos";
+            this.button3.UseVisualStyleBackColor = true;
             // 
-            // btnVentasPeriodo
+            // button4
             // 
-            this.btnVentasPeriodo.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnVentasPeriodo.Location = new System.Drawing.Point(413, 9);
-            this.btnVentasPeriodo.Margin = new System.Windows.Forms.Padding(0, 3, 6, 3);
-            this.btnVentasPeriodo.Name = "btnVentasPeriodo";
-            this.btnVentasPeriodo.Size = new System.Drawing.Size(120, 24);
-            this.btnVentasPeriodo.TabIndex = 4;
-            this.btnVentasPeriodo.Text = "Ventas por Periodo";
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button4.Location = new System.Drawing.Point(229, 6);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(106, 30);
+            this.button4.TabIndex = 29;
+            this.button4.Text = "Eliminar";
+            this.button4.UseVisualStyleBackColor = true;
             // 
-            // btnPromociones
+            // button5
             // 
-            this.btnPromociones.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnPromociones.Location = new System.Drawing.Point(539, 9);
-            this.btnPromociones.Margin = new System.Windows.Forms.Padding(0, 3, 6, 3);
-            this.btnPromociones.Name = "btnPromociones";
-            this.btnPromociones.Size = new System.Drawing.Size(100, 24);
-            this.btnPromociones.TabIndex = 5;
-            this.btnPromociones.Text = "Promociones";
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button5.Location = new System.Drawing.Point(121, 6);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(102, 30);
+            this.button5.TabIndex = 30;
+            this.button5.Text = "Modificar";
+            this.button5.UseVisualStyleBackColor = true;
             // 
-            // btnImportar
+            // button6
             // 
-            this.btnImportar.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnImportar.Location = new System.Drawing.Point(645, 9);
-            this.btnImportar.Margin = new System.Windows.Forms.Padding(0, 3, 6, 3);
-            this.btnImportar.Name = "btnImportar";
-            this.btnImportar.Size = new System.Drawing.Size(90, 24);
-            this.btnImportar.TabIndex = 6;
-            this.btnImportar.Text = "Importar";
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button6.Location = new System.Drawing.Point(12, 6);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(102, 30);
+            this.button6.TabIndex = 31;
+            this.button6.Text = "Nuevo";
+            this.button6.UseVisualStyleBackColor = true;
             // 
-            // btnCatalogo
+            // button7
             // 
-            this.btnCatalogo.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCatalogo.Location = new System.Drawing.Point(741, 9);
-            this.btnCatalogo.Margin = new System.Windows.Forms.Padding(0, 3, 6, 3);
-            this.btnCatalogo.Name = "btnCatalogo";
-            this.btnCatalogo.Size = new System.Drawing.Size(90, 24);
-            this.btnCatalogo.TabIndex = 7;
-            this.btnCatalogo.Text = "Catálogo";
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button7.Location = new System.Drawing.Point(736, 6);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(112, 30);
+            this.button7.TabIndex = 32;
+            this.button7.Text = "Importar";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button8.Location = new System.Drawing.Point(854, 6);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(114, 30);
+            this.button8.TabIndex = 33;
+            this.button8.Text = "Catalogo";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(122, 312);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 20);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "Inventario";
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(126, 344);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(184, 17);
+            this.checkBox4.TabIndex = 25;
+            this.checkBox4.Text = "Este Producto SI utiliza inventario";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(94, 367);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(26, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Hay";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(126, 364);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(100, 20);
+            this.textBox2.TabIndex = 27;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(126, 416);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(100, 20);
+            this.textBox3.TabIndex = 28;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(126, 390);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(100, 20);
+            this.textBox4.TabIndex = 29;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(80, 393);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(40, 13);
+            this.label5.TabIndex = 30;
+            this.label5.Text = "Minimo";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(232, 367);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(88, 13);
+            this.label6.TabIndex = 31;
+            this.label6.Text = "en este momento";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(80, 419);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(43, 13);
+            this.label7.TabIndex = 32;
+            this.label7.Text = "Maximo";
             // 
             // FormularioProductos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1483, 635);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(1483, 724);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.groupboxProducto);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnGuardar);
-            this.Controls.Add(this.comboDepartamento);
-            this.Controls.Add(this.labelDepartamento);
-            this.Controls.Add(this.textBoxPrecioVenta);
-            this.Controls.Add(this.labelPrecioVenta);
-            this.Controls.Add(this.numericGanancia);
-            this.Controls.Add(this.labelGanancia);
-            this.Controls.Add(this.textBoxPrecioCosto);
-            this.Controls.Add(this.labelPrecioCosto);
-            this.Controls.Add(this.textBoxDescripcion);
-            this.Controls.Add(this.labelDescripcion);
-            this.Controls.Add(this.textBoxCodigo);
-            this.Controls.Add(this.labelCodigo);
-            this.Controls.Add(this.toolPanel);
-            this.Controls.Add(this.labelSection);
             this.Controls.Add(this.panelHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormularioProductos";
@@ -406,9 +512,10 @@
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericGanancia)).EndInit();
-            this.toolPanel.ResumeLayout(false);
+            this.groupboxProducto.ResumeLayout(false);
+            this.groupboxProducto.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -417,15 +524,6 @@
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelSection;
-        private System.Windows.Forms.FlowLayoutPanel toolPanel;
-        private System.Windows.Forms.Button btnNuevo;
-        private System.Windows.Forms.Button btnModificar;
-        private System.Windows.Forms.Button btnEliminarTool;
-        private System.Windows.Forms.Button btnDepartamentos;
-        private System.Windows.Forms.Button btnVentasPeriodo;
-        private System.Windows.Forms.Button btnPromociones;
-        private System.Windows.Forms.Button btnImportar;
-        private System.Windows.Forms.Button btnCatalogo;
         private System.Windows.Forms.Label labelCodigo;
         private System.Windows.Forms.TextBox textBoxCodigo;
         private System.Windows.Forms.Label labelDescripcion;
@@ -446,5 +544,24 @@
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.GroupBox groupboxProducto;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label label3;
     }
 }
