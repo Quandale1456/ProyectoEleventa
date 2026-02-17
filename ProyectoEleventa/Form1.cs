@@ -56,5 +56,15 @@ namespace ProyectoEleventa
         {
             OpenChildForm(new FormularioProductos());
         }
+
+        private void panelContenedor_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnClientes_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new Clientes());
+        }
     }
 }

@@ -16,5 +16,10 @@ namespace ProyectoEleventa
         {
             InitializeComponent();
         }
+
+        private void FormularioVentas_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
