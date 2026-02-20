@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelSuperior = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.lblNombreUsuario = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.picboxLogo = new System.Windows.Forms.PictureBox();
@@ -45,7 +46,6 @@
             this.btnProductos = new System.Windows.Forms.Button();
             this.btnVentas = new System.Windows.Forms.Button();
             this.panelContenedor = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.panelSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxLogo)).BeginInit();
             this.panel1.SuspendLayout();
@@ -62,6 +62,18 @@
             this.panelSuperior.Name = "panelSuperior";
             this.panelSuperior.Size = new System.Drawing.Size(1499, 58);
             this.panelSuperior.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.label2.Location = new System.Drawing.Point(1220, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(168, 29);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "eleventa.com";
             // 
             // lblNombreUsuario
             // 
@@ -239,17 +251,6 @@
             this.panelContenedor.Size = new System.Drawing.Size(1499, 671);
             this.panelContenedor.TabIndex = 4;
             this.panelContenedor.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContenedor_Paint);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.label2.Location = new System.Drawing.Point(1220, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(168, 29);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "eleventa.com";
             // 
             // Form1
             // 

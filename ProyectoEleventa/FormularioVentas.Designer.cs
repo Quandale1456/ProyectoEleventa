@@ -47,7 +47,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnProductoComun = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -253,14 +253,14 @@
             this.button3.Text = "ENTER - Agregar Producto";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnProductoComun
             // 
-            this.button4.Location = new System.Drawing.Point(147, 74);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(124, 23);
-            this.button4.TabIndex = 19;
-            this.button4.Text = "CTRL + P Art. Comun";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnProductoComun.Location = new System.Drawing.Point(147, 74);
+            this.btnProductoComun.Name = "btnProductoComun";
+            this.btnProductoComun.Size = new System.Drawing.Size(124, 23);
+            this.btnProductoComun.TabIndex = 19;
+            this.btnProductoComun.Text = "CTRL + P Art. Comun";
+            this.btnProductoComun.UseVisualStyleBackColor = true;
             // 
             // button5
             // 
@@ -360,7 +360,7 @@
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.btnProductoComun);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
@@ -413,7 +413,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnProductoComun;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
