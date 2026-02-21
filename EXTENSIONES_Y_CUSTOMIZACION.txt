@@ -1,0 +1,631 @@
+================================================================================
+EXTENSIONES Y CUSTOMIZACIÓN DEL SISTEMA POS
+================================================================================
+
+Este documento muestra cómo extender y personalizar el sistema según 
+tus necesidades específicas.
+
+================================================================================
+## EXTENSIÓN 1: AGREGAR AUTENTICACIÓN DE USUARIO
+================================================================================
+
+MODIFICAR: Program.cs
+
+```csharp
+[STAThread]
+static void Main()
+{
+    Application.EnableVisualStyles();
+    Application.SetCompatibleTextRenderingDefault(false);
+    
+    // Mostrar login primero
+    FormularioLogin login = new FormularioLogin();
+    if (login.ShowDialog() == DialogResult.OK)
+    {
+        // Si login exitoso, pasar usuario al formulario principal
+        Form1 mainForm = new Form1();
+        mainForm.IdUsuarioActual = login.IdUsuarioActivo;
+        mainForm.NombreUsuario = login.NombreUsuario;
+        Application.Run(mainForm);
+    }
+}
+```
+
+AGREGAR A: FormularioVentas.cs
+
+```csharp
+// En la clase
+public int IdUsuarioActual { get; set; }
+public string NombreUsuarioActual { get; set; }
+
+// En FormularioVentas_Load
+_idUsuario = IdUsuarioActual; // Usar usuario real en lugar de 1
+
+// Mostrar usuario en un label
+private void MostrarUsuarioActual()
+{
+    Label lblUsuario = ObtenerLabel("Usuario");
+    if (lblUsuario != null)
+        lblUsuario.Text = $"Usuario: {NombreUsuarioActual}";
+}
+```
+
+================================================================================
+## EXTENSIÓN 2: AGREGAR IMPRESIÓN DE TICKET
+================================================================================
+
+CREAR NUEVO ARCHIVO: Data/TicketPrinter.cs
+
+```csharp
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace ProyectoEleventa.Data
+{
+    public class TicketPrinter
+    {
+        /// <summary>
+        /// Imprime un ticket de venta.
+        /// </summary>
+        public static void ImprimirTicket(
+            int idVenta,
+            string nombreCliente,
+            decimal subtotal,
+            decimal impuesto,
+            decimal total,
+            string metodoPago,
+            DataGridView detalleVenta)
+        {
+            PrintDocument pd = new PrintDocument();
+            
+            pd.PrintPage += (sender, e) =>
+            {
+                string ticket = GenerarTextoTicket(
+                    idVenta, nombreCliente, subtotal, impuesto, total, 
+                    metodoPago, detalleVenta);
+                
+                Font font = new Font("Courier New", 8);
+                e.Graphics.DrawString(ticket, font, Brushes.Black, 10, 10);
+            };
+            
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = pd;
+            
+            if (printDialog.ShowDialog() == DialogResult.OK)
+                pd.Print();
+        }
+        
+        private static string GenerarTextoTicket(
+            int idVenta,
+            string nombreCliente,
+            decimal subtotal,
+            decimal impuesto,
+            decimal total,
+            string metodoPago,
+            DataGridView detalleVenta)
+        {
+            string ticket = "";
+            ticket += "╔════════════════════════════════╗\n";
+            ticket += "║      SISTEMA DE VENTAS         ║\n";
+            ticket += "╚════════════════════════════════╝\n\n";
+            ticket += $"Venta Nº: {idVenta}\n";
+            ticket += $"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm:ss}\n";
+            ticket += $"Cliente: {nombreCliente}\n\n";
+            ticket += "────────────────────────────────\n";
+            ticket += "DESCRIPCIÓN            CANTIDAD  PRECIO    TOTAL\n";
+            ticket += "────────────────────────────────\n";
+            
+            foreach (DataGridViewRow row in detalleVenta.Rows)
+            {
+                if (row.Cells[0].Value != null)
+                {
+                    string nombre = row.Cells[1].Value.ToString();
+                    decimal cantidad = Convert.ToDecimal(row.Cells[2].Value);
+                    decimal precio = Convert.ToDecimal(row.Cells[3].Value);
+                    decimal subtotalLinea = Convert.ToDecimal(row.Cells[6].Value);
+                    
+                    ticket += $"{nombre,-20} {cantidad:F0}      ${precio:F2}    ${subtotalLinea:F2}\n";
+                }
+            }
+            
+            ticket += "────────────────────────────────\n";
+            ticket += $"Subtotal: ${subtotal:F2}\n";
+            ticket += $"Impuesto (16%): ${impuesto:F2}\n";
+            ticket += $"TOTAL: ${total:F2}\n";
+            ticket += $"Método de Pago: {metodoPago}\n";
+            ticket += "\n¡Gracias por su compra!\n";
+            
+            return ticket;
+        }
+    }
+}
+```
+
+USAR EN: FormularioVentas.cs
+
+```csharp
+// En RealizarCobro(), después de ExitoBotón éxito:
+if (exito)
+{
+    MessageBox.Show("¡Venta registrada exitosamente!", "Éxito", ...);
+    
+    // AGREGAR: Imprimir ticket
+    TicketPrinter.ImprimirTicket(
+        idVenta: idVenta,
+        nombreCliente: cmbClientes.Text,
+        subtotal: subtotal,
+        impuesto: impuesto,
+        total: total,
+        metodoPago: metodoPago,
+        detalleVenta: dgvTicket
+    );
+    
+    LimpiarTicket();
+    EnfocarCodigoProducto();
+}
+```
+
+================================================================================
+## EXTENSIÓN 3: AGREGAR DESCUENTOS AUTOMÁTICOS POR VOLUMEN
+================================================================================
+
+CREAR NUEVO ARCHIVO: Data/DescuentoDAL.cs
+
+```csharp
+namespace ProyectoEleventa.Data
+{
+    public class DescuentoDAL
+    {
+        /// <summary>
+        /// Obtiene el descuento automático según el total de compra.
+        /// </summary>
+        public static decimal ObtenerDescuentoPorVolumen(decimal totalVenta)
+        {
+            if (totalVenta >= 1000) return 0.10m;  // 10% si > $1000
+            if (totalVenta >= 500) return 0.07m;   // 7% si > $500
+            if (totalVenta >= 200) return 0.05m;   // 5% si > $200
+            return 0; // Sin descuento
+        }
+        
+        /// <summary>
+        /// Obtiene descuento especial para cliente frecuente.
+        /// </summary>
+        public static decimal ObtenerDescuentoCliente(int idCliente)
+        {
+            // Consulta base de datos para saber si cliente es VIP
+            string query = "SELECT descuento_vip FROM clientes WHERE id_cliente = @id";
+            var result = DBConnection.ExecuteScalar(query, 
+                new System.Data.SqlClient.SqlParameter("@id", idCliente));
+            
+            return result != null ? Convert.ToDecimal(result) : 0;
+        }
+    }
+}
+```
+
+USAR EN: FormularioVentas.cs
+
+```csharp
+// En RecalcularTotales()
+private void RecalcularTotales()
+{
+    // ... código anterior ...
+    
+    decimal subtotalGeneral = 0;
+    foreach (DataGridViewRow row in dgvTicket.Rows)
+    {
+        if (row.Cells[6].Value != null)
+            subtotalGeneral += Convert.ToDecimal(row.Cells[6].Value);
+    }
+    
+    // AGREGAR: Aplicar descuento automático por volumen
+    decimal descuentoVolumen = DescuentoDAL.ObtenerDescuentoPorVolumen(subtotalGeneral);
+    decimal descuentoCliente = DescuentoDAL.ObtenerDescuentoCliente(_idClienteSeleccionado);
+    decimal descuentoTotal = descuentoVolumen + descuentoCliente; // O usar el mayor
+    
+    subtotalGeneral -= descuentoTotal;
+    
+    // ... resto del cálculo ...
+}
+```
+
+================================================================================
+## EXTENSIÓN 4: AGREGAR BÚSQUEDA INTELIGENTE (FUZZY SEARCH)
+================================================================================
+
+CREAR NUEVO ARCHIVO: Data/SearchHelper.cs
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Data;
+
+namespace ProyectoEleventa.Data
+{
+    public class SearchHelper
+    {
+        /// <summary>
+        /// Calcula similaridad entre dos strings (0-100).
+        /// Usa algoritmo de Levenshtein.
+        /// </summary>
+        public static int CalcularSimilaridad(string s1, string s2)
+        {
+            s1 = s1.ToLower();
+            s2 = s2.ToLower();
+            
+            int maxLength = Math.Max(s1.Length, s2.Length);
+            int distancia = CalcularDistanciaLevenshtein(s1, s2);
+            
+            return (int)((1.0 - (distancia / (double)maxLength)) * 100);
+        }
+        
+        private static int CalcularDistanciaLevenshtein(string s1, string s2)
+        {
+            int[,] d = new int[s1.Length + 1, s2.Length + 1];
+            
+            for (int i = 0; i <= s1.Length; i++)
+                d[i, 0] = i;
+            for (int j = 0; j <= s2.Length; j++)
+                d[0, j] = j;
+            
+            for (int i = 1; i <= s1.Length; i++)
+                for (int j = 1; j <= s2.Length; j++)
+                {
+                    int costo = s1[i - 1] == s2[j - 1] ? 0 : 1;
+                    d[i, j] = Math.Min(
+                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + costo);
+                }
+            
+            return d[s1.Length, s2.Length];
+        }
+        
+        /// <summary>
+        /// Filtra productos por relevancia.
+        /// </summary>
+        public static DataTable FiltrarPorRelevancia(DataTable dt, string busqueda, int minimoSimilaridad = 50)
+        {
+            DataTable resultado = dt.Clone();
+            
+            foreach (DataRow row in dt.Rows)
+            {
+                string nombre = row["nombre"].ToString();
+                int similitud = CalcularSimilaridad(nombre, busqueda);
+                
+                if (similitud >= minimoSimilaridad)
+                {
+                    resultado.ImportRow(row);
+                }
+            }
+            
+            return resultado.AsEnumerable()
+                .OrderByDescending(r => CalcularSimilaridad(r["nombre"].ToString(), busqueda))
+                .CopyToDataTable();
+        }
+    }
+}
+```
+
+USAR EN: BusquedaProductos.cs
+
+```csharp
+private void CargarProductos(string filtro)
+{
+    DataGridView dgv = null;
+    foreach (Control control in Controls)
+    {
+        if (control is DataGridView)
+        {
+            dgv = (DataGridView)control;
+            break;
+        }
+    }
+    
+    if (dgv == null) return;
+    
+    DataTable dt;
+    if (string.IsNullOrWhiteSpace(filtro))
+    {
+        dt = ProductoDAL.ObtenerTodos();
+    }
+    else
+    {
+        // CAMBIAR: Usar búsqueda inteligente
+        dt = ProductoDAL.ObtenerTodos();
+        dt = SearchHelper.FiltrarPorRelevancia(dt, filtro, minimoSimilaridad: 30);
+    }
+    
+    dgv.DataSource = dt;
+}
+```
+
+================================================================================
+## EXTENSIÓN 5: AGREGAR DEVOLUCIONES Y CAMBIOS
+================================================================================
+
+CREAR NUEVO ARCHIVO: Data/DevolucionDAL.cs
+
+```csharp
+using System;
+using System.Data.SqlClient;
+
+namespace ProyectoEleventa.Data
+{
+    public class DevolucionDAL
+    {
+        /// <summary>
+        /// Registra una devolución (revierte una venta).
+        /// </summary>
+        public static bool RegistrarDevolucion(
+            int idVenta,
+            string razon,
+            SqlConnection conn,
+            SqlTransaction trans)
+        {
+            try
+            {
+                // 1. Obtener detalles de la venta original
+                string queryDetalle = @"
+                    SELECT id_producto, cantidad FROM detalle_ventas WHERE id_venta = @idVenta";
+                
+                SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conn, trans);
+                cmdDetalle.Parameters.AddWithValue("@idVenta", idVenta);
+                SqlDataReader reader = cmdDetalle.ExecuteReader();
+                
+                while (reader.Read())
+                {
+                    int idProducto = Convert.ToInt32(reader["id_producto"]);
+                    decimal cantidad = Convert.ToDecimal(reader["cantidad"]);
+                    
+                    // 2. Restaurar existencia
+                    string queryExistencia = @"
+                        UPDATE productos SET existencia = existencia + @cantidad
+                        WHERE id_producto = @id";
+                    
+                    SqlCommand cmdExistencia = new SqlCommand(queryExistencia, conn, trans);
+                    cmdExistencia.Parameters.AddWithValue("@cantidad", cantidad);
+                    cmdExistencia.Parameters.AddWithValue("@id", idProducto);
+                    cmdExistencia.ExecuteNonQuery();
+                    
+                    // 3. Registrar movimiento de devolución
+                    string queryMovimiento = @"
+                        INSERT INTO movimientos_inventario
+                        (id_producto, tipo_movimiento, cantidad, fecha_movimiento, referencia)
+                        VALUES (@idProd, 'Devolución', @cant, GETDATE(), 'DEVOLUCION_' + CAST(@idVenta AS VARCHAR))";
+                    
+                    SqlCommand cmdMovimiento = new SqlCommand(queryMovimiento, conn, trans);
+                    cmdMovimiento.Parameters.AddWithValue("@idProd", idProducto);
+                    cmdMovimiento.Parameters.AddWithValue("@cant", cantidad);
+                    cmdMovimiento.Parameters.AddWithValue("@idVenta", idVenta);
+                    cmdMovimiento.ExecuteNonQuery();
+                }
+                
+                reader.Close();
+                
+                // 4. Marcar venta como devuelta
+                string queryVenta = @"
+                    UPDATE ventas SET estado = 'Devuelto' WHERE id_venta = @id";
+                
+                SqlCommand cmdVenta = new SqlCommand(queryVenta, conn, trans);
+                cmdVenta.Parameters.AddWithValue("@id", idVenta);
+                cmdVenta.ExecuteNonQuery();
+                
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error registrando devolución: " + ex.Message);
+            }
+        }
+    }
+}
+```
+
+================================================================================
+## EXTENSIÓN 6: AGREGAR REPORTES
+================================================================================
+
+CREAR NUEVO ARCHIVO: Reportes/ReporteVentas.cs
+
+```csharp
+using System;
+using System.Data;
+using ProyectoEleventa.Data;
+
+namespace ProyectoEleventa.Reportes
+{
+    public class ReporteVentas
+    {
+        /// <summary>
+        /// Genera reporte de ventas diarias.
+        /// </summary>
+        public static DataTable ReporteDiario(DateTime fecha)
+        {
+            return VentaDAL.ObtenerVentasPorPeriodo(
+                fecha.Date,
+                fecha.Date.AddDays(1).AddSeconds(-1)
+            );
+        }
+        
+        /// <summary>
+        /// Genera reporte de ventas mensuales.
+        /// </summary>
+        public static DataTable ReporteMensual(int ano, int mes)
+        {
+            DateTime inicio = new DateTime(ano, mes, 1);
+            DateTime fin = inicio.AddMonths(1).AddDays(-1);
+            return VentaDAL.ObtenerVentasPorPeriodo(inicio, fin);
+        }
+        
+        /// <summary>
+        /// Genera reporte de productos más vendidos.
+        /// </summary>
+        public static DataTable ProductosMasVendidos(DateTime desde, DateTime hasta)
+        {
+            string query = @"
+                SELECT TOP 10
+                    p.nombre,
+                    SUM(dv.cantidad) as cantidad_vendida,
+                    SUM(dv.subtotal) as total_vendido
+                FROM detalle_ventas dv
+                JOIN ventas v ON dv.id_venta = v.id_venta
+                JOIN productos p ON dv.id_producto = p.id_producto
+                WHERE v.fecha_venta BETWEEN @desde AND @hasta
+                GROUP BY p.nombre
+                ORDER BY cantidad_vendida DESC";
+            
+            var parameters = new System.Data.SqlClient.SqlParameter[]
+            {
+                new System.Data.SqlClient.SqlParameter("@desde", desde),
+                new System.Data.SqlClient.SqlParameter("@hasta", hasta)
+            };
+            
+            return DBConnection.ExecuteQuery(query, parameters);
+        }
+    }
+}
+```
+
+================================================================================
+## EXTENSIÓN 7: AGREGAR SINCRONIZACIÓN CON SERVIDOR
+================================================================================
+
+CREAR NUEVO ARCHIVO: Sync/DataSynchronizer.cs
+
+```csharp
+using System;
+using System.Data;
+using System.Windows.Forms;
+using ProyectoEleventa.Data;
+
+namespace ProyectoEleventa.Sync
+{
+    public class DataSynchronizer
+    {
+        /// <summary>
+        /// Sincroniza datos con servidor central.
+        /// Útil para múltiples terminales POS.
+        /// </summary>
+        public static bool SincronizarDatos()
+        {
+            try
+            {
+                // 1. Cargar últimos productos del servidor
+                RefrescarProductos();
+                
+                // 2. Cargar últimos clientes del servidor
+                RefrescarClientes();
+                
+                // 3. Enviar ventas pendientes al servidor
+                EnviarVentasPendientes();
+                
+                MessageBox.Show("Sincronización exitosa", "Éxito", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error en sincronización: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+        
+        private static void RefrescarProductos()
+        {
+            // Obtener desde servidor
+            DataTable dt = ProductoDAL.ObtenerTodos();
+            // Guardar en caché local o actualizar BD
+        }
+        
+        private static void RefrescarClientes()
+        {
+            // Similar a RefrescarProductos
+        }
+        
+        private static void EnviarVentasPendientes()
+        {
+            // Obtener ventas no sincronizadas
+            // Enviar al servidor
+            // Marcar como sincronizadas
+        }
+    }
+}
+```
+
+================================================================================
+## EXTENSIÓN 8: AGREGAR AUDITORÍA
+================================================================================
+
+MODIFICAR: Data/DBConnection.cs
+
+```csharp
+/// <summary>
+/// Registra una acción en la tabla de auditoría.
+/// </summary>
+public static void RegistrarAuditoria(int idUsuario, string accion, string detalles)
+{
+    string query = @"
+        INSERT INTO auditoria (id_usuario, accion, detalles, fecha)
+        VALUES (@idUsuario, @accion, @detalles, GETDATE())";
+    
+    SqlParameter[] parameters = new SqlParameter[]
+    {
+        new SqlParameter("@idUsuario", idUsuario),
+        new SqlParameter("@accion", accion),
+        new SqlParameter("@detalles", detalles)
+    };
+    
+    ExecuteNonQuery(query, parameters);
+}
+```
+
+USAR EN: FormularioVentas.cs
+
+```csharp
+// En RealizarCobro(), después de exitoso:
+if (exito)
+{
+    // Registrar en auditoría
+    DBConnection.RegistrarAuditoria(_idUsuario, 
+        "VENTA", 
+        $"Venta ID: {idVenta}, Cliente: {idCliente}, Total: ${total}");
+    
+    MessageBox.Show("¡Venta registrada exitosamente!", ...);
+}
+```
+
+================================================================================
+## CHECKLIST DE CUSTOMIZACIÓN RECOMENDADA
+================================================================================
+
+NIVEL BÁSICO (Semana 1):
+☐ Agregar autenticación de usuario
+☐ Cambiar nombres/logos según negocio
+☐ Ajustar colores e interfaz
+☐ Configurar impresora de tickets
+
+NIVEL INTERMEDIO (Semana 2-3):
+☐ Agregar reportes básicos
+☐ Implementar descuentos automáticos
+☐ Mejorar búsqueda (fuzzy search)
+☐ Agregar auditoría
+
+NIVEL AVANZADO (Mes 2):
+☐ Sincronización con servidor
+☐ Devoluciones y cambios
+☐ Sistema de proveedores
+☐ Gestión de promociones
+☐ Análisis y estadísticas
+
+================================================================================
+¡PERSONALIZACIONES IMPLEMENTADAS!
+================================================================================
+
+El sistema está diseñado para ser fácilmente extensible.
+Cada extensión se puede implementar de forma independiente.
+
+Si necesitas más funcionalidades, la arquitectura en capas facilita agregar
+nuevas características sin afectar lo existente.

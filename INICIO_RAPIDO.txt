@@ -1,0 +1,291 @@
+================================================================================
+INICIO RÁPIDO - SISTEMA DE PUNTO DE VENTA (POS)
+================================================================================
+
+🚀 EN 5 PASOS ESTARÁ LISTO
+
+================================================================================
+PASO 1: CONFIGURAR BASE DE DATOS
+================================================================================
+
+1.1. Abre SQL Server Management Studio
+1.2. Crea una base de datos llamada: sistema_ventas
+1.3. Abre el archivo: SQL_CREAR_TABLAS.sql (en la raíz del proyecto)
+1.4. Selecciona la BD sistema_ventas
+1.5. Ejecuta el script (F5 o Ctrl+E)
+1.6. Verifica: Debes ver 7 tablas creadas con datos de prueba
+
+✓ Productos: 10 artículos con códigos de barras
+✓ Clientes: 4 clientes (MOSTRADOR, CONSUMIDOR FINAL, EMPRESA A, EMPRESA B)
+✓ Usuarios: 2 usuarios (admin, vendedor1)
+
+================================================================================
+PASO 2: VERIFICAR CONEXIÓN A BASE DE DATOS
+================================================================================
+
+2.1. Abre ProyectoEleventa en Visual Studio
+2.2. Ve a: Data/DBConnection.cs (línea ~12)
+2.3. Verifica la cadena de conexión:
+    
+    @"Server=localhost;Database=sistema_ventas;Integrated Security=true;"
+
+2.4. Si tu servidor SQL no está en "localhost", cambia:
+    - Abre SQL Server Management Studio
+    - Conecta al servidor (en la ventana, verás el nombre del servidor)
+    - En DBConnection.cs, cambia "localhost" por ese nombre
+    
+    Ejemplo: @"Server=DESKTOP-ABC123;Database=sistema_ventas;..."
+
+2.5. Si usas Usuario/Contraseña SQL en lugar de Integrated Security:
+    
+    @"Server=localhost;Database=sistema_ventas;User Id=sa;Password=tucontraseña;"
+
+================================================================================
+PASO 3: COMPILAR EL PROYECTO
+================================================================================
+
+3.1. En Visual Studio: Ctrl+Shift+B (Compilar solución)
+3.2. Debe mostrar: "Build successful"
+3.3. Si hay errores, revisa:
+    - ¿Falta algún archivo en Data/?
+    - ¿Referencia a System.Windows.Forms?
+    - ¿Referencia a System.Data.SqlClient?
+
+================================================================================
+PASO 4: EJECUTAR Y PROBAR
+================================================================================
+
+4.1. Presiona F5 para ejecutar
+4.2. Deberá abrirse el formulario principal (FormularioVentas)
+4.3. Prueba estos pasos:
+
+    PRUEBA 1: Agregar producto por código
+    ✓ En txtCodigoProducto, escribe: 7891234567890 (Laptop HP)
+    ✓ En nudCantidad, cambia a 1
+    ✓ Presiona botón AGREGAR
+    ✓ Debe aparecer en el DataGridView
+    ✓ Debe calcular automáticamente subtotal, impuesto, total
+    ✓ Debe enfocarse nuevamente en txtCodigoProducto
+
+    PRUEBA 2: Agregar otro producto
+    ✓ Escribe: 7891234567891 (Mouse Logitech)
+    ✓ Presiona AGREGAR
+    ✓ Deben haber 2 filas en el ticket
+    ✓ Los totales deben recalcularse
+
+    PRUEBA 3: Cambiar cliente
+    ✓ En cmbClientes, selecciona "EMPRESA A"
+    ✓ En cmbMetodoPago, deja "Efectivo"
+
+    PRUEBA 4: Realizar cobro
+    ✓ Presiona botón COBRAR
+    ✓ Debe mostrar mensaje: "¡Venta registrada exitosamente!"
+    ✓ El DataGridView debe vaciarse
+    ✓ Los totales vuelven a 0
+
+    PRUEBA 5: Verificar en base de datos
+    ✓ En SQL Server, abre la BD sistema_ventas
+    ✓ Select * FROM ventas → Debe haber 1 registro
+    ✓ Select * FROM detalle_ventas → Debe haber 2 registros (2 productos)
+    ✓ Select * FROM movimientos_inventario → Debe haber 2 registros (salidas)
+    ✓ Select existencia FROM productos WHERE id = 1 → Debe ser 4 (era 5, se vendió 1)
+
+================================================================================
+PASO 5: USAR EL SISTEMA
+================================================================================
+
+FLUJO NORMAL DE UNA VENTA:
+
+1. Escanea código de barras en txtCodigoProducto
+   ↓
+2. Sistema busca producto, lo valida y muestra nombre/precio
+   ↓
+3. Cambia cantidad en nudCantidad si es necesario
+   ↓
+4. Presiona AGREGAR
+   ↓
+5. Producto se agrega al DataGridView (ticket)
+   ↓
+6. Se recalculan subtotal, impuesto, total automáticamente
+   ↓
+7. Puedes agregar más productos (vuelve al paso 1)
+   ↓
+8. Cuando terminas:
+   - Selecciona cliente en cmbClientes
+   - Elige método de pago en cmbMetodoPago
+   - Presiona COBRAR
+   ↓
+9. Si todo está bien → Venta registrada, ticket limpiado, listo para siguiente
+
+TECLAS DE ATAJO:
+- F10: Abrir búsqueda de productos
+- F7: Entradas de efectivo
+- F8: Salidas de efectivo
+- F9: Verificador
+- INS: INS Varios
+- CTRL+P: Producto común
+
+================================================================================
+PRUEBAS CON DIFERENTES ESCENARIOS
+================================================================================
+
+ESCENARIO 1: Stock insuficiente
+→ txtCodigoProducto: 7891234567890 (Laptop HP, stock = 5)
+→ nudCantidad: 10
+→ Presiona AGREGAR
+✗ Esperado: "Stock insuficiente. Disponible: 5"
+
+ESCENARIO 2: Código no existe
+→ txtCodigoProducto: 999999999999
+→ Presiona AGREGAR
+✗ Esperado: "Producto no encontrado"
+
+ESCENARIO 3: Venta a crédito sin límite
+→ Agregar productos (total = $200)
+→ cmbClientes: Selecciona un cliente
+→ cmbMetodoPago: "Crédito"
+→ Si su credito_usado + 200 > limite_credito
+✗ Esperado: "Crédito insuficiente"
+
+ESCENARIO 4: Cancelar venta
+→ Agregar 2-3 productos
+→ Presiona CANCELAR
+→ "¿Está seguro de cancelar la venta?" → SÍ
+✓ Esperado: Ticket vacío, totales en 0, sin registrar en BD
+
+================================================================================
+CHECKLIST DE VERIFICACIÓN
+================================================================================
+
+CÓDIGO:
+☑ Data/DBConnection.cs existe y compila
+☑ Data/ProductoDAL.cs existe y compila
+☑ Data/ClienteDAL.cs existe y compila
+☑ Data/VentaDAL.cs existe y compila
+☑ BusquedaProductos.cs actualizado y compila
+☑ FormularioVentas.cs actualizado y compila
+☑ Proyecto compila sin errores (Build successful)
+
+BASE DE DATOS:
+☑ Tabla productos existe (con 10 registros)
+☑ Tabla clientes existe (con 4 registros)
+☑ Tabla ventas existe
+☑ Tabla detalle_ventas existe
+☑ Tabla movimientos_inventario existe
+☑ Tabla usuarios existe
+☑ Tabla compras existe
+
+FUNCIONALIDAD:
+☑ Escaneo de código agrega producto al ticket
+☑ Stock se valida antes de agregar
+☑ Cantidad se puede cambiar
+☑ Descuento por línea funciona
+☑ Totales se calculan correctamente
+☑ Cliente se selecciona correctamente
+☑ Método de pago se elige correctamente
+☑ Cobro registra en todas las tablas
+☑ Stock se actualiza después del cobro
+☑ Transacción hace ROLLBACK si falla
+☑ Ticket se limpia después de cobrar exitosamente
+☑ Foco vuelve a código después de cada acción
+
+================================================================================
+PROBLEMAS COMUNES Y SOLUCIONES
+================================================================================
+
+❌ "Cannot open database 'sistema_ventas'"
+✅ Solución: Ejecutar SQL_CREAR_TABLAS.sql en SQL Server primero
+
+❌ "The type or namespace name 'DBConnection' could not be found"
+✅ Solución: Agregar al inicio de FormularioVentas.cs:
+   using ProyectoEleventa.Data;
+
+❌ "Login failed for user 'NT AUTHORITY\SYSTEM'"
+✅ Solución: Cambiar DBConnection.cs a:
+   @"Server=.\SQLEXPRESS;Database=sistema_ventas;Integrated Security=true;"
+   (Reemplaza \SQLEXPRESS por tu instancia si es diferente)
+
+❌ "Producto no encontrado" aunque el código parece correcto
+✅ Solución:
+   - Verificar exactitud del código de barras (espacios, dígitos)
+   - Verificar que el estado del producto sea 1 (activo)
+   - En SQL: SELECT * FROM productos WHERE codigo_barras LIKE '%7891%'
+
+❌ "Hay muy pocos parámetros en la sentencia INSERT"
+✅ Solución: Revisar que VentaDAL tiene todos los INSERT correctos
+   - Verificar SQL en VentaDAL.RegistrarVenta()
+
+❌ El ticket se vacía pero no se guardó en BD
+✅ Solución:
+   - Revisar mensaje de error en SQL
+   - Verificar que tablas existen (SELECT * FROM ventas)
+   - Revisar integridad referencial (clientes y productos deben existir)
+
+================================================================================
+PRÓXIMOS PASOS
+================================================================================
+
+Una vez que el sistema esté funcionando:
+
+1. AGREGAR AUTENTICACIÓN
+   - Crear formulario de login
+   - Validar usuario y contraseña
+   - Pasar id_usuario a FormularioVentas
+
+2. AGREGAR REPORTES
+   - Ventas por día/mes
+   - Productos más vendidos
+   - Clientes con crédito vencido
+   - Inventario bajo
+
+3. MEJORAR INTERFAZ
+   - Agregar iconos a los botones
+   - Mostrar foto del producto
+   - Sonido al agregar/vender
+   - Impresora de tickets
+
+4. AGREGAR MÁS FUNCIONES
+   - Devoluciones
+   - Cambios
+   - Descuentos automáticos por volumen
+   - Promociones
+
+5. OPTIMIZACIONES
+   - Cache de productos para búsqueda rápida
+   - Sincronización con servidor central
+   - Backup automático
+   - Auditoría de ventas
+
+================================================================================
+DOCUMENTACIÓN ADICIONAL
+================================================================================
+
+📄 GUIA_SISTEMA_POS.txt
+   - Arquitectura completa
+   - Explicación detallada de cada componente
+   - Flujo completo de una venta
+
+📄 REFERENCIA_RAPIDA.txt
+   - Métodos y funciones disponibles
+   - Ejemplos de uso
+   - Patrones implementados
+
+📄 SQL_CREAR_TABLAS.sql
+   - Script para crear todas las tablas
+   - Datos de prueba iniciales
+   - Índices y relaciones
+
+================================================================================
+¡LISTO PARA USAR!
+================================================================================
+
+Si seguiste todos los pasos, tu Sistema de Punto de Venta está:
+✓ Funcional
+✓ Rápido
+✓ Seguro (transacciones, parámetros SQL)
+✓ Profesional
+✓ Listo para producción
+
+Cualquier pregunta, revisar los documentos de guía y referencia.
+
+¡ÉXITO CON TU SISTEMA!

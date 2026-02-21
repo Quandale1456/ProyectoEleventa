@@ -58,6 +58,10 @@
     <Compile Include="Clientes.Designer.cs">
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\ClienteDAL.cs" />
+    <Compile Include="Data\DBConnection.cs" />
+    <Compile Include="Data\ProductoDAL.cs" />
+    <Compile Include="Data\VentaDAL.cs" />
     <Compile Include="Departamentos.cs">
       <SubType>Form</SubType>
     </Compile>

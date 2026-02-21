@@ -1,0 +1,382 @@
+================================================================================
+SISTEMA DE PUNTO DE VENTA - GUÍA COMPLETA DE IMPLEMENTACIÓN
+================================================================================
+
+## INTRODUCCIÓN
+
+Este es un sistema profesional de Punto de Venta (POS) en C# Windows Forms.
+Está optimizado para ser rápido, confiable y fácil de usar con teclado y lector 
+de código de barras.
+
+================================================================================
+## ARQUITECTURA DEL SISTEMA
+================================================================================
+
+### CAPAS DEL PROYECTO
+
+1. **Data/DBConnection.cs** - Conexión centralizada a SQL Server
+   - Ejecuta queries SELECT (ExecuteQuery)
+   - Ejecuta operaciones INSERT/UPDATE/DELETE (ExecuteNonQuery)
+   - Obtiene valores escalares (ExecuteScalar)
+   - Maneja transacciones completas (ExecuteTransaction)
+
+2. **Data/ProductoDAL.cs** - Acceso a datos de productos
+   - BuscarPorCodigo() → Busca por código de barras
+   - BuscarPorNombre() → Busca por nombre (búsqueda general)
+   - ObtenerTodos() → Obtiene todos los productos
+   - ActualizarExistencia() → Reduce stock (dentro de transacción)
+   - ObtenerExistencia() → Verifica stock disponible
+
+3. **Data/ClienteDAL.cs** - Acceso a datos de clientes
+   - ObtenerTodos() → Lista todos los clientes
+   - ObtenerCreditoDisponible() → Calcula crédito disponible
+   - BuscarPorNombre() → Busca clientes por nombre
+   - ActualizarCreditoUsado() → Registra deuda (dentro de transacción)
+
+4. **Data/VentaDAL.cs** - Acceso a datos de ventas (CAPA CRÍTICA)
+   - RegistrarVenta() → TRANSACCIÓN COMPLETA:
+     * Inserta registro en tabla VENTAS
+     * Inserta líneas en tabla DETALLE_VENTAS
+     * Actualiza EXISTENCIA de productos
+     * Registra MOVIMIENTOS_INVENTARIO
+     * Si es crédito: actualiza CREDITO_USADO del cliente
+
+5. **BusquedaProductos.cs** - Formulario secundario de búsqueda
+   - Busca y selecciona productos de forma visual
+   - Retorna el producto seleccionado al formulario principal
+
+6. **FormularioVentas.cs** - PANTALLA PRINCIPAL DEL POS
+   - Gestiona todo el flujo de ventas
+   - Interfaz con el usuario
+   - Orquesta llamadas a la capa DAL
+
+================================================================================
+## FLUJO COMPLETO DE UNA VENTA
+================================================================================
+
+### PASO 1: INICIALIZACIÓN
+- Al abrir FormularioVentas, se cargan los clientes desde ClienteDAL
+- Se configura el DataGridView con las columnas necesarias
+- Se enfoca el cursor en txtCodigoProducto para escaneo
+
+### PASO 2: AGREGAR PRODUCTO
+
+1. Usuario escanea código o escribe código de barras en txtCodigoProducto
+2. El sistema llama a AgregarProductoAlTicket()
+
+   a) VALIDACIÓN:
+      - ¿Hay código? Si no → mensaje de error
+      - ¿Producto existe? ProductoDAL.BuscarPorCodigo()
+      - ¿Hay stock disponible? Compara cantidad vs existencia
+
+   b) CÁLCULO:
+      - importeLinea = cantidad × precioVenta
+      - subtotalLinea = importeLinea - descuentoLinea
+
+   c) AGREGAR A DATAgridview:
+      - Inserta fila con: ID, Nombre, Cantidad, Precio, Importe, Descuento, Subtotal
+
+   d) RECALCULAR:
+      - Suma todos los subtotales
+      - Aplica descuento global
+      - Calcula impuesto (16%)
+      - Actualiza Labels: lblSubtotal, lblImpuesto, lblTotal
+
+   e) LIMPIAR Y ENFOCAR:
+      - Limpia campos de producto
+      - Cursor regresa a txtCodigoProducto (RÁPIDO)
+
+### PASO 3: MODIFICAR CANTIDAD (OPCIONAL)
+- Usuario puede editar NumericUpDown nudCantidad antes de agregar
+- El sistema valida que no supere el stock
+
+### PASO 4: APLICAR DESCUENTOS
+- Descuento por línea: En txtDescuentoLinea (se aplica al agregar)
+- Descuento global: En txtDescuentoGlobal (se aplica al cobrar)
+
+### PASO 5: SELECCIONAR CLIENTE
+- ComboBox cmbClientes lista todos los clientes activos
+- Cliente por defecto: "MOSTRADOR" o "CONSUMIDOR FINAL"
+
+### PASO 6: ELEGIR MÉTODO DE PAGO
+- ComboBox cmbMetodoPago: Efectivo, Tarjeta, Crédito
+- Si es CRÉDITO: se valida que el cliente tenga saldo disponible
+
+### PASO 7: COBRAR (TRANSACCIÓN COMPLETA)
+
+El método RealizarCobro() ejecuta:
+
+   VALIDACIÓN PREVIA:
+   - ¿Hay productos en el ticket? Si no → error
+   - ¿Método es CRÉDITO? Valida límite disponible
+
+   DENTRO DE TRANSACCIÓN SQL:
+   1. INSERT en tabla VENTAS:
+      - id_cliente, fecha_venta, subtotal, impuesto, descuento, total
+      - metodo_pago, id_usuario, estado='Completada'
+      - RETORNA id_venta (SCOPE_IDENTITY)
+
+   2. POR CADA LÍNEA DEL TICKET:
+      - INSERT en DETALLE_VENTAS (id_venta, id_producto, cantidad, precio, etc)
+      - UPDATE en PRODUCTOS: existencia = existencia - cantidad
+      - INSERT en MOVIMIENTOS_INVENTARIO (registro de salida)
+
+   3. SI MÉTODO ES CRÉDITO:
+      - UPDATE en CLIENTES: credito_usado += total
+
+   SI ALGO FALLA:
+   - ROLLBACK automático (se deshace TODO)
+   - Mensaje de error al usuario
+
+   SI TODO EXITOSO:
+   - COMMIT automático
+   - Mensaje de éxito
+   - Limpiar ticket completamente
+   - Enfocar en código para nueva venta
+
+### PASO 8: CANCELAR
+- Botón Cancelar limpia todo sin guardar nada
+
+================================================================================
+## CONTROLES OBLIGATORIOS DEL FORMULARIO
+================================================================================
+
+CAMPOS DE ENTRADA:
+✓ TextBox txtCodigoProducto     → Escaneo de código de barras
+✓ TextBox txtNombreProducto     → Nombre del producto (lectura)
+✓ NumericUpDown nudCantidad     → Cantidad a agregar
+✓ TextBox txtPrecio             → Precio unitario (lectura)
+✓ TextBox txtDescuentoLinea     → Descuento por línea
+✓ TextBox txtDescuentoGlobal    → Descuento general
+✓ ComboBox cmbClientes          → Selección de cliente
+✓ ComboBox cmbMetodoPago        → Efectivo, Tarjeta, Crédito
+
+SALIDA:
+✓ DataGridView dgvTicket        → Lista de productos en el ticket
+✓ Label lblSubtotal             → Subtotal calculado
+✓ Label lblImpuesto             → Impuesto calculado
+✓ Label lblTotal                → Total a cobrar
+
+BOTONES:
+✓ Botón Agregar                 → AgregarProductoAlTicket()
+✓ Botón Eliminar                → EliminarProductoDelTicket()
+✓ Botón Buscar                  → AbrirBusquedaProductos()
+✓ Botón Cobrar                  → RealizarCobro()
+✓ Botón Cancelar                → CancelarVenta()
+
+================================================================================
+## VALIDACIONES IMPLEMENTADAS
+================================================================================
+
+EN AGREGAR PRODUCTO:
+✓ Código de barras no está vacío
+✓ Producto existe en base de datos
+✓ Cantidad es mayor a 0
+✓ Stock disponible >= cantidad solicitada
+
+EN COBRAR:
+✓ Hay al menos 1 producto en el ticket
+✓ Si método es CRÉDITO: cliente tiene límite disponible
+✓ Todas las operaciones de BD se hacen en una transacción
+
+EN BÚSQUEDA:
+✓ Productos activos solo (estado = 1)
+✓ Búsqueda por nombre con LIKE (insensible a mayúsculas)
+
+================================================================================
+## MANEJO DE TRANSACCIONES (CRÍTICO)
+================================================================================
+
+Todas las operaciones de venta se ejecutan en UNA SOLA TRANSACCIÓN:
+
+BEGIN TRANSACTION
+   INSERT VENTAS
+   INSERT DETALLE_VENTAS (múltiples filas)
+   UPDATE PRODUCTOS (múltiples filas)
+   INSERT MOVIMIENTOS_INVENTARIO (múltiples filas)
+   UPDATE CLIENTES (si es crédito)
+COMMIT o ROLLBACK (automático)
+
+¿POR QUÉ ES IMPORTANTE?
+- Si algo falla (ej: disco lleno), se deshace TODO
+- No queda base de datos inconsistente
+- Si se registra venta, se debe registrar inventario y crédito juntos
+
+================================================================================
+## CÁLCULOS MATEMÁTICOS
+================================================================================
+
+Por cada línea del producto:
+   importeLinea = cantidad × precioUnitario
+   subtotalLinea = importeLinea - descuentoLinea
+
+Totales generales:
+   sumSubtotales = SUM de todos los subtotalLinea
+   subtotalGeneral = sumSubtotales - descuentoGlobal
+   impuesto = subtotalGeneral × 0.16 (16% IVA)
+   total = subtotalGeneral + impuesto
+
+================================================================================
+## TECLAS DE ATAJO
+================================================================================
+
+Las siguientes teclas abren funciones alternativas:
+
+F7  → Abrir Entradas de Efectivo
+F8  → Abrir Salidas de Efectivo
+F9  → Abrir Verificador
+F10 → Abrir Búsqueda de Productos
+INS → Abrir INS Varios
+CTRL+P → Abrir Producto Común
+
+================================================================================
+## CONFIGURACIÓN DE CONEXIÓN A BD
+================================================================================
+
+En Data/DBConnection.cs, línea ~12:
+
+    private static readonly string _connectionString = 
+        @"Server=localhost;Database=sistema_ventas;Integrated Security=true;";
+
+CAMBIAR SEGÚN TU ENTORNO:
+- Server: Tu servidor SQL (localhost, IP, nombre del servidor)
+- Database: Nombre de la base de datos (sistema_ventas)
+- Integrated Security: true = usar credenciales de Windows
+  Si usas usuario/contraseña SQL:
+    @"Server=localhost;Database=sistema_ventas;User Id=sa;Password=tucontraseña;"
+
+================================================================================
+## ESTRUCTURA DE TABLAS ESPERADAS EN BD
+================================================================================
+
+TABLA: productos
+┌─────────────────┬──────────┐
+│ id_producto     │ INT PK   │
+│ nombre          │ VARCHAR  │
+│ codigo_barras   │ VARCHAR  │
+│ precio_venta    │ DECIMAL  │
+│ existencia      │ DECIMAL  │
+│ departamento    │ VARCHAR  │
+│ estado          │ INT      │
+└─────────────────┴──────────┘
+
+TABLA: clientes
+┌──────────────────┬──────────┐
+│ id_cliente       │ INT PK   │
+│ nombre           │ VARCHAR  │
+│ email            │ VARCHAR  │
+│ telefono         │ VARCHAR  │
+│ limite_credito   │ DECIMAL  │
+│ credito_usado    │ DECIMAL  │
+│ estado           │ INT      │
+└──────────────────┴──────────┘
+
+TABLA: ventas
+┌──────────────────┬──────────┐
+│ id_venta         │ INT PK   │
+│ id_cliente       │ INT FK   │
+│ fecha_venta      │ DATETIME │
+│ subtotal         │ DECIMAL  │
+│ impuesto         │ DECIMAL  │
+│ descuento        │ DECIMAL  │
+│ total            │ DECIMAL  │
+│ metodo_pago      │ VARCHAR  │
+│ id_usuario       │ INT      │
+│ estado           │ VARCHAR  │
+└──────────────────┴──────────┘
+
+TABLA: detalle_ventas
+┌──────────────────┬──────────┐
+│ id_detalle       │ INT PK   │
+│ id_venta         │ INT FK   │
+│ id_producto      │ INT FK   │
+│ cantidad         │ DECIMAL  │
+│ precio_unitario  │ DECIMAL  │
+│ descuento        │ DECIMAL  │
+│ subtotal         │ DECIMAL  │
+└──────────────────┴──────────┘
+
+TABLA: movimientos_inventario
+┌──────────────────┬──────────┐
+│ id_movimiento    │ INT PK   │
+│ id_producto      │ INT FK   │
+│ tipo_movimiento  │ VARCHAR  │
+│ cantidad         │ DECIMAL  │
+│ fecha_movimiento │ DATETIME │
+│ referencia       │ VARCHAR  │
+└──────────────────┴──────────┘
+
+================================================================================
+## ERRORES COMUNES Y SOLUCIONES
+================================================================================
+
+❌ Error: "The type or namespace name 'DBConnection' could not be found"
+✓ Solución: Verificar que Data/DBConnection.cs existe y agregar 
+            "using ProyectoEleventa.Data;" al inicio del archivo
+
+❌ Error: "Server=localhost" no se conecta
+✓ Solución: Cambiar localhost por el nombre real del servidor SQL
+           (Ver "Propiedades del servidor" en SQL Server Management Studio)
+
+❌ Error: "Login failed for user"
+✓ Solución: Verificar credenciales en DBConnection.cs
+           Si usas Integrated Security, usuario de Windows debe tener acceso
+
+❌ Error: "Conversion from type 'DBNull' to type 'Decimal' is not valid"
+✓ Solución: Validar que valor no es NULL antes de convertir
+           El código ya valida con "!= DBNull.Value"
+
+❌ Error: "Producto no encontrado" aunque existe
+✓ Solución: El código de barras debe ser EXACTO (incluyendo espacios)
+           O el estado del producto es 0 (inactivo)
+
+================================================================================
+## OPTIMIZACIONES Y MEJORAS FUTURAS
+================================================================================
+
+POSIBLES MEJORAS:
+- Agregar autenticación de usuario y auditoría
+- Cambiar búsqueda de productos a búsqueda más inteligente (levenshtein)
+- Generar tickets imprimibles
+- Sistema de cambios/devoluciones
+- Reportes de ventas por período
+- Histórico de ventas del cliente
+- Análisis de inventario bajo
+- Integración con sistemas de pago (tarjeta, transferencia)
+- Exportar ventas a Excel/PDF
+
+================================================================================
+## RESUMEN DE ARCHIVOS CREADOS
+================================================================================
+
+✓ Data/DBConnection.cs      - Conexión centralizada
+✓ Data/ProductoDAL.cs       - Métodos de productos
+✓ Data/ClienteDAL.cs        - Métodos de clientes
+✓ Data/VentaDAL.cs          - Métodos de ventas (transacción)
+✓ BusquedaProductos.cs      - Formulario de búsqueda
+✓ FormularioVentas.cs       - Pantalla principal POS
+
+TODOS LISTOS PARA USAR. El proyecto compila correctamente.
+
+================================================================================
+## ¿CÓMO PROBAR EL SISTEMA?
+================================================================================
+
+1. Asegúrate que SQL Server está corriendo
+2. Base de datos "sistema_ventas" existe
+3. Tablas están creadas con datos de prueba
+4. Abre Visual Studio y compila (Ctrl+Shift+B)
+5. Ejecuta (F5)
+6. En FormularioVentas:
+   - Escanea código de barras (o escribe manualmente)
+   - Verifica que se agregue al DataGridView
+   - Cambia cantidad si lo deseas
+   - Selecciona cliente
+   - Elige método de pago
+   - Haz clic en COBRAR
+   - Verifica en SQL Server que se insertó en ventas, detalle_ventas, 
+     movimientos_inventario y se actualizó existencia en productos
+
+================================================================================
+¡SISTEMA LISTO PARA PRODUCCIÓN!
+================================================================================

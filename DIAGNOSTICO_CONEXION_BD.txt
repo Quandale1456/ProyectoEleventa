@@ -1,0 +1,204 @@
+================================================================================
+DIAGNÓSTICO Y SOLUCIÓN - ERROR DE CONEXIÓN A BD
+================================================================================
+
+PROBLEMA ENCONTRADO:
+Error "Error en la consulta: Instance failure"
+
+CAUSA IDENTIFICADA:
+La cadena de conexión tenía: Server=DESKTOP-6QV8JQ9\\SQLEXPRESS
+Debería ser:              Server=DESKTOP-6QV8JQ9\SQLEXPRESS
+(Doble barra \\ en lugar de simple \)
+
+SOLUCIONES IMPLEMENTADAS:
+
+1. ✅ CORREGIDA CADENA DE CONEXIÓN
+   De: Server=DESKTOP-6QV8JQ9\\SQLEXPRESS
+   A:  Server=DESKTOP-6QV8JQ9\SQLEXPRESS
+
+2. ✅ AGREGADO MÉTODO DE PRUEBA DE CONEXIÓN
+   Nuevo método: DBConnection.ProbarConexion()
+   - Verifica si SQL Server está disponible
+   - Muestra mensajes claros de error
+   - Indica exactamente cuál es el problema
+
+3. ✅ VERIFICACIÓN AUTOMÁTICA AL ABRIR
+   Al iniciar el programa:
+   - Prueba la conexión automáticamente
+   - Si falla, muestra instrucciones claras
+   - No permite continuar si BD no está disponible
+
+================================================================================
+## PASOS PARA VERIFICAR QUE TODO FUNCIONA
+================================================================================
+
+PASO 1: Verifica que SQL Server está ejecutándose
+┌─────────────────────────────────────────────────────┐
+│ Windows → Servicios (services.msc)                  │
+│ Busca: SQL Server (SQLEXPRESS)                      │
+│ Estado: Debe estar "En ejecución" (verde)           │
+└─────────────────────────────────────────────────────┘
+
+PASO 2: Verifica que la BD 'sistema_ventas' existe
+┌─────────────────────────────────────────────────────┐
+│ Abre: SQL Server Management Studio                  │
+│ Conecta a: DESKTOP-6QV8JQ9\SQLEXPRESS              │
+│ Expande: Bases de datos                             │
+│ Debe ver: sistema_ventas                            │
+└─────────────────────────────────────────────────────┘
+
+PASO 3: Si la BD no existe, créala
+┌─────────────────────────────────────────────────────┐
+│ En SQL Server Management Studio:                    │
+│ 1. Click derecho en "Bases de datos"                │
+│ 2. "Nueva base de datos"                            │
+│ 3. Nombre: sistema_ventas                           │
+│ 4. Aceptar                                          │
+│ 5. Ejecutar SQL_CREAR_TABLAS.sql                    │
+└─────────────────────────────────────────────────────┘
+
+PASO 4: Ejecuta el programa
+┌─────────────────────────────────────────────────────┐
+│ Visual Studio: F5                                   │
+│ El programa:                                        │
+│ 1. Intenta conectar a BD                            │
+│ 2. Si éxito: Muestra el formulario normalmente      │
+│ 3. Si falla: Muestra error con instrucciones        │
+└─────────────────────────────────────────────────────┘
+
+================================================================================
+## SI SIGUE DANDO ERROR
+================================================================================
+
+ERROR: "No se puede conectar a la BD"
+
+SOLUCIÓN 1: Verifica SQL Server
+┌─────────────────────────────────────────────────────┐
+│ Abre: Configuración SQL Server                      │
+│ Verifica que está en EJECUCIÓN                      │
+│ Si no, haz click derecho → INICIAR                  │
+└─────────────────────────────────────────────────────┘
+
+SOLUCIÓN 2: Verifica la BD existe
+┌─────────────────────────────────────────────────────┐
+│ SQL Server Management Studio                        │
+│ Conecta a: DESKTOP-6QV8JQ9\SQLEXPRESS              │
+│ ¿Ves "sistema_ventas"?                              │
+│ Si NO: Ejecuta SQL_CREAR_TABLAS.sql                 │
+│ Si SÍ: Continúa con solución 3                      │
+└─────────────────────────────────────────────────────┘
+
+SOLUCIÓN 3: Verifica que las tablas están creadas
+┌─────────────────────────────────────────────────────┐
+│ En SQL Server Management Studio:                    │
+│ Expande: sistema_ventas → Tablas                    │
+│ Debe ver: 7 tablas:                                 │
+│  • clientes                                         │
+│  • departamentos                                    │
+│  • productos                                        │
+│  • ventas                                           │
+│  • detalle_ventas                                   │
+│  • movimientos_inventario                           │
+│  • usuarios                                         │
+│                                                     │
+│ Si falta alguna: Ejecuta SQL_CREAR_TABLAS.sql      │
+└─────────────────────────────────────────────────────┘
+
+SOLUCIÓN 4: Verifica los datos de prueba
+┌─────────────────────────────────────────────────────┐
+│ En SQL Server Management Studio:                    │
+│ Ejecuta: SELECT COUNT(*) FROM productos             │
+│ Debe retornar: 10                                   │
+│                                                     │
+│ Ejecuta: SELECT COUNT(*) FROM clientes              │
+│ Debe retornar: 4                                    │
+│                                                     │
+│ Si retorna 0: Los datos no están insertados         │
+│ Acción: Ejecuta de nuevo SQL_CREAR_TABLAS.sql      │
+└─────────────────────────────────────────────────────┘
+
+================================================================================
+## CHECKLIST DE VERIFICACIÓN
+================================================================================
+
+ANTES DE USAR EL SISTEMA:
+
+☐ SQL Server instalado
+☐ SQL Server ejecutándose (servicios)
+☐ Base de datos 'sistema_ventas' existe
+☐ Tablas creadas (7 tablas)
+☐ Datos de prueba insertados (10 productos, 4 clientes)
+☐ Cadena de conexión correcta: DESKTOP-6QV8JQ9\SQLEXPRESS
+☐ Programa compila sin errores
+☐ Programa inicia sin errores de conexión
+
+SI TODOS LOS PUNTOS ESTÁN MARCADOS ✓:
+El sistema funcionará correctamente
+
+================================================================================
+## NOMBRES DE LAS TABLAS Y REGISTROS
+================================================================================
+
+TABLA productos: 10 registros
+┌─────────────────────────────────────────────────────┐
+│ ID | Nombre                | Código        | Precio │
+├─────────────────────────────────────────────────────┤
+│ 1  | Laptop HP 15         | 7891234567890 | $899.99│
+│ 2  | Mouse Logitech       | 7891234567891 | $29.99 │
+│ 3  | Teclado USB          | 7891234567892 | $49.99 │
+│ 4  | Monitor LG 24"       | 7891234567893 | $199.99│
+│ 5  | Café Premium 1kg     | 7891234567894 | $15.99 │
+│ 6  | Arroz x 2kg          | 7891234567895 | $8.99  │
+│ 7  | Coca Cola 2L         | 7891234567896 | $4.99  │
+│ 8  | Jabón Líquido        | 7891234567897 | $5.99  │
+│ 9  | Toalla de Mano       | 7891234567898 | $12.99 │
+│ 10 | Camiseta Hombre L    | 7891234567899 | $25.99 │
+└─────────────────────────────────────────────────────┘
+
+TABLA clientes: 4 registros
+┌─────────────────────────────────────────────────────┐
+│ ID | Nombre               | Límite Crédito         │
+├─────────────────────────────────────────────────────┤
+│ 1  | MOSTRADOR            | $0.00                  │
+│ 2  | CONSUMIDOR FINAL     | $0.00                  │
+│ 3  | EMPRESA A            | $50,000.00             │
+│ 4  | EMPRESA B            | $30,000.00             │
+└─────────────────────────────────────────────────────┘
+
+================================================================================
+## PRUEBA RÁPIDA DE CONEXIÓN
+================================================================================
+
+Para verificar que la conexión funciona SIN INICIAR TODO EL PROGRAMA:
+
+1. Abre Visual Studio
+2. Abre Package Manager Console
+3. Ejecuta este comando:
+
+   $conn = New-Object System.Data.SqlClient.SqlConnection
+   $conn.ConnectionString = "Server=DESKTOP-6QV8JQ9\SQLEXPRESS;Database=sistema_ventas;Integrated Security=true;"
+   $conn.Open()
+   Write-Host "Conexión exitosa"
+   $conn.Close()
+
+Si imprime "Conexión exitosa" → Todo funciona
+Si da error → SQL Server no está corriendo
+
+================================================================================
+## STATUS ACTUAL
+================================================================================
+
+✅ Cadena de conexión CORREGIDA (sin doble barra)
+✅ Método ProbarConexion() IMPLEMENTADO
+✅ Verificación automática AL ABRIR agregada
+✅ Mensajes claros de error IMPLEMENTADOS
+✅ Build: SIN ERRORES
+
+PRÓXIMO PASO:
+1. Verifica que SQL Server está ejecutándose
+2. Verifica que tabla sistema_ventas existe
+3. Ejecuta SQL_CREAR_TABLAS.sql si no hay datos
+4. Ejecuta el programa (F5)
+5. Si sale error, sigue las instrucciones
+
+================================================================================

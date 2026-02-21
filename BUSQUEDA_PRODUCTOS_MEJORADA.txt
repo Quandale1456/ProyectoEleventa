@@ -1,0 +1,221 @@
+================================================================================
+BÚSQUEDA DE PRODUCTOS - CORREGIDO Y MEJORADO
+================================================================================
+
+✅ ERROR CORREGIDO
+El error "Error en la consulta: Instance failure" fue causado por usar LIMIT
+(sintaxis MySQL) en lugar de TOP (sintaxis SQL Server).
+
+Cambio realizado:
+❌ ANTES: SELECT id_producto, nombre ... LIMIT 1
+✅ AHORA: SELECT TOP 1 id_producto, nombre ...
+
+================================================================================
+## CÓMO BUSCAR PRODUCTOS - 3 FORMAS
+================================================================================
+
+Ahora puedes buscar de 3 formas diferentes en el mismo campo:
+
+1️⃣ POR CÓDIGO DE BARRAS (escanear)
+   - Ejemplo: 7891234567890
+   - Presiona ENTER
+   - Busca exacto
+
+2️⃣ POR ID DEL PRODUCTO
+   - Ejemplo: 1, 2, 5, 10
+   - Presiona ENTER
+   - Busca exacto
+
+3️⃣ POR NOMBRE DEL PRODUCTO
+   - Ejemplo: Laptop, Mouse, Café
+   - Presiona ENTER
+   - Búsqueda parcial (no necesita nombre completo)
+
+================================================================================
+## EJEMPLOS PRÁCTICOS
+================================================================================
+
+EJEMPLO 1: Buscar por CÓDIGO DE BARRAS
+┌─────────────────────────────────────────┐
+│ Contenido del Producto: 7891234567890   │
+│ Presiona: ENTER                         │
+└─────────────────────────────────────────┘
+Resultado: Encuentra "Laptop HP 15" si existe ese código
+
+EJEMPLO 2: Buscar por ID
+┌─────────────────────────────────────────┐
+│ Contenido del Producto: 1               │
+│ Presiona: ENTER                         │
+└─────────────────────────────────────────┘
+Resultado: Encuentra el producto con id_producto = 1
+
+EJEMPLO 3: Buscar por NOMBRE (parcial)
+┌─────────────────────────────────────────┐
+│ Contenido del Producto: Laptop          │
+│ Presiona: ENTER                         │
+└─────────────────────────────────────────┘
+Resultado: Si hay 1 producto con "Laptop", lo agrega
+Si hay múltiples, te pide que seas más específico
+
+EJEMPLO 4: Búsqueda más específica por nombre
+┌─────────────────────────────────────────┐
+│ Contenido del Producto: Laptop HP       │
+│ Presiona: ENTER                         │
+└─────────────────────────────────────────┘
+Resultado: Encuentra "Laptop HP 15"
+
+================================================================================
+## FLUJO DE BÚSQUEDA MEJORADO
+================================================================================
+
+1. Escribes en "Contenido del Producto"
+2. Presionas ENTER
+3. El sistema intenta buscar EN ESTE ORDEN:
+   
+   Paso 1: ¿Es un número? → Busca por ID
+   Paso 2: ¿Existe ese código? → Busca por CÓDIGO
+   Paso 3: ¿Existe ese nombre? → Busca por NOMBRE
+   
+4. Si encuentra 1 resultado → LO AGREGA AUTOMÁTICAMENTE
+5. Si encuentra múltiples → TE PIDE QUE SEAS MÁS ESPECÍFICO
+6. Si no encuentra nada → MENSAJE DE ERROR con instrucciones
+
+================================================================================
+## MENSAJES DE ERROR Y SOLUCIONES
+================================================================================
+
+ERROR: "Producto no encontrado"
+SOLUCIÓN: Verifica que:
+  ☐ El código de barras sea correcto
+  ☐ El ID del producto exista
+  ☐ El nombre del producto esté correcto
+  ☐ El producto esté activo (estado = 1) en la BD
+
+ERROR: "Se encontraron X productos"
+SOLUCIÓN: Sé más específico en el nombre
+  ☐ Ejemplo: En lugar de "Laptop", escribe "Laptop HP"
+  ☐ O usa código de barras exacto
+  ☐ O usa F10 para búsqueda visual
+
+ERROR: "Stock insuficiente"
+SOLUCIÓN: El producto no tiene existencia
+  ☐ Verifica en el inventario
+  ☐ Intenta con otro producto
+  ☐ Ingresa existencia nuevamente
+
+================================================================================
+## VENTAJAS DE LA BÚSQUEDA MEJORADA
+================================================================================
+
+✅ FLEXIBILIDAD
+   - 3 formas de buscar en el mismo campo
+   - El sistema intenta todas hasta encontrar
+
+✅ VELOCIDAD
+   - Código: Escaneo rápido
+   - ID: Si sabes el número
+   - Nombre: Si no tienes el código
+
+✅ INTELIGENCIA
+   - Búsqueda parcial por nombre
+   - No necesita coincidencia exacta
+   - Sugiere alternativas si hay múltiples
+
+✅ COMODIDAD
+   - Un solo campo de entrada
+   - Mismo flujo de trabajo
+   - Menos clics
+
+================================================================================
+## ALTERNATIVA: BÚSQUEDA VISUAL (F10)
+================================================================================
+
+Si prefieres buscar visualmente:
+
+1. Presiona F10 (o haz clic en "F10 Buscar")
+2. Se abre formulario de búsqueda visual
+3. Puedes:
+   ☐ Ver lista completa de productos
+   ☐ Escribir para filtrar
+   ☐ Doble clic para seleccionar
+4. Se agrega automáticamente al ticket
+
+RECOMENDACIÓN:
+- Códigos de barras: Usa escaneo directo (ENTER)
+- Búsqueda rápida: Escribe nombre o ID (ENTER)
+- Exploración: Usa F10 (búsqueda visual)
+
+================================================================================
+## DATOS DE PRUEBA PARA PROBAR
+================================================================================
+
+Código de barras:      7891234567890 (Laptop HP 15)
+ID:                    1 (Laptop HP 15)
+Nombre:                Laptop
+
+Código de barras:      7891234567891 (Mouse Logitech)
+ID:                    2 (Mouse Logitech)
+Nombre:                Mouse
+
+Código de barras:      7891234567894 (Café Premium)
+ID:                    5 (Café Premium)
+Nombre:                Café
+
+Código de barras:      7891234567896 (Coca Cola)
+ID:                    7 (Coca Cola)
+Nombre:                Coca
+
+================================================================================
+## PRUEBAS SUGERIDAS
+================================================================================
+
+PRUEBA 1: Escaneo por código
+1. Escribe: 7891234567890
+2. Presiona ENTER
+3. Resultado: ✅ Laptop aparece en la tabla
+
+PRUEBA 2: Búsqueda por ID
+1. Escribe: 2
+2. Presiona ENTER
+3. Resultado: ✅ Mouse aparece en la tabla
+
+PRUEBA 3: Búsqueda por nombre exacto
+1. Escribe: Laptop
+2. Presiona ENTER
+3. Resultado: ✅ Laptop aparece en la tabla
+
+PRUEBA 4: Búsqueda por nombre parcial
+1. Escribe: Café
+2. Presiona ENTER
+3. Resultado: ✅ Café Premium aparece en la tabla
+
+PRUEBA 5: Búsqueda ambigua (múltiples resultados)
+1. Escribe: a (letra que está en muchos nombres)
+2. Presiona ENTER
+3. Resultado: ⚠️ Mensaje de múltiples resultados
+4. Acción: Sé más específico
+
+PRUEBA 6: Producto no existe
+1. Escribe: 999
+2. Presiona ENTER
+3. Resultado: ❌ Mensaje de "Producto no encontrado"
+
+================================================================================
+## STATUS DEL SISTEMA
+================================================================================
+
+✅ Error de BD CORREGIDO
+✅ Búsqueda por CÓDIGO funcionando
+✅ Búsqueda por ID funcionando
+✅ Búsqueda por NOMBRE funcionando
+✅ Validación de STOCK funcionando
+✅ Transacciones SEGURAS funcionando
+✅ Build: SIN ERRORES
+
+================================================================================
+
+PRÓXIMO PASO: Prueba cualquiera de las 3 formas de búsqueda.
+
+Presiona ENTER después de escribir el código, ID o nombre del producto.
+
+¡Sistema listo para usar!

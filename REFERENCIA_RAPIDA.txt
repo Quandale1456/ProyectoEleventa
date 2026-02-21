@@ -1,0 +1,388 @@
+================================================================================
+REFERENCIA RÁPIDA - MÉTODOS Y FUNCIONES DEL SISTEMA POS
+================================================================================
+
+## CLASE: DBConnection.cs
+Ubicación: ProyectoEleventa/Data/DBConnection.cs
+
+### Métodos Públicos:
+
+📌 GetConnection()
+   Retorna: SqlConnection
+   Uso: Crear nueva conexión a base de datos
+   Ejemplo: using(SqlConnection conn = DBConnection.GetConnection()) { ... }
+
+📌 ExecuteQuery(string query, params SqlParameter[] parameters)
+   Retorna: DataTable
+   Uso: Ejecutar SELECT
+   Ejemplo: 
+      string sql = "SELECT * FROM productos WHERE nombre LIKE @nombre";
+      DataTable dt = DBConnection.ExecuteQuery(sql, 
+         new SqlParameter("@nombre", "%Laptop%"));
+
+📌 ExecuteNonQuery(string query, params SqlParameter[] parameters)
+   Retorna: int (número de filas afectadas)
+   Uso: Ejecutar INSERT, UPDATE, DELETE
+   Ejemplo:
+      string sql = "UPDATE productos SET existencia = existencia - @qty WHERE id = @id";
+      int filas = DBConnection.ExecuteNonQuery(sql,
+         new SqlParameter("@qty", 5),
+         new SqlParameter("@id", 10));
+
+📌 ExecuteScalar(string query, params SqlParameter[] parameters)
+   Retorna: object (valor único)
+   Uso: Obtener un solo valor (COUNT, SUM, MAX, etc)
+   Ejemplo:
+      object result = DBConnection.ExecuteScalar(
+         "SELECT COUNT(*) FROM productos WHERE estado = 1");
+      int cantidad = Convert.ToInt32(result);
+
+📌 ExecuteTransaction(Action<SqlConnection, SqlTransaction> action)
+   Retorna: bool (true si exitoso, false si error)
+   Uso: Ejecutar múltiples operaciones atomicamente
+   Ejemplo:
+      bool exito = DBConnection.ExecuteTransaction((conn, trans) => {
+         // INSERT, UPDATE, DELETE aquí
+         SqlCommand cmd = new SqlCommand("INSERT INTO ventas...", conn, trans);
+         cmd.ExecuteNonQuery();
+      });
+
+================================================================================
+## CLASE: ProductoDAL.cs
+Ubicación: ProyectoEleventa/Data/ProductoDAL.cs
+
+### Métodos Públicos:
+
+📌 BuscarPorCodigo(string codigo) → DataRow
+   Retorna: Fila del producto o null
+   SQL: SELECT id_producto, nombre, precio_venta, existencia WHERE codigo_barras = @codigo
+   Uso: Escaneo de código de barras en POS
+   Ejemplo:
+      DataRow producto = ProductoDAL.BuscarPorCodigo("7891234567890");
+      if (producto != null)
+         decimal precio = Convert.ToDecimal(producto["precio_venta"]);
+
+📌 BuscarPorNombre(string nombre) → DataTable
+   Retorna: DataTable con productos que coinciden
+   SQL: SELECT ... WHERE nombre LIKE @nombre AND estado = 1
+   Uso: Búsqueda de productos en BusquedaProductos
+   Ejemplo:
+      DataTable dt = ProductoDAL.BuscarPorNombre("Laptop");
+      dgv.DataSource = dt;
+
+📌 ObtenerPorId(int idProducto) → DataRow
+   Retorna: Fila del producto o null
+   SQL: SELECT ... WHERE id_producto = @id AND estado = 1
+   Uso: Obtener detalles de un producto específico
+   Ejemplo:
+      DataRow producto = ProductoDAL.ObtenerPorId(5);
+
+📌 ObtenerTodos() → DataTable
+   Retorna: DataTable con todos los productos activos
+   SQL: SELECT ... WHERE estado = 1 ORDER BY nombre
+   Uso: Cargar lista completa de productos
+   Ejemplo:
+      DataTable dt = ProductoDAL.ObtenerTodos();
+
+📌 ObtenerExistencia(int idProducto) → decimal
+   Retorna: Cantidad disponible en stock
+   SQL: SELECT existencia WHERE id_producto = @id
+   Uso: Validar si hay stock disponible
+   Ejemplo:
+      decimal stock = ProductoDAL.ObtenerExistencia(10);
+      if (cantidad > stock) MessageBox.Show("Stock insuficiente");
+
+📌 ActualizarExistencia(int idProducto, decimal cantidad, SqlConnection conn, SqlTransaction trans) → int
+   Retorna: Filas afectadas (1 = éxito, 0 = fracaso)
+   SQL: UPDATE productos SET existencia = existencia - @cantidad WHERE id = @id
+   Uso: SOLO DENTRO DE TRANSACCIÓN (en RealizarCobro)
+   Ejemplo: (Ver VentaDAL.RegistrarVenta)
+   NOTA: Necesita SqlConnection y SqlTransaction activos
+
+📌 Existe(int idProducto) → bool
+   Retorna: true si existe y está activo, false si no
+   SQL: SELECT COUNT(*) WHERE id = @id AND estado = 1
+   Uso: Verificar si un producto es válido
+   Ejemplo:
+      if (ProductoDAL.Existe(10))
+         MessageBox.Show("Producto existe");
+
+================================================================================
+## CLASE: ClienteDAL.cs
+Ubicación: ProyectoEleventa/Data/ClienteDAL.cs
+
+### Métodos Públicos:
+
+📌 ObtenerTodos() → DataTable
+   Retorna: DataTable con todos los clientes activos
+   SQL: SELECT id_cliente, nombre, limite_credito, credito_usado WHERE estado = 1
+   Uso: Cargar ComboBox cmbClientes
+   Ejemplo:
+      DataTable dt = ClienteDAL.ObtenerTodos();
+      cmbClientes.DataSource = dt;
+
+📌 ObtenerPorId(int idCliente) → DataRow
+   Retorna: Fila del cliente o null
+   SQL: SELECT ... WHERE id_cliente = @id AND estado = 1
+   Uso: Obtener detalles de un cliente específico
+   Ejemplo:
+      DataRow cliente = ClienteDAL.ObtenerPorId(5);
+      string nombre = cliente["nombre"].ToString();
+
+📌 ObtenerCreditoDisponible(int idCliente) → decimal
+   Retorna: Saldo de crédito disponible
+   Cálculo: limite_credito - credito_usado
+   Uso: Validar si puede hacer compra a crédito
+   Ejemplo:
+      decimal creditoDisp = ClienteDAL.ObtenerCreditoDisponible(3);
+      if (totalVenta > creditoDisp)
+         MessageBox.Show("Crédito insuficiente");
+
+📌 BuscarPorNombre(string nombre) → DataTable
+   Retorna: DataTable con clientes que coinciden
+   SQL: SELECT ... WHERE nombre LIKE @nombre AND estado = 1
+   Uso: Autocompletado o búsqueda de cliente
+   Ejemplo:
+      DataTable dt = ClienteDAL.BuscarPorNombre("EMPRESA");
+
+📌 ActualizarCreditoUsado(int idCliente, decimal monto, SqlConnection conn, SqlTransaction trans) → int
+   Retorna: Filas afectadas (1 = éxito)
+   SQL: UPDATE clientes SET credito_usado = credito_usado + @monto WHERE id = @id
+   Uso: SOLO DENTRO DE TRANSACCIÓN (en VentaDAL.RegistrarVenta si es crédito)
+   Ejemplo: (Ver VentaDAL.RegistrarVenta)
+   NOTA: Necesita SqlConnection y SqlTransaction activos
+
+📌 ObtenerClientePorDefecto() → int
+   Retorna: ID del cliente por defecto (MOSTRADOR o CONSUMIDOR FINAL)
+   SQL: SELECT TOP 1 id_cliente WHERE nombre = 'MOSTRADOR' OR 'CONSUMIDOR FINAL'
+   Uso: Si no se selecciona cliente explícitamente
+   Ejemplo:
+      int idCliente = ClienteDAL.ObtenerClientePorDefecto();
+
+================================================================================
+## CLASE: VentaDAL.cs
+Ubicación: ProyectoEleventa/Data/VentaDAL.cs
+
+### Métodos Públicos:
+
+📌 RegistrarVenta(int idCliente, decimal subtotal, decimal impuesto, decimal descuento, 
+                  decimal total, string metodoPago, int idUsuario, 
+                  DataGridView dgvTicket, SqlConnection conn, SqlTransaction trans) → int
+
+   Retorna: ID de la venta creada
+   
+   ¿QUÉ HACE?
+   1. INSERT en tabla VENTAS → retorna id_venta
+   2. POR CADA FILA en dgvTicket:
+      - INSERT en DETALLE_VENTAS
+      - UPDATE en PRODUCTOS (restar existencia)
+      - INSERT en MOVIMIENTOS_INVENTARIO
+   3. SI metodoPago == "Crédito": UPDATE CLIENTES (agregar a crédito_usado)
+   
+   Uso: SOLO DENTRO DE DBConnection.ExecuteTransaction()
+   
+   Ejemplo (ver FormularioVentas.RealizarCobro()):
+      bool exito = DBConnection.ExecuteTransaction((conn, trans) => {
+         int idVenta = VentaDAL.RegistrarVenta(
+            idCliente: 5,
+            subtotal: 1000,
+            impuesto: 160,
+            descuento: 50,
+            total: 1110,
+            metodoPago: "Efectivo",
+            idUsuario: 1,
+            dgvTicket: dgvTicket,
+            conn: conn,
+            trans: trans
+         );
+      });
+   
+   IMPORTANTE: Pasar SqlConnection y SqlTransaction activos
+              Si algo falla → ROLLBACK automático
+
+📌 ObtenerVentasPorPeriodo(DateTime desde, DateTime hasta) → DataTable
+   Retorna: Todas las ventas en rango de fechas
+   SQL: SELECT ... FROM ventas WHERE fecha_venta BETWEEN @desde AND @hasta
+   Uso: Reportes, historial de ventas
+   Ejemplo:
+      DataTable dt = VentaDAL.ObtenerVentasPorPeriodo(
+         new DateTime(2024, 1, 1),
+         new DateTime(2024, 1, 31)
+      );
+
+📌 ObtenerDetalleVenta(int idVenta) → DataTable
+   Retorna: Líneas de un venta específica
+   SQL: SELECT ... FROM detalle_ventas WHERE id_venta = @idVenta
+   Uso: Ver qué productos se vendieron en una venta
+   Ejemplo:
+      DataTable dt = VentaDAL.ObtenerDetalleVenta(123);
+
+📌 ObtenerTotalVentasPorPeriodo(DateTime desde, DateTime hasta) → decimal
+   Retorna: Suma de todos los totales en el período
+   SQL: SELECT SUM(total) FROM ventas WHERE fecha_venta BETWEEN @desde AND @hasta
+   Uso: Reporte de ventas totales
+   Ejemplo:
+      decimal total = VentaDAL.ObtenerTotalVentasPorPeriodo(
+         DateTime.Now.AddDays(-30), DateTime.Now
+      );
+
+================================================================================
+## MÉTODOS EN FormularioVentas.cs
+Ubicación: ProyectoEleventa/FormularioVentas.cs
+
+### Métodos Principales (FLUJO DEL POS):
+
+📌 AgregarProductoAlTicket()
+   Qué hace: Busca producto, valida stock, calcula subtotal, agrega a DataGridView
+   Pasos:
+      1. Lee txtCodigoProducto
+      2. Busca con ProductoDAL.BuscarPorCodigo()
+      3. Valida: código no vacío, producto existe, cantidad > 0, stock suficiente
+      4. Calcula: importeLinea = cantidad × precio; subtotal = importe - descuento
+      5. Inserta fila en dgvTicket
+      6. Recalcula totales
+      7. Limpia campos y enfoca código
+
+📌 EliminarProductoDelTicket()
+   Qué hace: Borra fila seleccionada del DataGridView y recalcula totales
+   Validación: Verifica que hay fila seleccionada
+
+📌 RecalcularTotales()
+   Qué hace: Suma todos los subtotales, calcula impuesto y total
+   Fórmula:
+      subtotalGeneral = SUM(subtotal de todas las filas) - descuentoGlobal
+      impuesto = subtotalGeneral × 0.16
+      total = subtotalGeneral + impuesto
+   Actualiza: lblSubtotal, lblImpuesto, lblTotal
+
+📌 RealizarCobro() ← MÉTODO CRÍTICO
+   Qué hace: Ejecuta transacción completa de venta
+   Pasos:
+      1. Validar: hay productos, cliente, método de pago
+      2. Si crédito: validar límite disponible
+      3. Ejecutar DBConnection.ExecuteTransaction()
+      4. Dentro: llamar VentaDAL.RegistrarVenta()
+      5. Si OK: mensaje éxito, limpiar ticket
+      6. Si error: ROLLBACK automático, mostrar error
+
+📌 CancelarVenta()
+   Qué hace: Limpia todo sin guardar
+   Pregunta: ¿Está seguro de cancelar?
+
+📌 LimpiarTicket()
+   Qué hace: Limpia DataGridView, campos de producto, totales
+   Usado: Después de cobrar exitoso, al cancelar
+
+📌 LimpiarCamposProducto()
+   Qué hace: Limpia txtCodigoProducto, txtNombreProducto, txtPrecio, nudCantidad
+   Usado: Después de agregar cada producto
+
+📌 EnfocarCodigoProducto()
+   Qué hace: Pone foco en txtCodigoProducto y lo selecciona
+   Usado: Para que usuario pueda escanear inmediatamente
+
+### Métodos de Utilidad:
+
+📌 ObtenerDataGridViewTicket() → DataGridView
+   Retorna: El DataGridView principal del ticket
+   Búsqueda: Encuentra control que contiene "dgv" en el nombre
+
+📌 ObtenerTextBox(string nombreParcial) → TextBox
+   Retorna: TextBox que contiene nombreParcial en el nombre
+   Ejemplo: ObtenerTextBox("Codigo") → encuentra txtCodigoProducto
+
+📌 ObtenerNumericUpDown(string nombreParcial) → NumericUpDown
+   Igual que ObtenerTextBox pero para NumericUpDown
+
+📌 ObtenerLabel(string nombreParcial) → Label
+   Igual que ObtenerTextBox pero para Label
+
+### Métodos de Formularios Secundarios:
+
+📌 AbrirBusquedaProductos()
+📌 AbrirINSVarios()
+📌 AbrirProductoComun()
+📌 AbrirEntradasEfectivo()
+📌 AbrirSalidasEfectivo()
+📌 AbrirVerificador()
+
+================================================================================
+## PATRONES Y MEJORES PRÁCTICAS IMPLEMENTADAS
+================================================================================
+
+1. USO DE PARÁMETROS SQL (previene SQL injection)
+   ❌ MALO: "WHERE codigo = '" + codigo + "'"
+   ✅ BIEN: "WHERE codigo = @codigo" 
+           con new SqlParameter("@codigo", codigo)
+
+2. MANEJO DE TRANSACCIONES (atomicidad)
+   DBConnection.ExecuteTransaction((conn, trans) => {
+      // Múltiples operaciones que se hacen juntas o NO se hacen
+      // Si algo falla → ROLLBACK automático
+   });
+
+3. BÚSQUEDA RECURSIVA DE CONTROLES
+   // En lugar de asumir nombres, buscar dinámicamente
+   foreach (Control control in Controls)
+       if (control is DataGridView && control.Name.Contains("dgv"))
+           { ... }
+
+4. SEPARACIÓN DE CAPAS
+   - FormularioVentas (UI) → NO accede directamente a base de datos
+   - ProductoDAL, ClienteDAL, VentaDAL (Data) → Métodos reutilizables
+   - DBConnection (Acceso) → Conexión centralizada
+
+5. VALIDACIONES ANTES DE TRANSACCIÓN
+   // Validar ANTES de entrar en transacción
+   if (cantidad > stock) {
+      MessageBox.Show("Error");
+      return;
+   }
+   // Luego sí hacer transacción
+
+================================================================================
+## CONSTANTES DEFINIDAS
+================================================================================
+
+FormularioVentas.cs:
+   const decimal IMPUESTO = 0.16m;  // 16% IVA
+   int _idUsuario = 1;              // Usuario por defecto (cambiar en login)
+
+DBConnection.cs:
+   Cadena de conexión: "Server=localhost;Database=sistema_ventas;..."
+   Cambiar según tu servidor SQL
+
+================================================================================
+## VALORES POR DEFECTO
+================================================================================
+
+Método de pago: "Efectivo"
+Cliente: "MOSTRADOR" (id de cliente por defecto)
+Cantidad inicial: 1 (NumericUpDown nudCantidad)
+Descuento inicial: 0
+
+================================================================================
+## MENSAJES AL USUARIO
+================================================================================
+
+✓ ÉXITO:
+  - "¡Venta registrada exitosamente!"
+
+⚠️ ADVERTENCIA:
+  - "Ingrese código de barras"
+  - "Cantidad debe ser mayor a 0"
+  - "Seleccione una fila para eliminar"
+  - "El ticket está vacío"
+  - "Seleccione un producto"
+
+❌ ERROR:
+  - "Producto no encontrado"
+  - "Stock insuficiente. Disponible: X"
+  - "Crédito insuficiente. Disponible: $X"
+
+❓ CONFIRMACIÓN:
+  - "¿Está seguro de cancelar la venta?"
+
+================================================================================
+¡FIN DE REFERENCIA RÁPIDA!
+================================================================================
