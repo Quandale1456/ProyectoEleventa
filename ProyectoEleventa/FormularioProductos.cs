@@ -264,12 +264,41 @@ namespace ProyectoEleventa
         {
             try
             {
-                // TODO: Implementar carga de departamentos si existe tabla
-                // Por ahora solo limpiar el combo
+                // Limpiar combo
                 this.comboDepartamento.DataSource = null;
                 this.comboDepartamento.Items.Clear();
-                this.comboDepartamento.Items.Add("Sin categoría");
-                this.comboDepartamento.SelectedIndex = 0;
+
+                // Obtener departamentos de BD
+                DataTable dtDepartamentos = DepartamentoDAL.ObtenerTodos();
+
+                if (dtDepartamentos != null && dtDepartamentos.Rows.Count > 0)
+                {
+                    // Crear una lista para el combo
+                    List<KeyValuePair<int, string>> departamentos = new List<KeyValuePair<int, string>>();
+
+                    // Agregar "Sin Departamento" como opción por defecto
+                    departamentos.Add(new KeyValuePair<int, string>(0, "- Sin Departamento -"));
+
+                    // Agregar departamentos de BD
+                    foreach (DataRow row in dtDepartamentos.Rows)
+                    {
+                        int id = (int)row["id_departamento"];
+                        string nombre = row["nombre"].ToString();
+                        departamentos.Add(new KeyValuePair<int, string>(id, nombre));
+                    }
+
+                    // Asignar al combo
+                    this.comboDepartamento.DataSource = departamentos;
+                    this.comboDepartamento.DisplayMember = "Value";
+                    this.comboDepartamento.ValueMember = "Key";
+                    this.comboDepartamento.SelectedIndex = 0;
+                }
+                else
+                {
+                    // Si no hay departamentos, solo mostrar "Sin Departamento"
+                    this.comboDepartamento.Items.Add("- Sin Departamento -");
+                    this.comboDepartamento.SelectedIndex = 0;
+                }
             }
             catch (Exception ex)
             {
@@ -283,6 +312,13 @@ namespace ProyectoEleventa
         /// </summary>
         private Producto ObtenerDatosFormulario()
         {
+            // Obtener el ID del departamento seleccionado
+            int departamentoId = 0;
+            if (this.comboDepartamento.SelectedValue != null && this.comboDepartamento.SelectedValue is int)
+            {
+                departamentoId = (int)this.comboDepartamento.SelectedValue;
+            }
+
             Producto producto = new Producto
             {
                 IdProducto = productoActualId,
@@ -292,7 +328,7 @@ namespace ProyectoEleventa
                 PorcentajeGanancia = (decimal)this.numericGanancia.Value,
                 PrecioVenta = decimal.Parse(this.textBoxPrecioVenta.Text),
                 Existencia = decimal.TryParse(this.txtExistencia.Text, out decimal existencia) ? existencia : 0,
-                DepartamentoId = 0,
+                DepartamentoId = departamentoId,
                 UsaInventario = this.checkBoxInventario.Checked,
                 ExistenciaMinima = decimal.TryParse(this.txtExistenciaMinima.Text, out decimal minima) ? minima : 0,
                 ExistenciaMaxima = decimal.TryParse(this.txtExistenciaMaxima.Text, out decimal maxima) ? maxima : 0
@@ -370,6 +406,26 @@ namespace ProyectoEleventa
                     (row.Table.Columns.Contains("existencia_maxima") && row["existencia_maxima"] != DBNull.Value && Convert.ToDecimal(row["existencia_maxima"]) > 0))
                 {
                     this.checkBoxInventario.Checked = true;
+                }
+
+                // Cargar departamento si existe
+                if (row.Table.Columns.Contains("departamento") && row["departamento"] != DBNull.Value)
+                {
+                    int departamentoId = Convert.ToInt32(row["departamento"]);
+
+                    // Buscar el departamento en el combo
+                    for (int i = 0; i < this.comboDepartamento.Items.Count; i++)
+                    {
+                        if (this.comboDepartamento.SelectedIndex >= 0)
+                        {
+                            object itemValue = ((KeyValuePair<int, string>)this.comboDepartamento.Items[i]).Key;
+                            if ((int)itemValue == departamentoId)
+                            {
+                                this.comboDepartamento.SelectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
                 }
 
                 this.labelSection.Text = "EDITAR PRODUCTO";

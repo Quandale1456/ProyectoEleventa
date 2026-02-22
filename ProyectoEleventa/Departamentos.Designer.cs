@@ -29,16 +29,15 @@
         private void InitializeComponent()
         {
             this.labelSection = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtBuscarDepartamento = new System.Windows.Forms.TextBox();
             this.btnNuevoDepartamento = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
+            this.dataGridViewDepartamentos = new System.Windows.Forms.ListBox();
+            this.lblDepartamentos = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.txtNombreDepartamento = new System.Windows.Forms.TextBox();
+            this.btnGuardarDepartamento = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelSection
@@ -52,12 +51,12 @@
             this.labelSection.TabIndex = 2;
             this.labelSection.Text = "DEPARTAMENTOS";
             // 
-            // textBox1
+            // txtBuscarDepartamento
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(281, 20);
-            this.textBox1.TabIndex = 3;
+            this.txtBuscarDepartamento.Location = new System.Drawing.Point(16, 46);
+            this.txtBuscarDepartamento.Name = "txtBuscarDepartamento";
+            this.txtBuscarDepartamento.Size = new System.Drawing.Size(281, 20);
+            this.txtBuscarDepartamento.TabIndex = 3;
             // 
             // btnNuevoDepartamento
             // 
@@ -77,24 +76,24 @@
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dataGridViewDepartamentos
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(16, 73);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(281, 671);
-            this.dataGridView1.TabIndex = 6;
+            this.dataGridViewDepartamentos.FormattingEnabled = true;
+            this.dataGridViewDepartamentos.Location = new System.Drawing.Point(16, 73);
+            this.dataGridViewDepartamentos.Name = "dataGridViewDepartamentos";
+            this.dataGridViewDepartamentos.Size = new System.Drawing.Size(281, 671);
+            this.dataGridViewDepartamentos.TabIndex = 6;
             // 
-            // label1
+            // lblDepartamentos
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.SandyBrown;
-            this.label1.Location = new System.Drawing.Point(303, 73);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(177, 20);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "- Sin Departamento -";
+            this.lblDepartamentos.AutoSize = true;
+            this.lblDepartamentos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold);
+            this.lblDepartamentos.ForeColor = System.Drawing.Color.SandyBrown;
+            this.lblDepartamentos.Location = new System.Drawing.Point(303, 73);
+            this.lblDepartamentos.Name = "lblDepartamentos";
+            this.lblDepartamentos.Size = new System.Drawing.Size(177, 20);
+            this.lblDepartamentos.TabIndex = 7;
+            this.lblDepartamentos.Text = "- Sin Departamento -";
             // 
             // label2
             // 
@@ -106,50 +105,50 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Nombre";
             // 
-            // textBox2
+            // txtNombreDepartamento
             // 
-            this.textBox2.Location = new System.Drawing.Point(323, 116);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(269, 20);
-            this.textBox2.TabIndex = 9;
+            this.txtNombreDepartamento.Location = new System.Drawing.Point(323, 116);
+            this.txtNombreDepartamento.Name = "txtNombreDepartamento";
+            this.txtNombreDepartamento.Size = new System.Drawing.Size(269, 20);
+            this.txtNombreDepartamento.TabIndex = 9;
             // 
-            // button1
+            // btnGuardarDepartamento
             // 
-            this.button1.Location = new System.Drawing.Point(323, 142);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 25);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Guardar Departamento";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnGuardarDepartamento.Location = new System.Drawing.Point(323, 142);
+            this.btnGuardarDepartamento.Name = "btnGuardarDepartamento";
+            this.btnGuardarDepartamento.Size = new System.Drawing.Size(133, 25);
+            this.btnGuardarDepartamento.TabIndex = 10;
+            this.btnGuardarDepartamento.Text = "Guardar Departamento";
+            this.btnGuardarDepartamento.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnCancelar
             // 
-            this.button2.Location = new System.Drawing.Point(462, 142);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(113, 25);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Cancelar";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnCancelar.Location = new System.Drawing.Point(462, 142);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(113, 25);
+            this.btnCancelar.TabIndex = 11;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
             // 
             // Departamentos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1415, 756);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnGuardarDepartamento);
+            this.Controls.Add(this.txtNombreDepartamento);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.lblDepartamentos);
+            this.Controls.Add(this.dataGridViewDepartamentos);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.btnNuevoDepartamento);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtBuscarDepartamento);
             this.Controls.Add(this.labelSection);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Departamentos";
             this.Text = "Departamentos";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Load += new System.EventHandler(this.Departamentos_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,14 +157,14 @@
         #endregion
 
         private System.Windows.Forms.Label labelSection;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtBuscarDepartamento;
         private System.Windows.Forms.Button btnNuevoDepartamento;
         private System.Windows.Forms.Button btnEliminar;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ListBox dataGridViewDepartamentos;
+        private System.Windows.Forms.Label lblDepartamentos;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox txtNombreDepartamento;
+        private System.Windows.Forms.Button btnGuardarDepartamento;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
