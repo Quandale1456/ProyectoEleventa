@@ -104,6 +104,7 @@
     <Compile Include="INSVarios.Designer.cs">
       <DependentUpon>INSVarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Producto.cs" />
     <Compile Include="ModificarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +197,22 @@
     <EmbeddedResource Include="Verificador.resx">
       <DependentUpon>Verificador.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="AJUSTES_FINALES_INVENTARIO.md" />
+    <None Include="BIENVENIDA.md" />
+    <None Include="CHANGELOG.md" />
+    <None Include="COMPILACION_Y_VALIDACION.md" />
+    <None Include="CONFIGURACION_INVENTARIO.md" />
+    <None Include="CORRECCION_COLUMNAS.md" />
+    <None Include="DECISION_ARQUITECTONICA.md" />
+    <None Include="EJEMPLOS_INTEGRACION.md" />
+    <None Include="FUNCIONALIDAD_INVENTARIO.md" />
+    <None Include="FUNCIONALIDAD_MODIFICAR_PRODUCTO.md" />
+    <None Include="GUIA_MODIFICAR_PRODUCTO.md" />
+    <None Include="GUIA_RAPIDA_INTEGRACION.md" />
+    <None Include="INDICE_DOCUMENTACION.md" />
+    <None Include="LISTA_ARCHIVOS.md" />
+    <None Include="MEJORAS_PRODUCTOS.md" />
+    <None Include="MODIFICAR_PRODUCTO_FUNCIONA.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -205,9 +222,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="README_PRODUCTOS.md" />
+    <None Include="RESUMEN_EJECUTIVO.md" />
+    <None Include="RESUMEN_IMPLEMENTACION.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="00_INICIO_AQUI.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

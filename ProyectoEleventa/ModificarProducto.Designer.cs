@@ -1,4 +1,7 @@
-﻿namespace ProyectoEleventa
+﻿using System;
+using System.Windows.Forms;
+
+namespace ProyectoEleventa
 {
     partial class ModificarProducto
     {
@@ -84,6 +87,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ModificarProducto";
             this.Text = "ModificarProducto";
+            this.Load += new System.EventHandler(this.ModificarProducto_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

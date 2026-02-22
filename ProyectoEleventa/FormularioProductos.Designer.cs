@@ -56,11 +56,11 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtExistenciaMinima = new System.Windows.Forms.TextBox();
+            this.txtExistenciaMaxima = new System.Windows.Forms.TextBox();
+            this.txtExistencia = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBoxInventario = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button8 = new System.Windows.Forms.Button();
@@ -193,6 +193,7 @@
             // 
             this.textBoxPrecioVenta.Location = new System.Drawing.Point(109, 200);
             this.textBoxPrecioVenta.Name = "textBoxPrecioVenta";
+            this.textBoxPrecioVenta.ReadOnly = true;
             this.textBoxPrecioVenta.Size = new System.Drawing.Size(100, 20);
             this.textBoxPrecioVenta.TabIndex = 11;
             // 
@@ -293,11 +294,11 @@
             this.groupboxProducto.Controls.Add(this.label7);
             this.groupboxProducto.Controls.Add(this.label6);
             this.groupboxProducto.Controls.Add(this.label5);
-            this.groupboxProducto.Controls.Add(this.textBox4);
-            this.groupboxProducto.Controls.Add(this.textBox3);
-            this.groupboxProducto.Controls.Add(this.textBox2);
+            this.groupboxProducto.Controls.Add(this.txtExistenciaMinima);
+            this.groupboxProducto.Controls.Add(this.txtExistenciaMaxima);
+            this.groupboxProducto.Controls.Add(this.txtExistencia);
             this.groupboxProducto.Controls.Add(this.label4);
-            this.groupboxProducto.Controls.Add(this.checkBox4);
+            this.groupboxProducto.Controls.Add(this.checkBoxInventario);
             this.groupboxProducto.Controls.Add(this.label3);
             this.groupboxProducto.Controls.Add(this.labelSection);
             this.groupboxProducto.Controls.Add(this.checkBox3);
@@ -352,26 +353,26 @@
             this.label5.TabIndex = 30;
             this.label5.Text = "Minimo";
             // 
-            // textBox4
+            // txtExistenciaMinima
             // 
-            this.textBox4.Location = new System.Drawing.Point(126, 390);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 29;
+            this.txtExistenciaMinima.Location = new System.Drawing.Point(126, 390);
+            this.txtExistenciaMinima.Name = "txtExistenciaMinima";
+            this.txtExistenciaMinima.Size = new System.Drawing.Size(100, 20);
+            this.txtExistenciaMinima.TabIndex = 29;
             // 
-            // textBox3
+            // txtExistenciaMaxima
             // 
-            this.textBox3.Location = new System.Drawing.Point(126, 416);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 28;
+            this.txtExistenciaMaxima.Location = new System.Drawing.Point(126, 416);
+            this.txtExistenciaMaxima.Name = "txtExistenciaMaxima";
+            this.txtExistenciaMaxima.Size = new System.Drawing.Size(100, 20);
+            this.txtExistenciaMaxima.TabIndex = 28;
             // 
-            // textBox2
+            // txtExistencia
             // 
-            this.textBox2.Location = new System.Drawing.Point(126, 364);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 27;
+            this.txtExistencia.Location = new System.Drawing.Point(126, 364);
+            this.txtExistencia.Name = "txtExistencia";
+            this.txtExistencia.Size = new System.Drawing.Size(100, 20);
+            this.txtExistencia.TabIndex = 27;
             // 
             // label4
             // 
@@ -382,15 +383,15 @@
             this.label4.TabIndex = 26;
             this.label4.Text = "Hay";
             // 
-            // checkBox4
+            // checkBoxInventario
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(126, 344);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(184, 17);
-            this.checkBox4.TabIndex = 25;
-            this.checkBox4.Text = "Este Producto SI utiliza inventario";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.checkBoxInventario.AutoSize = true;
+            this.checkBoxInventario.Location = new System.Drawing.Point(126, 344);
+            this.checkBoxInventario.Name = "checkBoxInventario";
+            this.checkBoxInventario.Size = new System.Drawing.Size(184, 17);
+            this.checkBoxInventario.TabIndex = 25;
+            this.checkBoxInventario.Text = "Este Producto SI utiliza inventario";
+            this.checkBoxInventario.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -570,11 +571,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtExistenciaMinima;
+        private System.Windows.Forms.TextBox txtExistenciaMaxima;
+        private System.Windows.Forms.TextBox txtExistencia;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBoxInventario;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panelContenido;
     }
