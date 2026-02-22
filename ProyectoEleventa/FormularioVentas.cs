@@ -13,7 +13,6 @@ namespace ProyectoEleventa
     /// </summary>
     public partial class FormularioVentas : Form
     {
-        private int _idClienteSeleccionado = -1;
         private const decimal IMPUESTO = 0.16m; // IVA 16%
         private int _idUsuario = 1; // Usuario por defecto
 

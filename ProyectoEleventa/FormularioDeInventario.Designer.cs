@@ -39,8 +39,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCodigoProducto = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtPrecioVenta = new System.Windows.Forms.TextBox();
+            this.txtAgregar = new System.Windows.Forms.TextBox();
+            this.txtPrecioCosto = new System.Windows.Forms.TextBox();
+            this.txtHay = new System.Windows.Forms.TextBox();
+            this.txtDescripcion = new System.Windows.Forms.TextBox();
+            this.txtPrecioMayoreo = new System.Windows.Forms.TextBox();
+            this.btnAgregarCantidad = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -156,11 +171,143 @@
             this.txtCodigoProducto.Size = new System.Drawing.Size(174, 20);
             this.txtCodigoProducto.TabIndex = 30;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnAgregarCantidad);
+            this.panel2.Controls.Add(this.txtPrecioMayoreo);
+            this.panel2.Controls.Add(this.txtPrecioVenta);
+            this.panel2.Controls.Add(this.txtPrecioCosto);
+            this.panel2.Controls.Add(this.txtHay);
+            this.panel2.Controls.Add(this.txtAgregar);
+            this.panel2.Controls.Add(this.txtDescripcion);
+            this.panel2.Controls.Add(this.label8);
+            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Location = new System.Drawing.Point(16, 172);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(382, 351);
+            this.panel2.TabIndex = 31;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(47, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 16);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Descripcion";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(47, 125);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(84, 16);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Precio Venta";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(47, 92);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 16);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Precio Costo";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(70, 66);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 16);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "Agregar";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(28, 159);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(103, 16);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Precio Mayoreo";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(95, 40);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(32, 16);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Hay";
+            // 
+            // txtPrecioVenta
+            // 
+            this.txtPrecioVenta.Location = new System.Drawing.Point(134, 124);
+            this.txtPrecioVenta.Name = "txtPrecioVenta";
+            this.txtPrecioVenta.Size = new System.Drawing.Size(174, 20);
+            this.txtPrecioVenta.TabIndex = 32;
+            // 
+            // txtAgregar
+            // 
+            this.txtAgregar.Location = new System.Drawing.Point(134, 65);
+            this.txtAgregar.Name = "txtAgregar";
+            this.txtAgregar.Size = new System.Drawing.Size(174, 20);
+            this.txtAgregar.TabIndex = 33;
+            // 
+            // txtPrecioCosto
+            // 
+            this.txtPrecioCosto.Location = new System.Drawing.Point(134, 91);
+            this.txtPrecioCosto.Name = "txtPrecioCosto";
+            this.txtPrecioCosto.Size = new System.Drawing.Size(174, 20);
+            this.txtPrecioCosto.TabIndex = 34;
+            // 
+            // txtHay
+            // 
+            this.txtHay.Location = new System.Drawing.Point(134, 36);
+            this.txtHay.Name = "txtHay";
+            this.txtHay.Size = new System.Drawing.Size(174, 20);
+            this.txtHay.TabIndex = 35;
+            // 
+            // txtDescripcion
+            // 
+            this.txtDescripcion.Location = new System.Drawing.Point(134, 7);
+            this.txtDescripcion.Name = "txtDescripcion";
+            this.txtDescripcion.Size = new System.Drawing.Size(174, 20);
+            this.txtDescripcion.TabIndex = 36;
+            // 
+            // txtPrecioMayoreo
+            // 
+            this.txtPrecioMayoreo.Location = new System.Drawing.Point(134, 158);
+            this.txtPrecioMayoreo.Name = "txtPrecioMayoreo";
+            this.txtPrecioMayoreo.Size = new System.Drawing.Size(174, 20);
+            this.txtPrecioMayoreo.TabIndex = 37;
+            // 
+            // btnAgregarCantidad
+            // 
+            this.btnAgregarCantidad.Location = new System.Drawing.Point(134, 185);
+            this.btnAgregarCantidad.Name = "btnAgregarCantidad";
+            this.btnAgregarCantidad.Size = new System.Drawing.Size(174, 35);
+            this.btnAgregarCantidad.TabIndex = 38;
+            this.btnAgregarCantidad.Text = "Agregar Cantidad a Inventario";
+            this.btnAgregarCantidad.UseVisualStyleBackColor = true;
+            // 
             // FormularioDeInventario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1483, 724);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.txtCodigoProducto);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
@@ -172,6 +319,8 @@
             this.panel1.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,5 +339,19 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCodigoProducto;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnAgregarCantidad;
+        private System.Windows.Forms.TextBox txtPrecioMayoreo;
+        private System.Windows.Forms.TextBox txtPrecioVenta;
+        private System.Windows.Forms.TextBox txtPrecioCosto;
+        private System.Windows.Forms.TextBox txtHay;
+        private System.Windows.Forms.TextBox txtAgregar;
+        private System.Windows.Forms.TextBox txtDescripcion;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
     }
 }

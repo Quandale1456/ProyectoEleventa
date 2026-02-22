@@ -16,6 +16,9 @@ namespace ProyectoEleventa
         public string CodigoProducto { get; private set; }
         public decimal Cantidad { get; private set; }
         public bool Aceptado { get; private set; }
+        private decimal costoTotal = 0;
+        private string nombreProducto = "";
+        private decimal precioUnitario = 0;
 
         public INSVarios()
         {
@@ -77,6 +80,10 @@ namespace ProyectoEleventa
                 e.Handled = true;
             }
         }
+
+        
+
+        
 
         private void Button1_Click(object sender, EventArgs e)
         {
