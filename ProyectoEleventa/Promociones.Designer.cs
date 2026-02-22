@@ -29,29 +29,29 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnNuevoDepartamento = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.labelSection = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.NombrePromocion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CodigoProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Desde = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hasta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrecioPromocion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnNuevaPromocion = new System.Windows.Forms.Button();
+            this.txtNombrePromocion = new System.Windows.Forms.TextBox();
+            this.labelSection = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtCantidadVaya = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txtCodigoBarras = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.CantidadHasta = new System.Windows.Forms.TextBox();
+            this.txtPrecioUnitario = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblPrecioCosto = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblPrecioNormal = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnEliminar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,21 +69,49 @@
             this.dataGridView1.Size = new System.Drawing.Size(1149, 425);
             this.dataGridView1.TabIndex = 16;
             // 
-            // btnNuevoDepartamento
+            // NombrePromocion
             // 
-            this.btnNuevoDepartamento.Location = new System.Drawing.Point(174, 188);
-            this.btnNuevoDepartamento.Name = "btnNuevoDepartamento";
-            this.btnNuevoDepartamento.Size = new System.Drawing.Size(229, 30);
-            this.btnNuevoDepartamento.TabIndex = 14;
-            this.btnNuevoDepartamento.Text = "Guardar Nueva Promocion";
-            this.btnNuevoDepartamento.UseVisualStyleBackColor = true;
+            this.NombrePromocion.HeaderText = "Nombre de la Promocion";
+            this.NombrePromocion.Name = "NombrePromocion";
+            this.NombrePromocion.Width = 200;
             // 
-            // textBox1
+            // CodigoProducto
             // 
-            this.textBox1.Location = new System.Drawing.Point(160, 32);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(281, 20);
-            this.textBox1.TabIndex = 13;
+            this.CodigoProducto.HeaderText = "Codigo Producto";
+            this.CodigoProducto.Name = "CodigoProducto";
+            this.CodigoProducto.Width = 150;
+            // 
+            // Desde
+            // 
+            this.Desde.HeaderText = "Desde";
+            this.Desde.Name = "Desde";
+            // 
+            // Hasta
+            // 
+            this.Hasta.HeaderText = "Hasta";
+            this.Hasta.Name = "Hasta";
+            // 
+            // PrecioPromocion
+            // 
+            this.PrecioPromocion.HeaderText = "Precio Promocion";
+            this.PrecioPromocion.Name = "PrecioPromocion";
+            this.PrecioPromocion.Width = 150;
+            // 
+            // btnNuevaPromocion
+            // 
+            this.btnNuevaPromocion.Location = new System.Drawing.Point(174, 188);
+            this.btnNuevaPromocion.Name = "btnNuevaPromocion";
+            this.btnNuevaPromocion.Size = new System.Drawing.Size(229, 30);
+            this.btnNuevaPromocion.TabIndex = 14;
+            this.btnNuevaPromocion.Text = "Guardar Nueva Promocion";
+            this.btnNuevaPromocion.UseVisualStyleBackColor = true;
+            // 
+            // txtNombrePromocion
+            // 
+            this.txtNombrePromocion.Location = new System.Drawing.Point(160, 32);
+            this.txtNombrePromocion.Name = "txtNombrePromocion";
+            this.txtNombrePromocion.Size = new System.Drawing.Size(281, 20);
+            this.txtNombrePromocion.TabIndex = 13;
             // 
             // labelSection
             // 
@@ -114,12 +142,12 @@
             this.label4.TabIndex = 24;
             this.label4.Text = "Cuando la cantidad vaya desde";
             // 
-            // textBox3
+            // txtCantidadVaya
             // 
-            this.textBox3.Location = new System.Drawing.Point(176, 113);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(90, 20);
-            this.textBox3.TabIndex = 23;
+            this.txtCantidadVaya.Location = new System.Drawing.Point(176, 113);
+            this.txtCantidadVaya.Name = "txtCantidadVaya";
+            this.txtCantidadVaya.Size = new System.Drawing.Size(90, 20);
+            this.txtCantidadVaya.TabIndex = 23;
             // 
             // label5
             // 
@@ -130,12 +158,12 @@
             this.label5.TabIndex = 26;
             this.label5.Text = "Codigo de barras";
             // 
-            // textBox4
+            // txtCodigoBarras
             // 
-            this.textBox4.Location = new System.Drawing.Point(160, 68);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(182, 20);
-            this.textBox4.TabIndex = 25;
+            this.txtCodigoBarras.Location = new System.Drawing.Point(160, 68);
+            this.txtCodigoBarras.Name = "txtCodigoBarras";
+            this.txtCodigoBarras.Size = new System.Drawing.Size(182, 20);
+            this.txtCodigoBarras.TabIndex = 25;
             // 
             // label6
             // 
@@ -146,19 +174,19 @@
             this.label6.TabIndex = 27;
             this.label6.Text = "Hasta";
             // 
-            // textBox5
+            // CantidadHasta
             // 
-            this.textBox5.Location = new System.Drawing.Point(313, 113);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(90, 20);
-            this.textBox5.TabIndex = 28;
+            this.CantidadHasta.Location = new System.Drawing.Point(313, 113);
+            this.CantidadHasta.Name = "CantidadHasta";
+            this.CantidadHasta.Size = new System.Drawing.Size(90, 20);
+            this.CantidadHasta.TabIndex = 28;
             // 
-            // textBox6
+            // txtPrecioUnitario
             // 
-            this.textBox6.Location = new System.Drawing.Point(176, 149);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(90, 20);
-            this.textBox6.TabIndex = 29;
+            this.txtPrecioUnitario.Location = new System.Drawing.Point(176, 149);
+            this.txtPrecioUnitario.Name = "txtPrecioUnitario";
+            this.txtPrecioUnitario.Size = new System.Drawing.Size(90, 20);
+            this.txtPrecioUnitario.TabIndex = 29;
             // 
             // label7
             // 
@@ -169,14 +197,14 @@
             this.label7.TabIndex = 30;
             this.label7.Text = "Usar precio unitario";
             // 
-            // label1
+            // lblPrecioCosto
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(396, 172);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
-            this.label1.TabIndex = 31;
-            this.label1.Text = "$0.00";
+            this.lblPrecioCosto.AutoSize = true;
+            this.lblPrecioCosto.Location = new System.Drawing.Point(396, 172);
+            this.lblPrecioCosto.Name = "lblPrecioCosto";
+            this.lblPrecioCosto.Size = new System.Drawing.Size(34, 13);
+            this.lblPrecioCosto.TabIndex = 31;
+            this.lblPrecioCosto.Text = "$0.00";
             // 
             // label2
             // 
@@ -196,14 +224,14 @@
             this.label8.TabIndex = 33;
             this.label8.Text = "Precio Costo:";
             // 
-            // label9
+            // lblPrecioNormal
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(396, 149);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(34, 13);
-            this.label9.TabIndex = 34;
-            this.label9.Text = "$0.00";
+            this.lblPrecioNormal.AutoSize = true;
+            this.lblPrecioNormal.Location = new System.Drawing.Point(396, 149);
+            this.lblPrecioNormal.Name = "lblPrecioNormal";
+            this.lblPrecioNormal.Size = new System.Drawing.Size(34, 13);
+            this.lblPrecioNormal.TabIndex = 34;
+            this.lblPrecioNormal.Text = "$0.00";
             // 
             // label10
             // 
@@ -216,70 +244,43 @@
             this.label10.TabIndex = 35;
             this.label10.Text = "PROMOCIONES VIGENTES";
             // 
-            // NombrePromocion
+            // btnEliminar
             // 
-            this.NombrePromocion.HeaderText = "Nombre de la Promocion";
-            this.NombrePromocion.Name = "NombrePromocion";
-            this.NombrePromocion.Width = 200;
-            // 
-            // CodigoProducto
-            // 
-            this.CodigoProducto.HeaderText = "Codigo Producto";
-            this.CodigoProducto.Name = "CodigoProducto";
-            this.CodigoProducto.Width = 150;
-            // 
-            // Desde
-            // 
-            this.Desde.HeaderText = "Desde";
-            this.Desde.Name = "Desde";
-            // 
-            // Hasta
-            // 
-            this.Hasta.HeaderText = "Hasta";
-            this.Hasta.Name = "Hasta";
-            // 
-            // PrecioPromocion
-            // 
-            this.PrecioPromocion.HeaderText = "Precio Promocion";
-            this.PrecioPromocion.Name = "PrecioPromocion";
-            this.PrecioPromocion.Width = 150;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1039, 228);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(126, 30);
-            this.button1.TabIndex = 36;
-            this.button1.Text = "Eliminar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnEliminar.Location = new System.Drawing.Point(1039, 228);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(126, 30);
+            this.btnEliminar.TabIndex = 36;
+            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.UseVisualStyleBackColor = true;
             // 
             // Promociones
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1177, 701);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.lblPrecioNormal);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblPrecioCosto);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.txtPrecioUnitario);
+            this.Controls.Add(this.CantidadHasta);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.txtCodigoBarras);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txtCantidadVaya);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btnNuevoDepartamento);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnNuevaPromocion);
+            this.Controls.Add(this.txtNombrePromocion);
             this.Controls.Add(this.labelSection);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Promociones";
             this.Text = "Promociones";
+            this.Load += new System.EventHandler(this.Promociones_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -289,28 +290,28 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button btnNuevoDepartamento;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnNuevaPromocion;
+        private System.Windows.Forms.TextBox txtNombrePromocion;
         private System.Windows.Forms.Label labelSection;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txtCantidadVaya;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox txtCodigoBarras;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox CantidadHasta;
+        private System.Windows.Forms.TextBox txtPrecioUnitario;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPrecioCosto;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblPrecioNormal;
         private System.Windows.Forms.DataGridViewTextBoxColumn NombrePromocion;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodigoProducto;
         private System.Windows.Forms.DataGridViewTextBoxColumn Desde;
         private System.Windows.Forms.DataGridViewTextBoxColumn Hasta;
         private System.Windows.Forms.DataGridViewTextBoxColumn PrecioPromocion;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnEliminar;
     }
 }

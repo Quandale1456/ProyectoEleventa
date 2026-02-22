@@ -62,12 +62,19 @@
     <Compile Include="Data\DBConnection.cs" />
     <Compile Include="Data\DepartamentoDAL.cs" />
     <Compile Include="Data\ProductoDAL.cs" />
+    <Compile Include="Data\PromociónDAL.cs" />
     <Compile Include="Data\VentaDAL.cs" />
     <Compile Include="Departamentos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Departamentos.Designer.cs">
       <DependentUpon>Departamentos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DescuentoVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DescuentoVenta.Designer.cs">
+      <DependentUpon>DescuentoVenta.cs</DependentUpon>
     </Compile>
     <Compile Include="EliminarProducto.cs">
       <SubType>Form</SubType>
@@ -216,6 +223,7 @@
     <EmbeddedResource Include="Verificador.resx">
       <DependentUpon>Verificador.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ACTUALIZACION_BD_CLIENTES.md" />
     <None Include="ACTUALIZACION_DEPARTAMENTOS_INTERFAZ.md" />
     <None Include="ACTUALIZACION_LABEL_DEPARTAMENTO.md" />
     <None Include="AJUSTES_FINALES_INVENTARIO.md" />
@@ -230,9 +238,12 @@
     <None Include="FUNCIONALIDAD_DEPARTAMENTOS.md" />
     <None Include="FUNCIONALIDAD_INVENTARIO.md" />
     <None Include="FUNCIONALIDAD_MODIFICAR_PRODUCTO.md" />
+    <None Include="GUIA_CLIENTES_RAPIDA.md" />
     <None Include="GUIA_MODIFICAR_PRODUCTO.md" />
     <None Include="GUIA_RAPIDA_DEPARTAMENTOS.md" />
     <None Include="GUIA_RAPIDA_INTEGRACION.md" />
+    <None Include="IMPLEMENTACION_CLIENTES.md" />
+    <None Include="INDICE_CLIENTES.md" />
     <None Include="INDICE_DOCUMENTACION.md" />
     <None Include="INTEGRACION_DEPARTAMENTOS_PRODUCTOS.md" />
     <None Include="LISTA_ARCHIVOS.md" />
@@ -248,6 +259,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="README_PRODUCTOS.md" />
+    <None Include="RESUMEN_CLIENTES.md" />
     <None Include="RESUMEN_DEPARTAMENTOS.md" />
     <None Include="RESUMEN_EJECUTIVO.md" />
     <None Include="RESUMEN_IMPLEMENTACION.md" />
@@ -257,6 +269,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="00_INICIO_AQUI.txt" />
+    <Content Include="Scripts_SQL\actualizar_tabla_clientes.sql" />
+    <Content Include="Scripts_SQL\crear_producto_comun.sql" />
+    <Content Include="Scripts_SQL\crear_tabla_clientes.sql" />
+    <Content Include="Scripts_SQL\crear_tabla_promociones.sql" />
+    <Content Include="Scripts_SQL\limpiar_y_actualizar_clientes.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

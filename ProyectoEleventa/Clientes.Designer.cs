@@ -1,4 +1,4 @@
-﻿namespace ProyectoEleventa
+namespace ProyectoEleventa
 {
     partial class Clientes
     {
@@ -29,71 +29,70 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnAdministracionClientes = new System.Windows.Forms.Button();
             this.labelSection = new System.Windows.Forms.Label();
-            this.btnGuardar = new System.Windows.Forms.Button();
+            this.btnEliminar = new System.Windows.Forms.Button();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelClientes = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.button10 = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button13 = new System.Windows.Forms.Button();
+            this.btnGuardar1 = new System.Windows.Forms.Button();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.txtComentarios = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboEstado = new System.Windows.Forms.ComboBox();
+            this.comboMunicipio = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.txtTelefono = new System.Windows.Forms.TextBox();
+            this.txtDomicilio1 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.txtCodigoPostal = new System.Windows.Forms.TextBox();
+            this.txtColonia = new System.Windows.Forms.TextBox();
+            this.txtDomicilio2 = new System.Windows.Forms.TextBox();
+            this.txtApellido = new System.Windows.Forms.TextBox();
+            this.txtNombre = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.listBoxClientes = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelClientes.SuspendLayout();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button6);
+            this.panel1.Controls.Add(this.btnAdministracionClientes);
             this.panel1.Location = new System.Drawing.Point(0, 35);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1446, 43);
             this.panel1.TabIndex = 29;
             // 
-            // button6
+            // btnAdministracionClientes
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button6.Location = new System.Drawing.Point(12, 6);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(139, 30);
-            this.button6.TabIndex = 31;
-            this.button6.Text = "Administracion de clientes";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnAdministracionClientes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAdministracionClientes.Location = new System.Drawing.Point(12, 6);
+            this.btnAdministracionClientes.Name = "btnAdministracionClientes";
+            this.btnAdministracionClientes.Size = new System.Drawing.Size(139, 30);
+            this.btnAdministracionClientes.TabIndex = 31;
+            this.btnAdministracionClientes.Text = "Administracion de clientes";
+            this.btnAdministracionClientes.UseVisualStyleBackColor = true;
             // 
             // labelSection
             // 
@@ -106,15 +105,15 @@
             this.labelSection.TabIndex = 1;
             this.labelSection.Text = "ADMINISTRACION DE CLIENTES";
             // 
-            // btnGuardar
+            // btnEliminar
             // 
-            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnGuardar.Location = new System.Drawing.Point(141, 6);
-            this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(102, 30);
-            this.btnGuardar.TabIndex = 27;
-            this.btnGuardar.Text = "Eliminar";
-            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEliminar.Location = new System.Drawing.Point(141, 6);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(102, 30);
+            this.btnEliminar.TabIndex = 27;
+            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.UseVisualStyleBackColor = true;
             // 
             // panelHeader
             // 
@@ -151,33 +150,25 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.textBox1);
-            this.panel4.Controls.Add(this.dataGridView1);
+            this.panel4.Controls.Add(this.listBoxClientes);
+            this.panel4.Controls.Add(this.txtBuscar);
             this.panel4.Location = new System.Drawing.Point(3, 103);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(455, 602);
             this.panel4.TabIndex = 39;
             // 
-            // textBox1
+            // txtBuscar
             // 
-            this.textBox1.Location = new System.Drawing.Point(22, 12);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(420, 20);
-            this.textBox1.TabIndex = 57;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 47);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(455, 605);
-            this.dataGridView1.TabIndex = 0;
+            this.txtBuscar.Location = new System.Drawing.Point(22, 12);
+            this.txtBuscar.Name = "txtBuscar";
+            this.txtBuscar.Size = new System.Drawing.Size(420, 20);
+            this.txtBuscar.TabIndex = 57;
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.button10);
-            this.panel3.Controls.Add(this.button11);
             this.panel3.Controls.Add(this.btnGuardar);
+            this.panel3.Controls.Add(this.button11);
+            this.panel3.Controls.Add(this.btnEliminar);
             this.panel3.Controls.Add(this.button9);
             this.panel3.Controls.Add(this.button12);
             this.panel3.Location = new System.Drawing.Point(473, 103);
@@ -185,16 +176,16 @@
             this.panel3.Size = new System.Drawing.Size(973, 46);
             this.panel3.TabIndex = 38;
             // 
-            // button10
+            // btnGuardar
             // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button10.Location = new System.Drawing.Point(249, 6);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(113, 30);
-            this.button10.TabIndex = 37;
-            this.button10.Text = "Guardar ";
-            this.button10.UseVisualStyleBackColor = true;
+            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnGuardar.Location = new System.Drawing.Point(249, 6);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(113, 30);
+            this.btnGuardar.TabIndex = 37;
+            this.btnGuardar.Text = "Guardar ";
+            this.btnGuardar.UseVisualStyleBackColor = true;
             // 
             // button11
             // 
@@ -239,26 +230,26 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button13);
+            this.panel2.Controls.Add(this.btnGuardar1);
             this.panel2.Controls.Add(this.checkBox5);
             this.panel2.Controls.Add(this.label19);
             this.panel2.Controls.Add(this.label18);
-            this.panel2.Controls.Add(this.textBox12);
+            this.panel2.Controls.Add(this.txtComentarios);
             this.panel2.Controls.Add(this.label17);
-            this.panel2.Controls.Add(this.comboBox1);
-            this.panel2.Controls.Add(this.comboBox2);
+            this.panel2.Controls.Add(this.comboEstado);
+            this.panel2.Controls.Add(this.comboMunicipio);
             this.panel2.Controls.Add(this.label11);
             this.panel2.Controls.Add(this.label13);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.textBox9);
-            this.panel2.Controls.Add(this.textBox8);
+            this.panel2.Controls.Add(this.txtTelefono);
+            this.panel2.Controls.Add(this.txtDomicilio1);
             this.panel2.Controls.Add(this.label10);
-            this.panel2.Controls.Add(this.textBox7);
-            this.panel2.Controls.Add(this.textBox6);
-            this.panel2.Controls.Add(this.textBox5);
-            this.panel2.Controls.Add(this.textBox10);
-            this.panel2.Controls.Add(this.textBox11);
+            this.panel2.Controls.Add(this.txtCodigoPostal);
+            this.panel2.Controls.Add(this.txtColonia);
+            this.panel2.Controls.Add(this.txtDomicilio2);
+            this.panel2.Controls.Add(this.txtApellido);
+            this.panel2.Controls.Add(this.txtNombre);
             this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.label9);
             this.panel2.Controls.Add(this.label16);
@@ -267,16 +258,16 @@
             this.panel2.Size = new System.Drawing.Size(973, 602);
             this.panel2.TabIndex = 34;
             // 
-            // button13
+            // btnGuardar1
             // 
-            this.button13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button13.Location = new System.Drawing.Point(408, 157);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(113, 30);
-            this.button13.TabIndex = 38;
-            this.button13.Text = "Guardar ";
-            this.button13.UseVisualStyleBackColor = true;
+            this.btnGuardar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnGuardar1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnGuardar1.Location = new System.Drawing.Point(408, 181);
+            this.btnGuardar1.Name = "btnGuardar1";
+            this.btnGuardar1.Size = new System.Drawing.Size(113, 30);
+            this.btnGuardar1.TabIndex = 38;
+            this.btnGuardar1.Text = "Guardar ";
+            this.btnGuardar1.UseVisualStyleBackColor = true;
             // 
             // checkBox5
             // 
@@ -308,42 +299,42 @@
             this.label18.TabIndex = 55;
             this.label18.Text = "Notas / Comentarios";
             // 
-            // textBox12
+            // txtComentarios
             // 
-            this.textBox12.Location = new System.Drawing.Point(117, 415);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(240, 20);
-            this.textBox12.TabIndex = 54;
+            this.txtComentarios.Location = new System.Drawing.Point(117, 415);
+            this.txtComentarios.Name = "txtComentarios";
+            this.txtComentarios.Size = new System.Drawing.Size(240, 20);
+            this.txtComentarios.TabIndex = 54;
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(7, 339);
+            this.label17.Location = new System.Drawing.Point(10, 339);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(96, 13);
             this.label17.TabIndex = 53;
             this.label17.Text = "Municipio / Estado";
             // 
-            // comboBox1
+            // comboEstado
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Location = new System.Drawing.Point(233, 336);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(113, 21);
-            this.comboBox1.TabIndex = 39;
+            this.comboEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboEstado.Location = new System.Drawing.Point(244, 336);
+            this.comboEstado.Name = "comboEstado";
+            this.comboEstado.Size = new System.Drawing.Size(113, 21);
+            this.comboEstado.TabIndex = 39;
             // 
-            // comboBox2
+            // comboMunicipio
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.Location = new System.Drawing.Point(109, 336);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(118, 21);
-            this.comboBox2.TabIndex = 40;
+            this.comboMunicipio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboMunicipio.Location = new System.Drawing.Point(117, 336);
+            this.comboMunicipio.Name = "comboMunicipio";
+            this.comboMunicipio.Size = new System.Drawing.Size(118, 21);
+            this.comboMunicipio.TabIndex = 40;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 263);
+            this.label11.Location = new System.Drawing.Point(48, 266);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(55, 13);
             this.label11.TabIndex = 41;
@@ -352,7 +343,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 378);
+            this.label13.Location = new System.Drawing.Point(32, 378);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(71, 13);
             this.label13.TabIndex = 45;
@@ -361,7 +352,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(7, 198);
+            this.label14.Location = new System.Drawing.Point(54, 198);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(49, 13);
             this.label14.TabIndex = 47;
@@ -370,74 +361,74 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 296);
+            this.label12.Location = new System.Drawing.Point(54, 303);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(42, 13);
             this.label12.TabIndex = 43;
             this.label12.Text = "Colonia";
             // 
-            // textBox9
+            // txtTelefono
             // 
-            this.textBox9.Location = new System.Drawing.Point(101, 193);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(240, 20);
-            this.textBox9.TabIndex = 48;
+            this.txtTelefono.Location = new System.Drawing.Point(117, 195);
+            this.txtTelefono.Name = "txtTelefono";
+            this.txtTelefono.Size = new System.Drawing.Size(240, 20);
+            this.txtTelefono.TabIndex = 48;
             // 
-            // textBox8
+            // txtDomicilio1
             // 
-            this.textBox8.Location = new System.Drawing.Point(101, 231);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(240, 20);
-            this.textBox8.TabIndex = 46;
+            this.txtDomicilio1.Location = new System.Drawing.Point(117, 230);
+            this.txtDomicilio1.Name = "txtDomicilio1";
+            this.txtDomicilio1.Size = new System.Drawing.Size(240, 20);
+            this.txtDomicilio1.TabIndex = 46;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(7, 237);
+            this.label10.Location = new System.Drawing.Point(48, 233);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(55, 13);
             this.label10.TabIndex = 39;
             this.label10.Text = "Domicilio1";
             // 
-            // textBox7
+            // txtCodigoPostal
             // 
-            this.textBox7.Location = new System.Drawing.Point(101, 375);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(240, 20);
-            this.textBox7.TabIndex = 44;
+            this.txtCodigoPostal.Location = new System.Drawing.Point(117, 375);
+            this.txtCodigoPostal.Name = "txtCodigoPostal";
+            this.txtCodigoPostal.Size = new System.Drawing.Size(240, 20);
+            this.txtCodigoPostal.TabIndex = 44;
             // 
-            // textBox6
+            // txtColonia
             // 
-            this.textBox6.Location = new System.Drawing.Point(101, 292);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(240, 20);
-            this.textBox6.TabIndex = 42;
+            this.txtColonia.Location = new System.Drawing.Point(117, 296);
+            this.txtColonia.Name = "txtColonia";
+            this.txtColonia.Size = new System.Drawing.Size(240, 20);
+            this.txtColonia.TabIndex = 42;
             // 
-            // textBox5
+            // txtDomicilio2
             // 
-            this.textBox5.Location = new System.Drawing.Point(101, 260);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(240, 20);
-            this.textBox5.TabIndex = 40;
+            this.txtDomicilio2.Location = new System.Drawing.Point(117, 263);
+            this.txtDomicilio2.Name = "txtDomicilio2";
+            this.txtDomicilio2.Size = new System.Drawing.Size(240, 20);
+            this.txtDomicilio2.TabIndex = 40;
             // 
-            // textBox10
+            // txtApellido
             // 
-            this.textBox10.Location = new System.Drawing.Point(101, 157);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(240, 20);
-            this.textBox10.TabIndex = 50;
+            this.txtApellido.Location = new System.Drawing.Point(117, 157);
+            this.txtApellido.Name = "txtApellido";
+            this.txtApellido.Size = new System.Drawing.Size(240, 20);
+            this.txtApellido.TabIndex = 50;
             // 
-            // textBox11
+            // txtNombre
             // 
-            this.textBox11.Location = new System.Drawing.Point(101, 122);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(240, 20);
-            this.textBox11.TabIndex = 52;
+            this.txtNombre.Location = new System.Drawing.Point(117, 122);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(240, 20);
+            this.txtNombre.TabIndex = 52;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(4, 160);
+            this.label15.Location = new System.Drawing.Point(54, 160);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(49, 13);
             this.label15.TabIndex = 49;
@@ -457,11 +448,19 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(7, 125);
+            this.label16.Location = new System.Drawing.Point(59, 129);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(44, 13);
             this.label16.TabIndex = 51;
             this.label16.Text = "Nombre";
+            // 
+            // listBoxClientes
+            // 
+            this.listBoxClientes.FormattingEnabled = true;
+            this.listBoxClientes.Location = new System.Drawing.Point(0, 38);
+            this.listBoxClientes.Name = "listBoxClientes";
+            this.listBoxClientes.Size = new System.Drawing.Size(455, 563);
+            this.listBoxClientes.TabIndex = 57;
             // 
             // Clientes
             // 
@@ -474,6 +473,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Clientes";
             this.Text = "Clientes";
+            this.Load += new System.EventHandler(this.Clientes_Load);
             this.panel1.ResumeLayout(false);
             this.panelHeader.ResumeLayout(false);
             this.panelHeader.PerformLayout();
@@ -481,7 +481,6 @@
             this.panelClientes.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -492,44 +491,44 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnAdministracionClientes;
         private System.Windows.Forms.Label labelSection;
-        private System.Windows.Forms.Button btnGuardar;
+        private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Panel panelClientes;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox txtCodigoPostal;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox txtColonia;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtDomicilio2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox txtTelefono;
+        private System.Windows.Forms.TextBox txtDomicilio1;
+        private System.Windows.Forms.TextBox txtApellido;
+        private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.TextBox txtBuscar;
+        private System.Windows.Forms.Button btnGuardar1;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox txtComentarios;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboEstado;
+        private System.Windows.Forms.ComboBox comboMunicipio;
+        private System.Windows.Forms.ListBox listBoxClientes;
     }
 }

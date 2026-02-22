@@ -52,47 +52,87 @@ namespace ProyectoEleventa.Data
                 {
                     if (row.Cells[0].Value != null)
                     {
-                        int idProducto = Convert.ToInt32(row.Cells[0].Value);
-                        decimal cantidad = Convert.ToDecimal(row.Cells[2].Value);
-                        decimal precioUnitario = Convert.ToDecimal(row.Cells[3].Value);
-                        decimal descuentoLinea = Convert.ToDecimal(row.Cells[5].Value ?? 0);
-                        decimal subtotalLinea = Convert.ToDecimal(row.Cells[6].Value);
+                        // Estructura de columnas: 0=código, 1=nombre, 2=precio, 3=cantidad, 4=importe, 5=existencia
+                        string codigo = row.Cells[0].Value.ToString();
+                        string nombre = row.Cells[1].Value?.ToString() ?? "";
+                        decimal cantidad = Convert.ToDecimal(row.Cells[3].Value);
+                        decimal precioUnitario = Convert.ToDecimal(row.Cells[2].Value);
+                        decimal importeLinea = Convert.ToDecimal(row.Cells[4].Value);
+                        decimal descuentoLinea = 0;
 
-                        // INSERTAR EN DETALLE_VENTAS
-                        string queryDetalle = @"
-                            INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, descuento, subtotal)
-                            VALUES (@idVenta, @idProducto, @cantidad, @precioUnitario, @descuentoLinea, @subtotalLinea)";
+                        // Verificar si es un producto común (código "PC")
+                        if (codigo.Equals("PC", StringComparison.OrdinalIgnoreCase))
+                        {
+                            // PRODUCTO COMÚN - Obtener el ID del producto especial "PRODUCTO COMÚN"
+                            DataRow productoComun = ProductoDAL.BuscarPorCodigo("PC");
+                            int idProductoComun = productoComun != null ? 
+                                Convert.ToInt32(productoComun["id_producto"]) : 1;
 
-                        SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conn, trans);
-                        cmdDetalle.Parameters.AddWithValue("@idVenta", idVenta);
-                        cmdDetalle.Parameters.AddWithValue("@idProducto", idProducto);
-                        cmdDetalle.Parameters.AddWithValue("@cantidad", cantidad);
-                        cmdDetalle.Parameters.AddWithValue("@precioUnitario", precioUnitario);
-                        cmdDetalle.Parameters.AddWithValue("@descuentoLinea", descuentoLinea);
-                        cmdDetalle.Parameters.AddWithValue("@subtotalLinea", subtotalLinea);
-                        cmdDetalle.ExecuteNonQuery();
+                            // INSERTAR EN DETALLE_VENTAS para producto común
+                            string queryDetalleComun = @"
+                                INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, descuento, subtotal)
+                                VALUES (@idVenta, @idProducto, @cantidad, @precioUnitario, @descuentoLinea, @subtotalLinea)";
 
-                        // ACTUALIZAR EXISTENCIA DEL PRODUCTO
-                        string queryActualizarExistencia = @"
-                            UPDATE productos
-                            SET existencia = existencia - @cantidad
-                            WHERE id_producto = @idProducto";
+                            SqlCommand cmdDetalleComun = new SqlCommand(queryDetalleComun, conn, trans);
+                            cmdDetalleComun.Parameters.AddWithValue("@idVenta", idVenta);
+                            cmdDetalleComun.Parameters.AddWithValue("@idProducto", idProductoComun);
+                            cmdDetalleComun.Parameters.AddWithValue("@cantidad", cantidad);
+                            cmdDetalleComun.Parameters.AddWithValue("@precioUnitario", precioUnitario);
+                            cmdDetalleComun.Parameters.AddWithValue("@descuentoLinea", descuentoLinea);
+                            cmdDetalleComun.Parameters.AddWithValue("@subtotalLinea", importeLinea);
+                            cmdDetalleComun.ExecuteNonQuery();
 
-                        SqlCommand cmdActualizar = new SqlCommand(queryActualizarExistencia, conn, trans);
-                        cmdActualizar.Parameters.AddWithValue("@cantidad", cantidad);
-                        cmdActualizar.Parameters.AddWithValue("@idProducto", idProducto);
-                        cmdActualizar.ExecuteNonQuery();
+                            // No actualizar existencia para productos comunes
+                        }
+                        else
+                        {
+                            // PRODUCTO REGISTRADO - Proceso normal
+                            // Obtener el ID del producto por código
+                            DataRow producto = ProductoDAL.BuscarPorCodigo(codigo);
 
-                        // REGISTRAR MOVIMIENTO DE INVENTARIO
-                        string queryMovimiento = @"
-                            INSERT INTO movimientos_inventario (id_producto, tipo_movimiento, cantidad, fecha_movimiento, referencia)
-                            VALUES (@idProducto, 'Salida', @cantidad, GETDATE(), 'VENTA_' + CAST(@idVenta AS VARCHAR))";
+                            if (producto == null)
+                            {
+                                throw new Exception($"Producto con código '{codigo}' no encontrado");
+                            }
 
-                        SqlCommand cmdMovimiento = new SqlCommand(queryMovimiento, conn, trans);
-                        cmdMovimiento.Parameters.AddWithValue("@idProducto", idProducto);
-                        cmdMovimiento.Parameters.AddWithValue("@cantidad", cantidad);
-                        cmdMovimiento.Parameters.AddWithValue("@idVenta", idVenta);
-                        cmdMovimiento.ExecuteNonQuery();
+                            int idProducto = Convert.ToInt32(producto["id_producto"]);
+
+                            // INSERTAR EN DETALLE_VENTAS
+                            string queryDetalle = @"
+                                INSERT INTO detalle_ventas (id_venta, id_producto, cantidad, precio_unitario, descuento, subtotal)
+                                VALUES (@idVenta, @idProducto, @cantidad, @precioUnitario, @descuentoLinea, @subtotalLinea)";
+
+                            SqlCommand cmdDetalle = new SqlCommand(queryDetalle, conn, trans);
+                            cmdDetalle.Parameters.AddWithValue("@idVenta", idVenta);
+                            cmdDetalle.Parameters.AddWithValue("@idProducto", idProducto);
+                            cmdDetalle.Parameters.AddWithValue("@cantidad", cantidad);
+                            cmdDetalle.Parameters.AddWithValue("@precioUnitario", precioUnitario);
+                            cmdDetalle.Parameters.AddWithValue("@descuentoLinea", descuentoLinea);
+                            cmdDetalle.Parameters.AddWithValue("@subtotalLinea", importeLinea);
+                            cmdDetalle.ExecuteNonQuery();
+
+                            // ACTUALIZAR EXISTENCIA DEL PRODUCTO
+                            string queryActualizarExistencia = @"
+                                UPDATE productos
+                                SET existencia = existencia - @cantidad
+                                WHERE id_producto = @idProducto";
+
+                            SqlCommand cmdActualizar = new SqlCommand(queryActualizarExistencia, conn, trans);
+                            cmdActualizar.Parameters.AddWithValue("@cantidad", cantidad);
+                            cmdActualizar.Parameters.AddWithValue("@idProducto", idProducto);
+                            cmdActualizar.ExecuteNonQuery();
+
+                            // REGISTRAR MOVIMIENTO DE INVENTARIO
+                            string queryMovimiento = @"
+                                INSERT INTO movimientos_inventario (id_producto, tipo_movimiento, cantidad, fecha_movimiento, referencia)
+                                VALUES (@idProducto, 'Salida', @cantidad, GETDATE(), 'VENTA_' + CAST(@idVenta AS VARCHAR))";
+
+                            SqlCommand cmdMovimiento = new SqlCommand(queryMovimiento, conn, trans);
+                            cmdMovimiento.Parameters.AddWithValue("@idProducto", idProducto);
+                            cmdMovimiento.Parameters.AddWithValue("@cantidad", cantidad);
+                            cmdMovimiento.Parameters.AddWithValue("@idVenta", idVenta);
+                            cmdMovimiento.ExecuteNonQuery();
+                        }
                     }
                 }
 
@@ -167,6 +207,29 @@ namespace ProyectoEleventa.Data
 
             object result = DBConnection.ExecuteScalar(query, parameters);
             return result != null && result != DBNull.Value ? Convert.ToDecimal(result) : 0;
+        }
+
+        /// <summary>
+        /// Obtiene el detalle de todas las ventas de un período.
+        /// </summary>
+        public static DataTable ObtenerDetalleVentasPorPeriodo(DateTime desde, DateTime hasta)
+        {
+            string query = @"
+                SELECT p.codigo_barras, p.nombre, dv.cantidad, dv.precio_unitario, d.nombre as departamento
+                FROM detalle_ventas dv
+                JOIN productos p ON dv.id_producto = p.id_producto
+                JOIN departamentos d ON p.departamento = d.id_departamento
+                JOIN ventas v ON dv.id_venta = v.id_venta
+                WHERE v.fecha_venta BETWEEN @desde AND @hasta
+                ORDER BY v.fecha_venta DESC, p.nombre";
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@desde", desde),
+                new SqlParameter("@hasta", hasta)
+            };
+
+            return DBConnection.ExecuteQuery(query, parameters);
         }
     }
 }

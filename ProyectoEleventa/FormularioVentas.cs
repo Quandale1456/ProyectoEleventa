@@ -62,22 +62,20 @@ namespace ProyectoEleventa
         private void ConfigurarDataGridView()
         {
             dataGridView1.Columns.Clear();
-            dataGridView1.Columns.Add("idProducto", "ID");
-            dataGridView1.Columns.Add("nombre", "Producto");
+            dataGridView1.Columns.Add("codigo", "Código de Barras");
+            dataGridView1.Columns.Add("nombre", "Descripción del Producto");
+            dataGridView1.Columns.Add("precio", "Precio Venta");
             dataGridView1.Columns.Add("cantidad", "Cant.");
-            dataGridView1.Columns.Add("precio", "Precio Unit.");
             dataGridView1.Columns.Add("importe", "Importe");
-            dataGridView1.Columns.Add("descuento", "Desc.");
-            dataGridView1.Columns.Add("subtotal", "Subtotal");
+            dataGridView1.Columns.Add("existencia", "Existencia");
 
             // Ancho de columnas
-            dataGridView1.Columns[0].Width = 50;
-            dataGridView1.Columns[1].Width = 200;
-            dataGridView1.Columns[2].Width = 60;
-            dataGridView1.Columns[3].Width = 80;
-            dataGridView1.Columns[4].Width = 80;
-            dataGridView1.Columns[5].Width = 70;
-            dataGridView1.Columns[6].Width = 80;
+            dataGridView1.Columns[0].Width = 100;
+            dataGridView1.Columns[1].Width = 180;
+            dataGridView1.Columns[2].Width = 90;
+            dataGridView1.Columns[3].Width = 60;
+            dataGridView1.Columns[4].Width = 100;
+            dataGridView1.Columns[5].Width = 80;
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.ReadOnly = true;
@@ -190,6 +188,7 @@ namespace ProyectoEleventa
 
                 // Extraer datos del producto
                 int id = Convert.ToInt32(producto["id_producto"]);
+                string codigo = producto["codigo_barras"].ToString();
                 string nombre = producto["nombre"].ToString();
                 decimal precioVenta = Convert.ToDecimal(producto["precio_venta"]);
                 decimal existencia = Convert.ToDecimal(producto["existencia"]);
@@ -207,20 +206,17 @@ namespace ProyectoEleventa
                     return;
                 }
 
-                // Calcular totales
+                // Calcular importe
                 decimal importeLinea = cantidad * precioVenta;
-                decimal descuentoLinea = 0;
-                decimal subtotalLinea = importeLinea - descuentoLinea;
 
                 // Agregar al DataGridView
                 dataGridView1.Rows.Add(
-                    id,
+                    codigo,
                     nombre,
-                    cantidad,
                     precioVenta,
+                    cantidad,
                     importeLinea,
-                    descuentoLinea,
-                    subtotalLinea
+                    existencia
                 );
 
                 // Recalcular totales
@@ -271,12 +267,12 @@ namespace ProyectoEleventa
             {
                 decimal subtotalGeneral = 0;
 
-                // Sumar todos los subtotales
+                // Sumar todos los importes (columna 4)
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
-                    if (row.Cells[6].Value != null)
+                    if (row.Cells[4].Value != null)
                     {
-                        subtotalGeneral += Convert.ToDecimal(row.Cells[6].Value);
+                        subtotalGeneral += Convert.ToDecimal(row.Cells[4].Value);
                     }
                 }
 
@@ -392,14 +388,132 @@ namespace ProyectoEleventa
 
         private void AbrirINSVarios()
         {
-            INSVarios formINSVarios = new INSVarios();
-            formINSVarios.ShowDialog();
+            try
+            {
+                INSVarios formINSVarios = new INSVarios();
+                DialogResult resultado = formINSVarios.ShowDialog();
+
+                // Si el usuario aceptó
+                if (resultado == DialogResult.OK && formINSVarios.Aceptado)
+                {
+                    string codigo = formINSVarios.CodigoProducto;
+                    decimal cantidadAdicional = formINSVarios.Cantidad;
+
+                    // Buscar el producto
+                    DataRow producto = ProductoDAL.BuscarPorCodigo(codigo);
+
+                    if (producto != null)
+                    {
+                        int id = Convert.ToInt32(producto["id_producto"]);
+                        string nombre = producto["nombre"].ToString();
+                        decimal precioVenta = Convert.ToDecimal(producto["precio_venta"]);
+                        decimal existencia = Convert.ToDecimal(producto["existencia"]);
+
+                        // Validar que haya existencia suficiente
+                        if (cantidadAdicional > existencia)
+                        {
+                            MessageBox.Show($"Stock insuficiente.\nProducto: {nombre}\nDisponible: {existencia}", 
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        // Buscar si el producto ya está en el ticket
+                        bool productoEncontrado = false;
+                        foreach (DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            if (row.Cells[0].Value?.ToString() == codigo)
+                            {
+                                // Producto ya existe, aumentar cantidad
+                                decimal cantidadActual = Convert.ToDecimal(row.Cells[3].Value);
+                                decimal nuevaCantidad = cantidadActual + cantidadAdicional;
+
+                                if (nuevaCantidad > existencia)
+                                {
+                                    MessageBox.Show($"Stock insuficiente para la cantidad solicitada.\nDisponible: {existencia}", 
+                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+
+                                // Actualizar fila
+                                decimal nuevoImporte = nuevaCantidad * precioVenta;
+                                row.Cells[3].Value = nuevaCantidad;
+                                row.Cells[4].Value = nuevoImporte;
+
+                                productoEncontrado = true;
+                                break;
+                            }
+                        }
+
+                        // Si no existe, agregar nueva fila
+                        if (!productoEncontrado)
+                        {
+                            decimal importeLinea = cantidadAdicional * precioVenta;
+
+                            dataGridView1.Rows.Add(
+                                codigo,
+                                nombre,
+                                precioVenta,
+                                cantidadAdicional,
+                                importeLinea,
+                                existencia
+                            );
+                        }
+
+                        // Recalcular totales
+                        RecalcularTotales();
+
+                        MessageBox.Show($"Producto agregado exitosamente.\n{nombre} x {cantidadAdicional}", 
+                            "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Producto no encontrado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AbrirProductoComun()
         {
-            ProductoComun formProductoComun = new ProductoComun();
-            formProductoComun.ShowDialog();
+            try
+            {
+                ProductoComun formProductoComun = new ProductoComun();
+                DialogResult resultado = formProductoComun.ShowDialog();
+
+                // Si el usuario aceptó
+                if (resultado == DialogResult.OK && formProductoComun.Aceptado)
+                {
+                    string descripcion = formProductoComun.Descripcion;
+                    decimal cantidad = formProductoComun.Cantidad;
+                    decimal precio = formProductoComun.Precio;
+                    decimal importe = cantidad * precio;
+
+                    // Agregar el producto común al DataGridView
+                    // Usamos el código "PC" (Producto Común) para identificarlo
+                    dataGridView1.Rows.Add(
+                        "PC", // Código (Producto Común)
+                        descripcion,
+                        precio,
+                        cantidad,
+                        importe,
+                        0 // Sin existencia registrada
+                    );
+
+                    // Recalcular totales
+                    RecalcularTotales();
+
+                    MessageBox.Show($"Producto común agregado exitosamente.\n{descripcion} x {cantidad} @ ${precio}", 
+                        "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void AbrirEntradasEfectivo()
