@@ -494,5 +494,15 @@ namespace ProyectoEleventa
         }
 
         #endregion
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupboxProducto_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

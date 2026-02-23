@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AjustesInv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AjustesInv.Designer.cs">
+      <DependentUpon>AjustesInv.cs</DependentUpon>
+    </Compile>
     <Compile Include="BusquedaProductos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +175,9 @@
     <Compile Include="Verificador.Designer.cs">
       <DependentUpon>Verificador.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AjustesInv.resx">
+      <DependentUpon>AjustesInv.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BusquedaProductos.resx">
       <DependentUpon>BusquedaProductos.cs</DependentUpon>
     </EmbeddedResource>
@@ -235,10 +244,6 @@
     <EmbeddedResource Include="Verificador.resx">
       <DependentUpon>Verificador.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="ACTUALIZACION_BD_CLIENTES.md" />
-    <None Include="ACTUALIZACION_DEPARTAMENTOS_INTERFAZ.md" />
-    <None Include="ACTUALIZACION_LABEL_DEPARTAMENTO.md" />
-    <None Include="AJUSTES_FINALES_INVENTARIO.md" />
     <None Include="BIENVENIDA.md" />
     <None Include="CAMBIO_ELIMINACION_FECHA.md" />
     <None Include="CHANGELOG.md" />
@@ -280,7 +285,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="00_INICIO_AQUI.txt" />
     <Content Include="Scripts_SQL\actualizar_tabla_clientes.sql" />
     <Content Include="Scripts_SQL\crear_producto_comun.sql" />
     <Content Include="Scripts_SQL\crear_tabla_clientes.sql" />

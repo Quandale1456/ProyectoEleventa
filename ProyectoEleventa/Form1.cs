@@ -22,6 +22,8 @@ namespace ProyectoEleventa
             this.btnVentas.Click += new System.EventHandler(this.btnVentas_Click);
             // Suscribir evento del botón Productos
             this.btnProductos.Click += new System.EventHandler(this.btnProductos_Click);
+            // Suscribir evento del botón Inventario
+            this.btnInventario.Click += new System.EventHandler(this.btnInventario_Click);
             // Abrir FormularioVentas al iniciar
             OpenChildForm(new FormularioVentas());
         }
@@ -55,6 +57,11 @@ namespace ProyectoEleventa
         private void btnProductos_Click(object sender, EventArgs e)
         {
             OpenChildForm(new FormularioProductos());
+        }
+
+        private void btnInventario_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FormularioDeInventario());
         }
 
         private void panelContenedor_Paint(object sender, PaintEventArgs e)

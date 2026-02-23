@@ -325,6 +325,7 @@
             this.groupboxProducto.TabIndex = 24;
             this.groupboxProducto.TabStop = false;
             this.groupboxProducto.Text = "Producto";
+            this.groupboxProducto.Enter += new System.EventHandler(this.groupboxProducto_Enter);
             // 
             // label7
             // 
@@ -479,6 +480,7 @@
             this.button4.TabIndex = 29;
             this.button4.Text = "Eliminar";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 

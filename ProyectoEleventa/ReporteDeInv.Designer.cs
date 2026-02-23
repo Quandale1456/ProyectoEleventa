@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.Codigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Descripcion = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Costo = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,6 +36,13 @@
             this.Existencia = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InvMinimo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.InvMaximo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,6 +62,41 @@
             this.dataGridView1.Size = new System.Drawing.Size(1268, 569);
             this.dataGridView1.TabIndex = 7;
             // 
+            // Codigo
+            // 
+            this.Codigo.HeaderText = "Codigo";
+            this.Codigo.Name = "Codigo";
+            // 
+            // Descripcion
+            // 
+            this.Descripcion.HeaderText = "Descripcion del Producto";
+            this.Descripcion.Name = "Descripcion";
+            // 
+            // Costo
+            // 
+            this.Costo.HeaderText = "Costo";
+            this.Costo.Name = "Costo";
+            // 
+            // PrecioVenta
+            // 
+            this.PrecioVenta.HeaderText = "Precio Venta";
+            this.PrecioVenta.Name = "PrecioVenta";
+            // 
+            // Existencia
+            // 
+            this.Existencia.HeaderText = "Existencia";
+            this.Existencia.Name = "Existencia";
+            // 
+            // InvMinimo
+            // 
+            this.InvMinimo.HeaderText = "Inv. Minimo";
+            this.InvMinimo.Name = "InvMinimo";
+            // 
+            // InvMaximo
+            // 
+            this.InvMaximo.HeaderText = "InvMaximo";
+            this.InvMaximo.Name = "InvMaximo";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -80,9 +115,9 @@
             this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
             this.label1.Location = new System.Drawing.Point(11, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(362, 24);
+            this.label1.Size = new System.Drawing.Size(273, 24);
             this.label1.TabIndex = 5;
-            this.label1.Text = "PRODUCTOS BAJO EN INVENTARIO";
+            this.label1.Text = "REPORTE DE INVENTARIO";
             // 
             // label3
             // 
@@ -133,41 +168,6 @@
             this.comboBox1.Size = new System.Drawing.Size(230, 21);
             this.comboBox1.TabIndex = 12;
             this.comboBox1.Text = "- Todos -";
-            // 
-            // Codigo
-            // 
-            this.Codigo.HeaderText = "Codigo";
-            this.Codigo.Name = "Codigo";
-            // 
-            // Descripcion
-            // 
-            this.Descripcion.HeaderText = "Descripcion del Producto";
-            this.Descripcion.Name = "Descripcion";
-            // 
-            // Costo
-            // 
-            this.Costo.HeaderText = "Costo";
-            this.Costo.Name = "Costo";
-            // 
-            // PrecioVenta
-            // 
-            this.PrecioVenta.HeaderText = "Precio Venta";
-            this.PrecioVenta.Name = "PrecioVenta";
-            // 
-            // Existencia
-            // 
-            this.Existencia.HeaderText = "Existencia";
-            this.Existencia.Name = "Existencia";
-            // 
-            // InvMinimo
-            // 
-            this.InvMinimo.HeaderText = "Inv. Minimo";
-            this.InvMinimo.Name = "InvMinimo";
-            // 
-            // InvMaximo
-            // 
-            this.InvMaximo.HeaderText = "InvMaximo";
-            this.InvMaximo.Name = "InvMaximo";
             // 
             // ReporteDeInv
             // 
