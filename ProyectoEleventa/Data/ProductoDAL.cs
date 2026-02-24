@@ -146,7 +146,9 @@ namespace ProyectoEleventa.Data
         {
             string query = @"
                 SELECT id_producto, codigo_barras, nombre, precio_compra, 
-                       porcentaje_ganancia, precio_venta, existencia, departamento
+                       porcentaje_ganancia, precio_venta, existencia, departamento,
+                       ISNULL(existencia_minima, 0) as existencia_minima,
+                       ISNULL(existencia_maxima, 0) as existencia_maxima
                 FROM productos
                 WHERE estado = 1
                 ORDER BY nombre";
@@ -298,6 +300,76 @@ namespace ProyectoEleventa.Data
 
             object result = DBConnection.ExecuteScalar(query, parameters);
             return result != null ? result.ToString() : "";
+        }
+
+        /// <summary>
+        /// Actualiza el stock mínimo y máximo de un producto.
+        /// </summary>
+        public static bool ActualizarStockMinMax(int idProducto, decimal existenciaMinima, decimal existenciaMaxima)
+        {
+            try
+            {
+                string query = @"
+                    UPDATE productos
+                    SET existencia_minima = @existenciaMinima,
+                        existencia_maxima = @existenciaMaxima
+                    WHERE id_producto = @id AND estado = 1";
+
+                SqlParameter[] parameters = new SqlParameter[]
+                {
+                    new SqlParameter("@id", idProducto),
+                    new SqlParameter("@existenciaMinima", existenciaMinima),
+                    new SqlParameter("@existenciaMaxima", existenciaMaxima)
+                };
+
+                int resultado = DBConnection.ExecuteNonQuery(query, parameters);
+                return resultado > 0;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show($"Error al actualizar stock mín/máx: {ex.Message}", 
+                    "Error", System.Windows.Forms.MessageBoxButtons.OK, 
+                    System.Windows.Forms.MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Obtiene todos los departamentos únicos de los productos.
+        /// </summary>
+        public static DataTable ObtenerDepartamentosUnicos()
+        {
+            string query = @"
+                SELECT DISTINCT departamento
+                FROM productos
+                WHERE estado = 1 AND departamento IS NOT NULL
+                ORDER BY departamento";
+
+            return DBConnection.ExecuteQuery(query);
+        }
+
+        /// <summary>
+        /// Obtiene todos los productos que están por debajo de su stock mínimo.
+        /// </summary>
+        public static DataTable ObtenerProductosBajoInvMinimo()
+        {
+            string query = @"
+                SELECT 
+                    id_producto,
+                    codigo_barras,
+                    nombre,
+                    precio_venta,
+                    departamento,
+                    existencia,
+                    ISNULL(existencia_minima, 0) as existencia_minima,
+                    ISNULL(existencia_maxima, 0) as existencia_maxima
+                FROM productos
+                WHERE estado = 1 
+                  AND existencia_minima IS NOT NULL
+                  AND existencia < existencia_minima
+                ORDER BY existencia ASC";
+
+            return DBConnection.ExecuteQuery(query);
         }
     }
 }

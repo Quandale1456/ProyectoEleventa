@@ -124,6 +124,10 @@
     <Compile Include="INSVarios.Designer.cs">
       <DependentUpon>INSVarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="ModificarProducto.cs">
       <SubType>Form</SubType>
@@ -264,6 +268,13 @@
     <None Include="INDICE_DOCUMENTACION.md" />
     <None Include="INTEGRACION_DEPARTAMENTOS_PRODUCTOS.md" />
     <None Include="LISTA_ARCHIVOS.md" />
+    <None Include="LOGIN_DOCUMENTACION_TECNICA.md" />
+    <None Include="LOGIN_ENTREGA_FINAL.md" />
+    <None Include="LOGIN_GUIA_RAPIDA.md" />
+    <None Include="LOGIN_INDICE_DE_DOCUMENTACION.md" />
+    <None Include="LOGIN_INSTRUCCIONES_IMPLEMENTACION.md" />
+    <None Include="LOGIN_README.md" />
+    <None Include="LOGIN_RESUMEN_CODIGO.md" />
     <None Include="MEJORAS_PRODUCTOS.md" />
     <None Include="MODIFICAR_PRODUCTO_FUNCIONA.md" />
     <None Include="Properties\Settings.settings">
@@ -285,6 +296,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="LOGIN_INICIO_RAPIDO.txt" />
+    <Content Include="LOGIN_RESUMEN_VISUAL.txt" />
     <Content Include="Scripts_SQL\actualizar_tabla_clientes.sql" />
     <Content Include="Scripts_SQL\crear_producto_comun.sql" />
     <Content Include="Scripts_SQL\crear_tabla_clientes.sql" />

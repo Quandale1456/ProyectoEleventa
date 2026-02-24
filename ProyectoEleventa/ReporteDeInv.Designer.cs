@@ -38,11 +38,12 @@
             this.InvMaximo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblCosto = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblCantidad = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboDepartamentos = new System.Windows.Forms.ComboBox();
+            this.btnModificarProducto = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,15 +120,15 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "REPORTE DE INVENTARIO";
             // 
-            // label3
+            // lblCosto
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(74, 82);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(11, 16);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "-";
+            this.lblCosto.AutoSize = true;
+            this.lblCosto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCosto.Location = new System.Drawing.Point(74, 82);
+            this.lblCosto.Name = "lblCosto";
+            this.lblCosto.Size = new System.Drawing.Size(11, 16);
+            this.lblCosto.TabIndex = 8;
+            this.lblCosto.Text = "-";
             // 
             // label4
             // 
@@ -140,15 +141,15 @@
             this.label4.TabIndex = 9;
             this.label4.Text = "Cantidad de productos en el inventario";
             // 
-            // label5
+            // lblCantidad
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(288, 82);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(11, 16);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "-";
+            this.lblCantidad.AutoSize = true;
+            this.lblCantidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCantidad.Location = new System.Drawing.Point(288, 82);
+            this.lblCantidad.Name = "lblCantidad";
+            this.lblCantidad.Size = new System.Drawing.Size(11, 16);
+            this.lblCantidad.TabIndex = 10;
+            this.lblCantidad.Text = "-";
             // 
             // label6
             // 
@@ -160,31 +161,42 @@
             this.label6.TabIndex = 11;
             this.label6.Text = "Departamento";
             // 
-            // comboBox1
+            // comboDepartamentos
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(112, 152);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(230, 21);
-            this.comboBox1.TabIndex = 12;
-            this.comboBox1.Text = "- Todos -";
+            this.comboDepartamentos.FormattingEnabled = true;
+            this.comboDepartamentos.Location = new System.Drawing.Point(112, 152);
+            this.comboDepartamentos.Name = "comboDepartamentos";
+            this.comboDepartamentos.Size = new System.Drawing.Size(230, 21);
+            this.comboDepartamentos.TabIndex = 12;
+            this.comboDepartamentos.Text = "- Todos -";
+            // 
+            // btnModificarProducto
+            // 
+            this.btnModificarProducto.Location = new System.Drawing.Point(1159, 152);
+            this.btnModificarProducto.Name = "btnModificarProducto";
+            this.btnModificarProducto.Size = new System.Drawing.Size(109, 34);
+            this.btnModificarProducto.TabIndex = 13;
+            this.btnModificarProducto.Text = "Modificar Producto";
+            this.btnModificarProducto.UseVisualStyleBackColor = true;
             // 
             // ReporteDeInv
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1269, 761);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.btnModificarProducto);
+            this.Controls.Add(this.comboDepartamentos);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.lblCantidad);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblCosto);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ReporteDeInv";
             this.Text = "ReporteDeInv";
+            this.Load += new System.EventHandler(this.ReporteDeInv_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -203,10 +215,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Existencia;
         private System.Windows.Forms.DataGridViewTextBoxColumn InvMinimo;
         private System.Windows.Forms.DataGridViewTextBoxColumn InvMaximo;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblCosto;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblCantidad;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboDepartamentos;
+        private System.Windows.Forms.Button btnModificarProducto;
     }
 }

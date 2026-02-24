@@ -17,6 +17,7 @@ namespace ProyectoEleventa
         private Form activeForm = null;
         private int productoActualId = 0;
         private bool editando = false;
+        public int IdProductoACargar { get; set; } = 0; // Propiedad para cargar producto automáticamente
 
         public FormularioProductos()
         {
@@ -46,6 +47,12 @@ namespace ProyectoEleventa
 
             CargarDepartamentos();
             LimpiarFormulario();
+
+            // Si hay un producto para cargar, cargarlo automáticamente
+            if (IdProductoACargar > 0)
+            {
+                CargarProducto(IdProductoACargar);
+            }
         }
 
         #region Métodos de Cálculo Automático
