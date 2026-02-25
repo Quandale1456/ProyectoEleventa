@@ -127,6 +127,8 @@ namespace ProyectoEleventa
                     // Credenciales correctas - Abrir formulario principal
                     Form1 formPrincipal = new Form1();
                     formPrincipal.Show();
+                    this.Hide();
+
 
                     // Cerrar el formulario de login
                     this.Hide();
