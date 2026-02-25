@@ -16,15 +16,15 @@ namespace ProyectoEleventa
         private void Login_Load(object sender, EventArgs e)
         {
             // Suscribir eventos
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
-            this.btnAcceder.Click += new System.EventHandler(this.btnAcceder_Click);
+            this.btnAcceder.Click += new EventHandler(this.btnAcceder_Click);
+            this.btnSalir.Click += new EventHandler(this.btnSalir_Click);
+            this.btnClose.Click += new EventHandler(this.btnClose_Click);
             this.txtPassword.KeyPress += new KeyPressEventHandler(this.txtPassword_KeyPress);
 
-            // Cargar los usuarios en el ComboBox
+            // Cargar usuarios desde BD
             CargarUsuarios();
 
-            // Enfocar el ComboBox
+            // Enfocar en ComboBox
             this.cmbUsuario.Focus();
         }
 
@@ -85,7 +85,7 @@ namespace ProyectoEleventa
         }
 
         /// <summary>
-        /// Evento del botón Acceder - Valida credenciales y abre el formulario principal
+        /// Evento del botón Acceder
         /// </summary>
         private void btnAcceder_Click(object sender, EventArgs e)
         {
@@ -93,7 +93,7 @@ namespace ProyectoEleventa
         }
 
         /// <summary>
-        /// Método general para acceder al sistema
+        /// Método para ejecutar el login
         /// </summary>
         private void Acceder()
         {
@@ -117,26 +117,20 @@ namespace ProyectoEleventa
                     return;
                 }
 
-                // Obtener el usuario y contraseña ingresados
+                // Obtener usuario y contraseña
                 string usuario = this.cmbUsuario.Text;
                 string password = this.txtPassword.Text;
 
                 // Validar credenciales
                 if (ValidarCredenciales(usuario, password))
                 {
-                    // Credenciales correctas - Abrir formulario principal
-                    Form1 formPrincipal = new Form1();
-                    formPrincipal.Show();
-                    this.Hide();
-
-
-                    // Cerrar el formulario de login
-                    this.Hide();
+                    // Éxito - Establecer DialogResult y cerrar
+                    this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 else
                 {
-                    // Credenciales incorrectas
+                    // Error - Mostrar mensaje
                     MessageBox.Show("Usuario o contraseña incorrectos. Intenta de nuevo.", 
                         "Error de Autenticación", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.txtPassword.Clear();
@@ -151,11 +145,11 @@ namespace ProyectoEleventa
         }
 
         /// <summary>
-        /// Permite presionar Enter en el TextBox de contraseña para acceder
+        /// Permite presionar Enter en el campo de contraseña para acceder
         /// </summary>
         private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13) // 13 es el código ASCII de Enter
+            if (e.KeyChar == (char)13) // 13 es Enter
             {
                 e.Handled = true;
                 Acceder();
@@ -163,7 +157,7 @@ namespace ProyectoEleventa
         }
 
         /// <summary>
-        /// Evento del botón Salir - Cierra la aplicación
+        /// Evento del botón Salir
         /// </summary>
         private void btnSalir_Click(object sender, EventArgs e)
         {
@@ -171,7 +165,7 @@ namespace ProyectoEleventa
         }
 
         /// <summary>
-        /// Evento del botón Cerrar - Cierra la aplicación
+        /// Evento del botón Cerrar
         /// </summary>
         private void btnClose_Click(object sender, EventArgs e)
         {

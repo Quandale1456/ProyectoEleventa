@@ -1,21 +1,9 @@
-using System;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Drawing;
-
 namespace ProyectoEleventa
 {
-    partial class Login : System.Windows.Forms.Form
+    partial class Login
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -25,15 +13,8 @@ namespace ProyectoEleventa
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.pnlTop = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.lblTitulo = new System.Windows.Forms.Label();
@@ -49,9 +30,8 @@ namespace ProyectoEleventa
             this.pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).BeginInit();
             this.SuspendLayout();
-            // 
+            
             // pnlTop
-            // 
             this.pnlTop.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlTop.Controls.Add(this.btnClose);
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -59,9 +39,8 @@ namespace ProyectoEleventa
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(400, 30);
             this.pnlTop.TabIndex = 0;
-            // 
+            
             // btnClose
-            // 
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnClose.FlatAppearance.BorderSize = 0;
@@ -74,9 +53,8 @@ namespace ProyectoEleventa
             this.btnClose.TabIndex = 0;
             this.btnClose.Text = "✕";
             this.btnClose.UseVisualStyleBackColor = false;
-            // 
+            
             // lblTitulo
-            // 
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.MidnightBlue;
@@ -85,19 +63,16 @@ namespace ProyectoEleventa
             this.lblTitulo.Size = new System.Drawing.Size(275, 26);
             this.lblTitulo.TabIndex = 1;
             this.lblTitulo.Text = "Comenzar nuevo turno";
-            // 
+            
             // picIcon
-            // 
-            this.picIcon.Image = ((System.Drawing.Image)(resources.GetObject("picIcon.Image")));
             this.picIcon.Location = new System.Drawing.Point(20, 40);
             this.picIcon.Name = "picIcon";
             this.picIcon.Size = new System.Drawing.Size(50, 50);
             this.picIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picIcon.TabIndex = 2;
             this.picIcon.TabStop = false;
-            // 
+            
             // lblDescripcion
-            // 
             this.lblDescripcion.AutoSize = true;
             this.lblDescripcion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.lblDescripcion.ForeColor = System.Drawing.Color.DimGray;
@@ -106,9 +81,8 @@ namespace ProyectoEleventa
             this.lblDescripcion.Size = new System.Drawing.Size(308, 15);
             this.lblDescripcion.TabIndex = 3;
             this.lblDescripcion.Text = "Por favor ingresa tu usuario y contraseña para continuar.";
-            // 
+            
             // lblUsuario
-            // 
             this.lblUsuario.AutoSize = true;
             this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.lblUsuario.Location = new System.Drawing.Point(20, 110);
@@ -116,9 +90,8 @@ namespace ProyectoEleventa
             this.lblUsuario.Size = new System.Drawing.Size(61, 16);
             this.lblUsuario.TabIndex = 4;
             this.lblUsuario.Text = "Usuario:";
-            // 
+            
             // cmbUsuario
-            // 
             this.cmbUsuario.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.cmbUsuario.FormattingEnabled = true;
@@ -126,9 +99,8 @@ namespace ProyectoEleventa
             this.cmbUsuario.Name = "cmbUsuario";
             this.cmbUsuario.Size = new System.Drawing.Size(360, 24);
             this.cmbUsuario.TabIndex = 5;
-            // 
+            
             // lblPassword
-            // 
             this.lblPassword.AutoSize = true;
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold);
             this.lblPassword.Location = new System.Drawing.Point(20, 160);
@@ -136,18 +108,16 @@ namespace ProyectoEleventa
             this.lblPassword.Size = new System.Drawing.Size(90, 16);
             this.lblPassword.TabIndex = 6;
             this.lblPassword.Text = "Contraseña:";
-            // 
+            
             // txtPassword
-            // 
             this.txtPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
             this.txtPassword.Location = new System.Drawing.Point(20, 180);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '●';
             this.txtPassword.Size = new System.Drawing.Size(252, 22);
             this.txtPassword.TabIndex = 7;
-            // 
+            
             // lnkOlvide
-            // 
             this.lnkOlvide.AutoSize = true;
             this.lnkOlvide.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.lnkOlvide.Location = new System.Drawing.Point(278, 185);
@@ -156,9 +126,8 @@ namespace ProyectoEleventa
             this.lnkOlvide.TabIndex = 8;
             this.lnkOlvide.TabStop = true;
             this.lnkOlvide.Text = "Olvide mi contraseña";
-            // 
+            
             // btnAcceder
-            // 
             this.btnAcceder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnAcceder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnAcceder.Location = new System.Drawing.Point(20, 220);
@@ -167,9 +136,8 @@ namespace ProyectoEleventa
             this.btnAcceder.TabIndex = 9;
             this.btnAcceder.Text = "🔒 Acceder";
             this.btnAcceder.UseVisualStyleBackColor = false;
-            // 
+            
             // btnSalir
-            // 
             this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
             this.btnSalir.Location = new System.Drawing.Point(205, 220);
@@ -178,9 +146,8 @@ namespace ProyectoEleventa
             this.btnSalir.TabIndex = 10;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = false;
-            // 
+            
             // Login
-            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
@@ -202,14 +169,12 @@ namespace ProyectoEleventa
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "eleventa - Comenzar Nuevo Turno";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.pnlTop.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
-
-        #endregion
 
         private System.Windows.Forms.Panel pnlTop;
         private System.Windows.Forms.Button btnClose;
