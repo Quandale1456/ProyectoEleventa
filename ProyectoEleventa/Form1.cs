@@ -86,9 +86,6 @@ namespace ProyectoEleventa
             this.Close();
         }
 
-        private void btnCorte_Click(object sender, EventArgs e)
-        {
-            OpenChildForm(new FrmCorteCaja());
-        }
+        
     }
 }
