@@ -167,5 +167,10 @@ namespace ProyectoEleventa
             lblCorteIniciadoFecha.Text = DateTime.Now.ToString("dd/MMM/yyyy");
             CargarDatosEjemplo();
         }
+
+        private void lblVentasTotalesValor_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

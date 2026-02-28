@@ -21,8 +21,8 @@ namespace ProyectoEleventa
             this.tableHeader = new System.Windows.Forms.TableLayoutPanel();
             this.lblTitulo = new System.Windows.Forms.Label();
             this.flowHeaderButtons = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnImprimir = new System.Windows.Forms.Button();
             this.btnCerrarTurno = new System.Windows.Forms.Button();
+            this.btnImprimir = new System.Windows.Forms.Button();
             this.panelTopActions = new System.Windows.Forms.Panel();
             this.flowTopActions = new System.Windows.Forms.FlowLayoutPanel();
             this.btnCorteCajero = new System.Windows.Forms.Button();
@@ -42,9 +42,7 @@ namespace ProyectoEleventa
             this.lblGananciaValor = new System.Windows.Forms.Label();
             this.tableColumns = new System.Windows.Forms.TableLayoutPanel();
             this.panelColIzq = new System.Windows.Forms.Panel();
-            this.panelColDer = new System.Windows.Forms.Panel();
             this.flowIzq = new System.Windows.Forms.FlowLayoutPanel();
-            this.flowDer = new System.Windows.Forms.FlowLayoutPanel();
             this.groupDineroCaja = new System.Windows.Forms.GroupBox();
             this.tableDineroCaja = new System.Windows.Forms.TableLayoutPanel();
             this.lblFondoCajaTitulo = new System.Windows.Forms.Label();
@@ -67,6 +65,8 @@ namespace ProyectoEleventa
             this.lblNoVentasDepartamento = new System.Windows.Forms.Label();
             this.groupImpuestos = new System.Windows.Forms.GroupBox();
             this.lblNoImpuestos = new System.Windows.Forms.Label();
+            this.panelColDer = new System.Windows.Forms.Panel();
+            this.flowDer = new System.Windows.Forms.FlowLayoutPanel();
             this.groupVentas = new System.Windows.Forms.GroupBox();
             this.tableVentas = new System.Windows.Forms.TableLayoutPanel();
             this.lblVentaEfectivoTitulo = new System.Windows.Forms.Label();
@@ -109,14 +109,14 @@ namespace ProyectoEleventa
             this.tableResumen.SuspendLayout();
             this.tableColumns.SuspendLayout();
             this.panelColIzq.SuspendLayout();
-            this.panelColDer.SuspendLayout();
             this.flowIzq.SuspendLayout();
-            this.flowDer.SuspendLayout();
             this.groupDineroCaja.SuspendLayout();
             this.tableDineroCaja.SuspendLayout();
             this.groupEntradasEfectivo.SuspendLayout();
             this.groupVentasDepartamento.SuspendLayout();
             this.groupImpuestos.SuspendLayout();
+            this.panelColDer.SuspendLayout();
+            this.flowDer.SuspendLayout();
             this.groupVentas.SuspendLayout();
             this.tableVentas.SuspendLayout();
             this.groupIngresosContado.SuspendLayout();
@@ -143,7 +143,7 @@ namespace ProyectoEleventa
             this.tableHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableHeader.Location = new System.Drawing.Point(0, 0);
             this.tableHeader.Name = "tableHeader";
-            this.tableHeader.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.tableHeader.Padding = new System.Windows.Forms.Padding(10);
             this.tableHeader.RowCount = 1;
             this.tableHeader.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableHeader.Size = new System.Drawing.Size(1200, 56);
@@ -163,6 +163,8 @@ namespace ProyectoEleventa
             // 
             // flowHeaderButtons
             // 
+            this.flowHeaderButtons.Controls.Add(this.btnCerrarTurno);
+            this.flowHeaderButtons.Controls.Add(this.btnImprimir);
             this.flowHeaderButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowHeaderButtons.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowHeaderButtons.Location = new System.Drawing.Point(721, 13);
@@ -170,16 +172,6 @@ namespace ProyectoEleventa
             this.flowHeaderButtons.Size = new System.Drawing.Size(466, 30);
             this.flowHeaderButtons.TabIndex = 1;
             this.flowHeaderButtons.WrapContents = false;
-            // 
-            // btnImprimir
-            // 
-            this.btnImprimir.Location = new System.Drawing.Point(303, 3);
-            this.btnImprimir.Name = "btnImprimir";
-            this.btnImprimir.Size = new System.Drawing.Size(75, 23);
-            this.btnImprimir.TabIndex = 1;
-            this.btnImprimir.Text = "Imprimir";
-            this.btnImprimir.UseVisualStyleBackColor = true;
-            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // btnCerrarTurno
             // 
@@ -190,6 +182,16 @@ namespace ProyectoEleventa
             this.btnCerrarTurno.Text = "Cerrar turno";
             this.btnCerrarTurno.UseVisualStyleBackColor = true;
             this.btnCerrarTurno.Click += new System.EventHandler(this.btnCerrarTurno_Click);
+            // 
+            // btnImprimir
+            // 
+            this.btnImprimir.Location = new System.Drawing.Point(303, 3);
+            this.btnImprimir.Name = "btnImprimir";
+            this.btnImprimir.Size = new System.Drawing.Size(75, 23);
+            this.btnImprimir.TabIndex = 1;
+            this.btnImprimir.Text = "Imprimir";
+            this.btnImprimir.UseVisualStyleBackColor = true;
+            this.btnImprimir.Click += new System.EventHandler(this.btnImprimir_Click);
             // 
             // panelTopActions
             // 
@@ -204,10 +206,12 @@ namespace ProyectoEleventa
             // flowTopActions
             // 
             this.flowTopActions.AutoSize = true;
+            this.flowTopActions.Controls.Add(this.btnCorteCajero);
+            this.flowTopActions.Controls.Add(this.btnCorteDelDia);
             this.flowTopActions.Dock = System.Windows.Forms.DockStyle.Left;
             this.flowTopActions.Location = new System.Drawing.Point(10, 6);
             this.flowTopActions.Name = "flowTopActions";
-            this.flowTopActions.Size = new System.Drawing.Size(310, 30);
+            this.flowTopActions.Size = new System.Drawing.Size(292, 30);
             this.flowTopActions.TabIndex = 0;
             this.flowTopActions.WrapContents = false;
             // 
@@ -237,7 +241,7 @@ namespace ProyectoEleventa
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.Location = new System.Drawing.Point(0, 98);
             this.panelContenido.Name = "panelContenido";
-            this.panelContenido.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.panelContenido.Padding = new System.Windows.Forms.Padding(10);
             this.panelContenido.Size = new System.Drawing.Size(1200, 702);
             this.panelContenido.TabIndex = 2;
             // 
@@ -376,6 +380,7 @@ namespace ProyectoEleventa
             this.lblVentasTotalesValor.TabIndex = 1;
             this.lblVentasTotalesValor.Text = "$0.00";
             this.lblVentasTotalesValor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblVentasTotalesValor.Click += new System.EventHandler(this.lblVentasTotalesValor_Click);
             // 
             // lblGananciaTitulo
             // 
@@ -425,18 +430,13 @@ namespace ProyectoEleventa
             this.panelColIzq.Size = new System.Drawing.Size(581, 606);
             this.panelColIzq.TabIndex = 0;
             // 
-            // panelColDer
-            // 
-            this.panelColDer.Controls.Add(this.flowDer);
-            this.panelColDer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelColDer.Location = new System.Drawing.Point(590, 3);
-            this.panelColDer.Name = "panelColDer";
-            this.panelColDer.Size = new System.Drawing.Size(581, 606);
-            this.panelColDer.TabIndex = 1;
-            // 
             // flowIzq
             // 
             this.flowIzq.AutoScroll = true;
+            this.flowIzq.Controls.Add(this.groupDineroCaja);
+            this.flowIzq.Controls.Add(this.groupEntradasEfectivo);
+            this.flowIzq.Controls.Add(this.groupVentasDepartamento);
+            this.flowIzq.Controls.Add(this.groupImpuestos);
             this.flowIzq.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowIzq.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowIzq.Location = new System.Drawing.Point(0, 0);
@@ -445,18 +445,6 @@ namespace ProyectoEleventa
             this.flowIzq.Size = new System.Drawing.Size(581, 606);
             this.flowIzq.TabIndex = 0;
             this.flowIzq.WrapContents = false;
-            // 
-            // flowDer
-            // 
-            this.flowDer.AutoScroll = true;
-            this.flowDer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowDer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowDer.Location = new System.Drawing.Point(0, 0);
-            this.flowDer.Name = "flowDer";
-            this.flowDer.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.flowDer.Size = new System.Drawing.Size(581, 606);
-            this.flowDer.TabIndex = 0;
-            this.flowDer.WrapContents = false;
             // 
             // groupDineroCaja
             // 
@@ -488,7 +476,7 @@ namespace ProyectoEleventa
             this.tableDineroCaja.Controls.Add(this.lblTotalFinalTitulo, 0, 6);
             this.tableDineroCaja.Controls.Add(this.lblTotalFinalValor, 1, 6);
             this.tableDineroCaja.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableDineroCaja.Location = new System.Drawing.Point(10, 23);
+            this.tableDineroCaja.Location = new System.Drawing.Point(3, 16);
             this.tableDineroCaja.Name = "tableDineroCaja";
             this.tableDineroCaja.RowCount = 7;
             this.tableDineroCaja.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
@@ -498,7 +486,7 @@ namespace ProyectoEleventa
             this.tableDineroCaja.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableDineroCaja.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableDineroCaja.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableDineroCaja.Size = new System.Drawing.Size(535, 197);
+            this.tableDineroCaja.Size = new System.Drawing.Size(549, 211);
             this.tableDineroCaja.TabIndex = 0;
             // 
             // lblFondoCajaTitulo
@@ -507,7 +495,7 @@ namespace ProyectoEleventa
             this.lblFondoCajaTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblFondoCajaTitulo.Location = new System.Drawing.Point(3, 0);
             this.lblFondoCajaTitulo.Name = "lblFondoCajaTitulo";
-            this.lblFondoCajaTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblFondoCajaTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblFondoCajaTitulo.TabIndex = 0;
             this.lblFondoCajaTitulo.Text = "Fondo de caja";
             this.lblFondoCajaTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -516,9 +504,9 @@ namespace ProyectoEleventa
             // 
             this.lblFondoCajaValor.AutoSize = true;
             this.lblFondoCajaValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblFondoCajaValor.Location = new System.Drawing.Point(350, 0);
+            this.lblFondoCajaValor.Location = new System.Drawing.Point(359, 0);
             this.lblFondoCajaValor.Name = "lblFondoCajaValor";
-            this.lblFondoCajaValor.Size = new System.Drawing.Size(182, 26);
+            this.lblFondoCajaValor.Size = new System.Drawing.Size(187, 26);
             this.lblFondoCajaValor.TabIndex = 1;
             this.lblFondoCajaValor.Text = "$0.00";
             this.lblFondoCajaValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -529,7 +517,7 @@ namespace ProyectoEleventa
             this.lblVentasEfectivoTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblVentasEfectivoTitulo.Location = new System.Drawing.Point(3, 26);
             this.lblVentasEfectivoTitulo.Name = "lblVentasEfectivoTitulo";
-            this.lblVentasEfectivoTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblVentasEfectivoTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblVentasEfectivoTitulo.TabIndex = 2;
             this.lblVentasEfectivoTitulo.Text = "Ventas en efectivo";
             this.lblVentasEfectivoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -538,9 +526,9 @@ namespace ProyectoEleventa
             // 
             this.lblVentasEfectivoValor.AutoSize = true;
             this.lblVentasEfectivoValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblVentasEfectivoValor.Location = new System.Drawing.Point(350, 26);
+            this.lblVentasEfectivoValor.Location = new System.Drawing.Point(359, 26);
             this.lblVentasEfectivoValor.Name = "lblVentasEfectivoValor";
-            this.lblVentasEfectivoValor.Size = new System.Drawing.Size(182, 26);
+            this.lblVentasEfectivoValor.Size = new System.Drawing.Size(187, 26);
             this.lblVentasEfectivoValor.TabIndex = 3;
             this.lblVentasEfectivoValor.Text = "$0.00";
             this.lblVentasEfectivoValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -551,7 +539,7 @@ namespace ProyectoEleventa
             this.lblAbonosEfectivoTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblAbonosEfectivoTitulo.Location = new System.Drawing.Point(3, 52);
             this.lblAbonosEfectivoTitulo.Name = "lblAbonosEfectivoTitulo";
-            this.lblAbonosEfectivoTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblAbonosEfectivoTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblAbonosEfectivoTitulo.TabIndex = 4;
             this.lblAbonosEfectivoTitulo.Text = "Abonos en efectivo";
             this.lblAbonosEfectivoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -560,9 +548,9 @@ namespace ProyectoEleventa
             // 
             this.lblAbonosEfectivoValor.AutoSize = true;
             this.lblAbonosEfectivoValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblAbonosEfectivoValor.Location = new System.Drawing.Point(350, 52);
+            this.lblAbonosEfectivoValor.Location = new System.Drawing.Point(359, 52);
             this.lblAbonosEfectivoValor.Name = "lblAbonosEfectivoValor";
-            this.lblAbonosEfectivoValor.Size = new System.Drawing.Size(182, 26);
+            this.lblAbonosEfectivoValor.Size = new System.Drawing.Size(187, 26);
             this.lblAbonosEfectivoValor.TabIndex = 5;
             this.lblAbonosEfectivoValor.Text = "$0.00";
             this.lblAbonosEfectivoValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -573,7 +561,7 @@ namespace ProyectoEleventa
             this.lblEntradasTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblEntradasTitulo.Location = new System.Drawing.Point(3, 78);
             this.lblEntradasTitulo.Name = "lblEntradasTitulo";
-            this.lblEntradasTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblEntradasTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblEntradasTitulo.TabIndex = 6;
             this.lblEntradasTitulo.Text = "Entradas";
             this.lblEntradasTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -582,9 +570,9 @@ namespace ProyectoEleventa
             // 
             this.lblEntradasValor.AutoSize = true;
             this.lblEntradasValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblEntradasValor.Location = new System.Drawing.Point(350, 78);
+            this.lblEntradasValor.Location = new System.Drawing.Point(359, 78);
             this.lblEntradasValor.Name = "lblEntradasValor";
-            this.lblEntradasValor.Size = new System.Drawing.Size(182, 26);
+            this.lblEntradasValor.Size = new System.Drawing.Size(187, 26);
             this.lblEntradasValor.TabIndex = 7;
             this.lblEntradasValor.Text = "$0.00";
             this.lblEntradasValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -595,7 +583,7 @@ namespace ProyectoEleventa
             this.lblSalidasTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSalidasTitulo.Location = new System.Drawing.Point(3, 104);
             this.lblSalidasTitulo.Name = "lblSalidasTitulo";
-            this.lblSalidasTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblSalidasTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblSalidasTitulo.TabIndex = 8;
             this.lblSalidasTitulo.Text = "Salidas";
             this.lblSalidasTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -604,9 +592,9 @@ namespace ProyectoEleventa
             // 
             this.lblSalidasValor.AutoSize = true;
             this.lblSalidasValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSalidasValor.Location = new System.Drawing.Point(350, 104);
+            this.lblSalidasValor.Location = new System.Drawing.Point(359, 104);
             this.lblSalidasValor.Name = "lblSalidasValor";
-            this.lblSalidasValor.Size = new System.Drawing.Size(182, 26);
+            this.lblSalidasValor.Size = new System.Drawing.Size(187, 26);
             this.lblSalidasValor.TabIndex = 9;
             this.lblSalidasValor.Text = "$0.00";
             this.lblSalidasValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -617,7 +605,7 @@ namespace ProyectoEleventa
             this.lblDevolucionesEfectivoTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDevolucionesEfectivoTitulo.Location = new System.Drawing.Point(3, 130);
             this.lblDevolucionesEfectivoTitulo.Name = "lblDevolucionesEfectivoTitulo";
-            this.lblDevolucionesEfectivoTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblDevolucionesEfectivoTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblDevolucionesEfectivoTitulo.TabIndex = 10;
             this.lblDevolucionesEfectivoTitulo.Text = "Devoluciones en efectivo";
             this.lblDevolucionesEfectivoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -626,9 +614,9 @@ namespace ProyectoEleventa
             // 
             this.lblDevolucionesEfectivoValor.AutoSize = true;
             this.lblDevolucionesEfectivoValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDevolucionesEfectivoValor.Location = new System.Drawing.Point(350, 130);
+            this.lblDevolucionesEfectivoValor.Location = new System.Drawing.Point(359, 130);
             this.lblDevolucionesEfectivoValor.Name = "lblDevolucionesEfectivoValor";
-            this.lblDevolucionesEfectivoValor.Size = new System.Drawing.Size(182, 26);
+            this.lblDevolucionesEfectivoValor.Size = new System.Drawing.Size(187, 26);
             this.lblDevolucionesEfectivoValor.TabIndex = 11;
             this.lblDevolucionesEfectivoValor.Text = "$0.00";
             this.lblDevolucionesEfectivoValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -640,7 +628,7 @@ namespace ProyectoEleventa
             this.lblTotalFinalTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.lblTotalFinalTitulo.Location = new System.Drawing.Point(3, 156);
             this.lblTotalFinalTitulo.Name = "lblTotalFinalTitulo";
-            this.lblTotalFinalTitulo.Size = new System.Drawing.Size(341, 30);
+            this.lblTotalFinalTitulo.Size = new System.Drawing.Size(350, 55);
             this.lblTotalFinalTitulo.TabIndex = 12;
             this.lblTotalFinalTitulo.Text = "Total final";
             this.lblTotalFinalTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -650,9 +638,9 @@ namespace ProyectoEleventa
             this.lblTotalFinalValor.AutoSize = true;
             this.lblTotalFinalValor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTotalFinalValor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.lblTotalFinalValor.Location = new System.Drawing.Point(350, 156);
+            this.lblTotalFinalValor.Location = new System.Drawing.Point(359, 156);
             this.lblTotalFinalValor.Name = "lblTotalFinalValor";
-            this.lblTotalFinalValor.Size = new System.Drawing.Size(182, 30);
+            this.lblTotalFinalValor.Size = new System.Drawing.Size(187, 55);
             this.lblTotalFinalValor.TabIndex = 13;
             this.lblTotalFinalValor.Text = "$0.00";
             this.lblTotalFinalValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -670,9 +658,9 @@ namespace ProyectoEleventa
             // lblNoEntradasEfectivo
             // 
             this.lblNoEntradasEfectivo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoEntradasEfectivo.Location = new System.Drawing.Point(10, 23);
+            this.lblNoEntradasEfectivo.Location = new System.Drawing.Point(3, 16);
             this.lblNoEntradasEfectivo.Name = "lblNoEntradasEfectivo";
-            this.lblNoEntradasEfectivo.Size = new System.Drawing.Size(535, 51);
+            this.lblNoEntradasEfectivo.Size = new System.Drawing.Size(549, 65);
             this.lblNoEntradasEfectivo.TabIndex = 0;
             this.lblNoEntradasEfectivo.Text = "No hubo entradas en efectivo.";
             this.lblNoEntradasEfectivo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -690,9 +678,9 @@ namespace ProyectoEleventa
             // lblNoVentasDepartamento
             // 
             this.lblNoVentasDepartamento.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoVentasDepartamento.Location = new System.Drawing.Point(10, 23);
+            this.lblNoVentasDepartamento.Location = new System.Drawing.Point(3, 16);
             this.lblNoVentasDepartamento.Name = "lblNoVentasDepartamento";
-            this.lblNoVentasDepartamento.Size = new System.Drawing.Size(535, 51);
+            this.lblNoVentasDepartamento.Size = new System.Drawing.Size(549, 65);
             this.lblNoVentasDepartamento.TabIndex = 0;
             this.lblNoVentasDepartamento.Text = "No se registró ninguna venta.";
             this.lblNoVentasDepartamento.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -710,12 +698,39 @@ namespace ProyectoEleventa
             // lblNoImpuestos
             // 
             this.lblNoImpuestos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoImpuestos.Location = new System.Drawing.Point(10, 23);
+            this.lblNoImpuestos.Location = new System.Drawing.Point(3, 16);
             this.lblNoImpuestos.Name = "lblNoImpuestos";
-            this.lblNoImpuestos.Size = new System.Drawing.Size(535, 51);
+            this.lblNoImpuestos.Size = new System.Drawing.Size(549, 65);
             this.lblNoImpuestos.TabIndex = 0;
             this.lblNoImpuestos.Text = "No hubo ventas.";
             this.lblNoImpuestos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panelColDer
+            // 
+            this.panelColDer.Controls.Add(this.flowDer);
+            this.panelColDer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelColDer.Location = new System.Drawing.Point(590, 3);
+            this.panelColDer.Name = "panelColDer";
+            this.panelColDer.Size = new System.Drawing.Size(581, 606);
+            this.panelColDer.TabIndex = 1;
+            // 
+            // flowDer
+            // 
+            this.flowDer.AutoScroll = true;
+            this.flowDer.Controls.Add(this.groupVentas);
+            this.flowDer.Controls.Add(this.groupIngresosContado);
+            this.flowDer.Controls.Add(this.groupSalidasEfectivo);
+            this.flowDer.Controls.Add(this.groupPagosCreditos);
+            this.flowDer.Controls.Add(this.groupClientesMasVentas);
+            this.flowDer.Controls.Add(this.groupClientesMasGanancia);
+            this.flowDer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowDer.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowDer.Location = new System.Drawing.Point(0, 0);
+            this.flowDer.Name = "flowDer";
+            this.flowDer.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.flowDer.Size = new System.Drawing.Size(581, 606);
+            this.flowDer.TabIndex = 0;
+            this.flowDer.WrapContents = false;
             // 
             // groupVentas
             // 
@@ -749,7 +764,7 @@ namespace ProyectoEleventa
             this.tableVentas.Controls.Add(this.lblVentasTotalTitulo, 0, 7);
             this.tableVentas.Controls.Add(this.lblVentasTotalValor, 1, 7);
             this.tableVentas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableVentas.Location = new System.Drawing.Point(10, 23);
+            this.tableVentas.Location = new System.Drawing.Point(3, 16);
             this.tableVentas.Name = "tableVentas";
             this.tableVentas.RowCount = 8;
             this.tableVentas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
@@ -760,7 +775,7 @@ namespace ProyectoEleventa
             this.tableVentas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableVentas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableVentas.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableVentas.Size = new System.Drawing.Size(535, 225);
+            this.tableVentas.Size = new System.Drawing.Size(549, 239);
             this.tableVentas.TabIndex = 0;
             // 
             // lblVentaEfectivoTitulo
@@ -769,7 +784,7 @@ namespace ProyectoEleventa
             this.lblVentaEfectivoTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblVentaEfectivoTitulo.Location = new System.Drawing.Point(3, 0);
             this.lblVentaEfectivoTitulo.Name = "lblVentaEfectivoTitulo";
-            this.lblVentaEfectivoTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblVentaEfectivoTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblVentaEfectivoTitulo.TabIndex = 0;
             this.lblVentaEfectivoTitulo.Text = "En efectivo";
             this.lblVentaEfectivoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -778,9 +793,9 @@ namespace ProyectoEleventa
             // 
             this.lblVentaEfectivoValor.AutoSize = true;
             this.lblVentaEfectivoValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblVentaEfectivoValor.Location = new System.Drawing.Point(350, 0);
+            this.lblVentaEfectivoValor.Location = new System.Drawing.Point(359, 0);
             this.lblVentaEfectivoValor.Name = "lblVentaEfectivoValor";
-            this.lblVentaEfectivoValor.Size = new System.Drawing.Size(182, 26);
+            this.lblVentaEfectivoValor.Size = new System.Drawing.Size(187, 26);
             this.lblVentaEfectivoValor.TabIndex = 1;
             this.lblVentaEfectivoValor.Text = "$0.00";
             this.lblVentaEfectivoValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -791,7 +806,7 @@ namespace ProyectoEleventa
             this.lblTarjetaCreditoTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTarjetaCreditoTitulo.Location = new System.Drawing.Point(3, 26);
             this.lblTarjetaCreditoTitulo.Name = "lblTarjetaCreditoTitulo";
-            this.lblTarjetaCreditoTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblTarjetaCreditoTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblTarjetaCreditoTitulo.TabIndex = 2;
             this.lblTarjetaCreditoTitulo.Text = "Con tarjeta de crédito";
             this.lblTarjetaCreditoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -800,9 +815,9 @@ namespace ProyectoEleventa
             // 
             this.lblTarjetaCreditoValor.AutoSize = true;
             this.lblTarjetaCreditoValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTarjetaCreditoValor.Location = new System.Drawing.Point(350, 26);
+            this.lblTarjetaCreditoValor.Location = new System.Drawing.Point(359, 26);
             this.lblTarjetaCreditoValor.Name = "lblTarjetaCreditoValor";
-            this.lblTarjetaCreditoValor.Size = new System.Drawing.Size(182, 26);
+            this.lblTarjetaCreditoValor.Size = new System.Drawing.Size(187, 26);
             this.lblTarjetaCreditoValor.TabIndex = 3;
             this.lblTarjetaCreditoValor.Text = "$0.00";
             this.lblTarjetaCreditoValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -813,7 +828,7 @@ namespace ProyectoEleventa
             this.lblACreditoTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblACreditoTitulo.Location = new System.Drawing.Point(3, 52);
             this.lblACreditoTitulo.Name = "lblACreditoTitulo";
-            this.lblACreditoTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblACreditoTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblACreditoTitulo.TabIndex = 4;
             this.lblACreditoTitulo.Text = "A crédito";
             this.lblACreditoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -822,9 +837,9 @@ namespace ProyectoEleventa
             // 
             this.lblACreditoValor.AutoSize = true;
             this.lblACreditoValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblACreditoValor.Location = new System.Drawing.Point(350, 52);
+            this.lblACreditoValor.Location = new System.Drawing.Point(359, 52);
             this.lblACreditoValor.Name = "lblACreditoValor";
-            this.lblACreditoValor.Size = new System.Drawing.Size(182, 26);
+            this.lblACreditoValor.Size = new System.Drawing.Size(187, 26);
             this.lblACreditoValor.TabIndex = 5;
             this.lblACreditoValor.Text = "$0.00";
             this.lblACreditoValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -835,7 +850,7 @@ namespace ProyectoEleventa
             this.lblValesDespensaTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblValesDespensaTitulo.Location = new System.Drawing.Point(3, 78);
             this.lblValesDespensaTitulo.Name = "lblValesDespensaTitulo";
-            this.lblValesDespensaTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblValesDespensaTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblValesDespensaTitulo.TabIndex = 6;
             this.lblValesDespensaTitulo.Text = "Con vales de despensa";
             this.lblValesDespensaTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -844,9 +859,9 @@ namespace ProyectoEleventa
             // 
             this.lblValesDespensaValor.AutoSize = true;
             this.lblValesDespensaValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblValesDespensaValor.Location = new System.Drawing.Point(350, 78);
+            this.lblValesDespensaValor.Location = new System.Drawing.Point(359, 78);
             this.lblValesDespensaValor.Name = "lblValesDespensaValor";
-            this.lblValesDespensaValor.Size = new System.Drawing.Size(182, 26);
+            this.lblValesDespensaValor.Size = new System.Drawing.Size(187, 26);
             this.lblValesDespensaValor.TabIndex = 7;
             this.lblValesDespensaValor.Text = "$0.00";
             this.lblValesDespensaValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -857,7 +872,7 @@ namespace ProyectoEleventa
             this.lblTransferenciaTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblTransferenciaTitulo.Location = new System.Drawing.Point(3, 104);
             this.lblTransferenciaTitulo.Name = "lblTransferenciaTitulo";
-            this.lblTransferenciaTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblTransferenciaTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblTransferenciaTitulo.TabIndex = 8;
             this.lblTransferenciaTitulo.Text = "Con transferencia";
             this.lblTransferenciaTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -866,9 +881,9 @@ namespace ProyectoEleventa
             // 
             this.lblTransferenciaValor.AutoSize = true;
             this.lblTransferenciaValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblTransferenciaValor.Location = new System.Drawing.Point(350, 104);
+            this.lblTransferenciaValor.Location = new System.Drawing.Point(359, 104);
             this.lblTransferenciaValor.Name = "lblTransferenciaValor";
-            this.lblTransferenciaValor.Size = new System.Drawing.Size(182, 26);
+            this.lblTransferenciaValor.Size = new System.Drawing.Size(187, 26);
             this.lblTransferenciaValor.TabIndex = 9;
             this.lblTransferenciaValor.Text = "$0.00";
             this.lblTransferenciaValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -879,7 +894,7 @@ namespace ProyectoEleventa
             this.lblChequeTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblChequeTitulo.Location = new System.Drawing.Point(3, 130);
             this.lblChequeTitulo.Name = "lblChequeTitulo";
-            this.lblChequeTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblChequeTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblChequeTitulo.TabIndex = 10;
             this.lblChequeTitulo.Text = "Con cheque";
             this.lblChequeTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -888,9 +903,9 @@ namespace ProyectoEleventa
             // 
             this.lblChequeValor.AutoSize = true;
             this.lblChequeValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblChequeValor.Location = new System.Drawing.Point(350, 130);
+            this.lblChequeValor.Location = new System.Drawing.Point(359, 130);
             this.lblChequeValor.Name = "lblChequeValor";
-            this.lblChequeValor.Size = new System.Drawing.Size(182, 26);
+            this.lblChequeValor.Size = new System.Drawing.Size(187, 26);
             this.lblChequeValor.TabIndex = 11;
             this.lblChequeValor.Text = "$0.00";
             this.lblChequeValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -901,7 +916,7 @@ namespace ProyectoEleventa
             this.lblDevolucionesVentasTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDevolucionesVentasTitulo.Location = new System.Drawing.Point(3, 156);
             this.lblDevolucionesVentasTitulo.Name = "lblDevolucionesVentasTitulo";
-            this.lblDevolucionesVentasTitulo.Size = new System.Drawing.Size(341, 26);
+            this.lblDevolucionesVentasTitulo.Size = new System.Drawing.Size(350, 26);
             this.lblDevolucionesVentasTitulo.TabIndex = 12;
             this.lblDevolucionesVentasTitulo.Text = "Devoluciones de ventas";
             this.lblDevolucionesVentasTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -910,9 +925,9 @@ namespace ProyectoEleventa
             // 
             this.lblDevolucionesVentasValor.AutoSize = true;
             this.lblDevolucionesVentasValor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblDevolucionesVentasValor.Location = new System.Drawing.Point(350, 156);
+            this.lblDevolucionesVentasValor.Location = new System.Drawing.Point(359, 156);
             this.lblDevolucionesVentasValor.Name = "lblDevolucionesVentasValor";
-            this.lblDevolucionesVentasValor.Size = new System.Drawing.Size(182, 26);
+            this.lblDevolucionesVentasValor.Size = new System.Drawing.Size(187, 26);
             this.lblDevolucionesVentasValor.TabIndex = 13;
             this.lblDevolucionesVentasValor.Text = "$0.00";
             this.lblDevolucionesVentasValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -924,7 +939,7 @@ namespace ProyectoEleventa
             this.lblVentasTotalTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
             this.lblVentasTotalTitulo.Location = new System.Drawing.Point(3, 182);
             this.lblVentasTotalTitulo.Name = "lblVentasTotalTitulo";
-            this.lblVentasTotalTitulo.Size = new System.Drawing.Size(341, 30);
+            this.lblVentasTotalTitulo.Size = new System.Drawing.Size(350, 57);
             this.lblVentasTotalTitulo.TabIndex = 14;
             this.lblVentasTotalTitulo.Text = "Total";
             this.lblVentasTotalTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -934,9 +949,9 @@ namespace ProyectoEleventa
             this.lblVentasTotalValor.AutoSize = true;
             this.lblVentasTotalValor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblVentasTotalValor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold);
-            this.lblVentasTotalValor.Location = new System.Drawing.Point(350, 182);
+            this.lblVentasTotalValor.Location = new System.Drawing.Point(359, 182);
             this.lblVentasTotalValor.Name = "lblVentasTotalValor";
-            this.lblVentasTotalValor.Size = new System.Drawing.Size(182, 30);
+            this.lblVentasTotalValor.Size = new System.Drawing.Size(187, 57);
             this.lblVentasTotalValor.TabIndex = 15;
             this.lblVentasTotalValor.Text = "$0.00";
             this.lblVentasTotalValor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -954,9 +969,9 @@ namespace ProyectoEleventa
             // lblNoIngresosContado
             // 
             this.lblNoIngresosContado.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoIngresosContado.Location = new System.Drawing.Point(10, 23);
+            this.lblNoIngresosContado.Location = new System.Drawing.Point(3, 16);
             this.lblNoIngresosContado.Name = "lblNoIngresosContado";
-            this.lblNoIngresosContado.Size = new System.Drawing.Size(535, 51);
+            this.lblNoIngresosContado.Size = new System.Drawing.Size(549, 65);
             this.lblNoIngresosContado.TabIndex = 0;
             this.lblNoIngresosContado.Text = "No hubo ingresos de contado.";
             this.lblNoIngresosContado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -974,9 +989,9 @@ namespace ProyectoEleventa
             // lblNoSalidasEfectivo
             // 
             this.lblNoSalidasEfectivo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoSalidasEfectivo.Location = new System.Drawing.Point(10, 23);
+            this.lblNoSalidasEfectivo.Location = new System.Drawing.Point(3, 16);
             this.lblNoSalidasEfectivo.Name = "lblNoSalidasEfectivo";
-            this.lblNoSalidasEfectivo.Size = new System.Drawing.Size(535, 51);
+            this.lblNoSalidasEfectivo.Size = new System.Drawing.Size(549, 65);
             this.lblNoSalidasEfectivo.TabIndex = 0;
             this.lblNoSalidasEfectivo.Text = "No hubo salidas en efectivo.";
             this.lblNoSalidasEfectivo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -994,9 +1009,9 @@ namespace ProyectoEleventa
             // lblNoPagosCreditos
             // 
             this.lblNoPagosCreditos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoPagosCreditos.Location = new System.Drawing.Point(10, 23);
+            this.lblNoPagosCreditos.Location = new System.Drawing.Point(3, 16);
             this.lblNoPagosCreditos.Name = "lblNoPagosCreditos";
-            this.lblNoPagosCreditos.Size = new System.Drawing.Size(535, 51);
+            this.lblNoPagosCreditos.Size = new System.Drawing.Size(549, 65);
             this.lblNoPagosCreditos.TabIndex = 0;
             this.lblNoPagosCreditos.Text = "No se recibieron pagos de créditos.";
             this.lblNoPagosCreditos.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1014,9 +1029,9 @@ namespace ProyectoEleventa
             // lblNoClientesMasVentas
             // 
             this.lblNoClientesMasVentas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoClientesMasVentas.Location = new System.Drawing.Point(10, 23);
+            this.lblNoClientesMasVentas.Location = new System.Drawing.Point(3, 16);
             this.lblNoClientesMasVentas.Name = "lblNoClientesMasVentas";
-            this.lblNoClientesMasVentas.Size = new System.Drawing.Size(535, 51);
+            this.lblNoClientesMasVentas.Size = new System.Drawing.Size(549, 65);
             this.lblNoClientesMasVentas.TabIndex = 0;
             this.lblNoClientesMasVentas.Text = "No hubo ventas.";
             this.lblNoClientesMasVentas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1034,9 +1049,9 @@ namespace ProyectoEleventa
             // lblNoClientesMasGanancia
             // 
             this.lblNoClientesMasGanancia.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblNoClientesMasGanancia.Location = new System.Drawing.Point(10, 23);
+            this.lblNoClientesMasGanancia.Location = new System.Drawing.Point(3, 16);
             this.lblNoClientesMasGanancia.Name = "lblNoClientesMasGanancia";
-            this.lblNoClientesMasGanancia.Size = new System.Drawing.Size(535, 51);
+            this.lblNoClientesMasGanancia.Size = new System.Drawing.Size(549, 65);
             this.lblNoClientesMasGanancia.TabIndex = 0;
             this.lblNoClientesMasGanancia.Text = "No hubo ventas.";
             this.lblNoClientesMasGanancia.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1069,15 +1084,15 @@ namespace ProyectoEleventa
             this.tableResumen.PerformLayout();
             this.tableColumns.ResumeLayout(false);
             this.panelColIzq.ResumeLayout(false);
-            this.panelColDer.ResumeLayout(false);
             this.flowIzq.ResumeLayout(false);
-            this.flowDer.ResumeLayout(false);
             this.groupDineroCaja.ResumeLayout(false);
             this.tableDineroCaja.ResumeLayout(false);
             this.tableDineroCaja.PerformLayout();
             this.groupEntradasEfectivo.ResumeLayout(false);
             this.groupVentasDepartamento.ResumeLayout(false);
             this.groupImpuestos.ResumeLayout(false);
+            this.panelColDer.ResumeLayout(false);
+            this.flowDer.ResumeLayout(false);
             this.groupVentas.ResumeLayout(false);
             this.tableVentas.ResumeLayout(false);
             this.tableVentas.PerformLayout();
@@ -1088,23 +1103,6 @@ namespace ProyectoEleventa
             this.groupClientesMasGanancia.ResumeLayout(false);
             this.ResumeLayout(false);
 
-            this.flowHeaderButtons.Controls.Add(this.btnCerrarTurno);
-            this.flowHeaderButtons.Controls.Add(this.btnImprimir);
-
-            this.flowTopActions.Controls.Add(this.btnCorteCajero);
-            this.flowTopActions.Controls.Add(this.btnCorteDelDia);
-
-            this.flowIzq.Controls.Add(this.groupDineroCaja);
-            this.flowIzq.Controls.Add(this.groupEntradasEfectivo);
-            this.flowIzq.Controls.Add(this.groupVentasDepartamento);
-            this.flowIzq.Controls.Add(this.groupImpuestos);
-
-            this.flowDer.Controls.Add(this.groupVentas);
-            this.flowDer.Controls.Add(this.groupIngresosContado);
-            this.flowDer.Controls.Add(this.groupSalidasEfectivo);
-            this.flowDer.Controls.Add(this.groupPagosCreditos);
-            this.flowDer.Controls.Add(this.groupClientesMasVentas);
-            this.flowDer.Controls.Add(this.groupClientesMasGanancia);
         }
 
         #endregion
