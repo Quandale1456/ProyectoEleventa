@@ -6,11 +6,19 @@ namespace ProyectoEleventa
 {
     public partial class FrmCorteCaja : Form
     {
+        private enum TipoCorte
+        {
+            Cajero,
+            DelDia
+        }
+
+        private TipoCorte _tipoCorteActual = TipoCorte.DelDia;
+
         public FrmCorteCaja()
         {
             InitializeComponent();
             ConfigurarEstilos();
-            CargarDatosEjemplo();
+            MostrarCorteDelDia();
         }
 
         private void ConfigurarEstilos()
@@ -136,12 +144,28 @@ namespace ProyectoEleventa
 
         private void btnCorteCajero_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Vista: Corte de cajero (ejemplo).", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MostrarCorteCajero();
         }
 
         private void btnCorteDelDia_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Vista: Corte del día (ejemplo).", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MostrarCorteDelDia();
+        }
+
+        private void MostrarCorteCajero()
+        {
+            _tipoCorteActual = TipoCorte.Cajero;
+            lblTitulo.Text = "CORTE";
+            lblCorteIniciadoFecha.Text = DateTime.Now.ToString("dd/MMM/yyyy");
+            CargarDatosEjemplo();
+        }
+
+        private void MostrarCorteDelDia()
+        {
+            _tipoCorteActual = TipoCorte.DelDia;
+            lblTitulo.Text = "CORTE";
+            lblCorteIniciadoFecha.Text = DateTime.Now.ToString("dd/MMM/yyyy");
+            CargarDatosEjemplo();
         }
     }
 }

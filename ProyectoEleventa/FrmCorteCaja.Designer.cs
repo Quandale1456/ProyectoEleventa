@@ -29,6 +29,11 @@ namespace ProyectoEleventa
             this.btnCorteDelDia = new System.Windows.Forms.Button();
             this.panelContenido = new System.Windows.Forms.Panel();
             this.tableRoot = new System.Windows.Forms.TableLayoutPanel();
+            this.panelInfo = new System.Windows.Forms.Panel();
+            this.tableInfo = new System.Windows.Forms.TableLayoutPanel();
+            this.tableInfoLeft = new System.Windows.Forms.TableLayoutPanel();
+            this.lblCorteIniciadoTitulo = new System.Windows.Forms.Label();
+            this.lblCorteIniciadoFecha = new System.Windows.Forms.Label();
             this.panelResumen = new System.Windows.Forms.Panel();
             this.tableResumen = new System.Windows.Forms.TableLayoutPanel();
             this.lblVentasTotalesTitulo = new System.Windows.Forms.Label();
@@ -97,6 +102,9 @@ namespace ProyectoEleventa
             this.flowTopActions.SuspendLayout();
             this.panelContenido.SuspendLayout();
             this.tableRoot.SuspendLayout();
+            this.panelInfo.SuspendLayout();
+            this.tableInfo.SuspendLayout();
+            this.tableInfoLeft.SuspendLayout();
             this.panelResumen.SuspendLayout();
             this.tableResumen.SuspendLayout();
             this.tableColumns.SuspendLayout();
@@ -129,11 +137,9 @@ namespace ProyectoEleventa
             // 
             // tableHeader
             // 
-            this.tableHeader.ColumnCount = 2;
-            this.tableHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
-            this.tableHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableHeader.ColumnCount = 1;
+            this.tableHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableHeader.Controls.Add(this.lblTitulo, 0, 0);
-            this.tableHeader.Controls.Add(this.flowHeaderButtons, 1, 0);
             this.tableHeader.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableHeader.Location = new System.Drawing.Point(0, 0);
             this.tableHeader.Name = "tableHeader";
@@ -150,7 +156,7 @@ namespace ProyectoEleventa
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.Location = new System.Drawing.Point(13, 10);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(702, 36);
+            this.lblTitulo.Size = new System.Drawing.Size(1174, 36);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "CORTE";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -239,26 +245,94 @@ namespace ProyectoEleventa
             // 
             this.tableRoot.ColumnCount = 1;
             this.tableRoot.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableRoot.Controls.Add(this.panelResumen, 0, 0);
-            this.tableRoot.Controls.Add(this.tableColumns, 0, 1);
+            this.tableRoot.Controls.Add(this.panelInfo, 0, 0);
+            this.tableRoot.Controls.Add(this.panelResumen, 0, 1);
+            this.tableRoot.Controls.Add(this.tableColumns, 0, 2);
             this.tableRoot.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableRoot.Location = new System.Drawing.Point(10, 10);
             this.tableRoot.Name = "tableRoot";
-            this.tableRoot.RowCount = 2;
+            this.tableRoot.RowCount = 3;
+            this.tableRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.tableRoot.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableRoot.Size = new System.Drawing.Size(1180, 682);
             this.tableRoot.TabIndex = 0;
             // 
+            // panelInfo
+            // 
+            this.panelInfo.Controls.Add(this.tableInfo);
+            this.panelInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelInfo.Location = new System.Drawing.Point(3, 3);
+            this.panelInfo.Name = "panelInfo";
+            this.panelInfo.Padding = new System.Windows.Forms.Padding(6);
+            this.panelInfo.Size = new System.Drawing.Size(1174, 42);
+            this.panelInfo.TabIndex = 0;
+            // 
+            // tableInfo
+            // 
+            this.tableInfo.ColumnCount = 2;
+            this.tableInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableInfo.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableInfo.Controls.Add(this.tableInfoLeft, 0, 0);
+            this.tableInfo.Controls.Add(this.flowHeaderButtons, 1, 0);
+            this.tableInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableInfo.Location = new System.Drawing.Point(6, 6);
+            this.tableInfo.Name = "tableInfo";
+            this.tableInfo.RowCount = 1;
+            this.tableInfo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableInfo.Size = new System.Drawing.Size(1162, 30);
+            this.tableInfo.TabIndex = 0;
+            // 
+            // tableInfoLeft
+            // 
+            this.tableInfoLeft.ColumnCount = 2;
+            this.tableInfoLeft.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.AutoSize));
+            this.tableInfoLeft.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableInfoLeft.Controls.Add(this.lblCorteIniciadoTitulo, 0, 0);
+            this.tableInfoLeft.Controls.Add(this.lblCorteIniciadoFecha, 1, 0);
+            this.tableInfoLeft.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableInfoLeft.Location = new System.Drawing.Point(3, 3);
+            this.tableInfoLeft.Name = "tableInfoLeft";
+            this.tableInfoLeft.RowCount = 1;
+            this.tableInfoLeft.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableInfoLeft.Size = new System.Drawing.Size(807, 24);
+            this.tableInfoLeft.TabIndex = 0;
+            // 
+            // lblCorteIniciadoTitulo
+            // 
+            this.lblCorteIniciadoTitulo.AutoSize = true;
+            this.lblCorteIniciadoTitulo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCorteIniciadoTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.lblCorteIniciadoTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.lblCorteIniciadoTitulo.Location = new System.Drawing.Point(3, 0);
+            this.lblCorteIniciadoTitulo.Name = "lblCorteIniciadoTitulo";
+            this.lblCorteIniciadoTitulo.Size = new System.Drawing.Size(167, 24);
+            this.lblCorteIniciadoTitulo.TabIndex = 0;
+            this.lblCorteIniciadoTitulo.Text = "Corte iniciado el";
+            this.lblCorteIniciadoTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblCorteIniciadoFecha
+            // 
+            this.lblCorteIniciadoFecha.AutoSize = true;
+            this.lblCorteIniciadoFecha.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCorteIniciadoFecha.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Underline);
+            this.lblCorteIniciadoFecha.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.lblCorteIniciadoFecha.Location = new System.Drawing.Point(176, 0);
+            this.lblCorteIniciadoFecha.Name = "lblCorteIniciadoFecha";
+            this.lblCorteIniciadoFecha.Size = new System.Drawing.Size(628, 24);
+            this.lblCorteIniciadoFecha.TabIndex = 1;
+            this.lblCorteIniciadoFecha.Text = "--/---/----";
+            this.lblCorteIniciadoFecha.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // panelResumen
             // 
             this.panelResumen.Controls.Add(this.tableResumen);
             this.panelResumen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelResumen.Location = new System.Drawing.Point(3, 3);
+            this.panelResumen.Location = new System.Drawing.Point(3, 51);
             this.panelResumen.Name = "panelResumen";
             this.panelResumen.Padding = new System.Windows.Forms.Padding(6);
             this.panelResumen.Size = new System.Drawing.Size(1174, 58);
-            this.panelResumen.TabIndex = 0;
+            this.panelResumen.TabIndex = 1;
             // 
             // tableResumen
             // 
@@ -335,11 +409,11 @@ namespace ProyectoEleventa
             this.tableColumns.Controls.Add(this.panelColIzq, 0, 0);
             this.tableColumns.Controls.Add(this.panelColDer, 1, 0);
             this.tableColumns.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableColumns.Location = new System.Drawing.Point(3, 67);
+            this.tableColumns.Location = new System.Drawing.Point(3, 115);
             this.tableColumns.Name = "tableColumns";
             this.tableColumns.RowCount = 1;
             this.tableColumns.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableColumns.Size = new System.Drawing.Size(1174, 612);
+            this.tableColumns.Size = new System.Drawing.Size(1174, 564);
             this.tableColumns.TabIndex = 1;
             // 
             // panelColIzq
@@ -981,12 +1055,15 @@ namespace ProyectoEleventa
             this.panelHeader.ResumeLayout(false);
             this.tableHeader.ResumeLayout(false);
             this.tableHeader.PerformLayout();
-            this.flowHeaderButtons.ResumeLayout(false);
             this.panelTopActions.ResumeLayout(false);
             this.panelTopActions.PerformLayout();
             this.flowTopActions.ResumeLayout(false);
             this.panelContenido.ResumeLayout(false);
             this.tableRoot.ResumeLayout(false);
+            this.panelInfo.ResumeLayout(false);
+            this.tableInfo.ResumeLayout(false);
+            this.tableInfoLeft.ResumeLayout(false);
+            this.tableInfoLeft.PerformLayout();
             this.panelResumen.ResumeLayout(false);
             this.tableResumen.ResumeLayout(false);
             this.tableResumen.PerformLayout();
@@ -1044,6 +1121,11 @@ namespace ProyectoEleventa
         private System.Windows.Forms.Button btnCorteDelDia;
         private System.Windows.Forms.Panel panelContenido;
         private System.Windows.Forms.TableLayoutPanel tableRoot;
+        private System.Windows.Forms.Panel panelInfo;
+        private System.Windows.Forms.TableLayoutPanel tableInfo;
+        private System.Windows.Forms.TableLayoutPanel tableInfoLeft;
+        private System.Windows.Forms.Label lblCorteIniciadoTitulo;
+        private System.Windows.Forms.Label lblCorteIniciadoFecha;
         private System.Windows.Forms.Panel panelResumen;
         private System.Windows.Forms.TableLayoutPanel tableResumen;
         private System.Windows.Forms.Label lblVentasTotalesTitulo;
