@@ -143,5 +143,10 @@ namespace ProyectoEleventa
         {
             MessageBox.Show("Vista: Corte del día (ejemplo).", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        private void lblVentasTotalesValor_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

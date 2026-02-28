@@ -156,6 +156,7 @@
             this.btnCorte.TabIndex = 8;
             this.btnCorte.Text = "Corte";
             this.btnCorte.UseVisualStyleBackColor = true;
+            this.btnCorte.Click += new System.EventHandler(this.btnCorte_Click);
             // 
             // btnFacturas
             // 
