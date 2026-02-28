@@ -4,9 +4,9 @@ using System.Windows.Forms;
 
 namespace ProyectoEleventa
 {
-    public partial class FrmCorteCaja : Form
+    public partial class FrmCorteDelDia : Form
     {
-        public FrmCorteCaja()
+        public FrmCorteDelDia()
         {
             InitializeComponent();
             ConfigurarEstilos();
@@ -39,18 +39,19 @@ namespace ProyectoEleventa
 
             lblVentasTotalesTitulo.ForeColor = Color.FromArgb(60, 60, 60);
             lblGananciaTitulo.ForeColor = Color.FromArgb(60, 60, 60);
-
             lblVentasTotalesValor.ForeColor = Color.FromArgb(0, 102, 204);
             lblGananciaValor.ForeColor = Color.FromArgb(0, 102, 204);
 
+            lblCorteIniciadoTitulo.ForeColor = Color.FromArgb(70, 70, 70);
+            lblCorteIniciadoFecha.ForeColor = Color.FromArgb(0, 102, 204);
+
             foreach (Control c in new Control[]
             {
-                groupDineroCaja,
-                groupEntradasEfectivo,
-                groupVentasDepartamento,
-                groupImpuestos,
                 groupVentas,
+                groupEntradasEfectivo,
                 groupIngresosContado,
+                groupVentasDepartamento,
+                groupGananciaDepartamento,
                 groupSalidasEfectivo,
                 groupPagosCreditos,
                 groupClientesMasVentas,
@@ -72,38 +73,32 @@ namespace ProyectoEleventa
 
         private void CargarDatosEjemplo()
         {
-            decimal ventasTotales = 12850.75m;
-            decimal ganancia = 3120.20m;
+            lblCorteIniciadoFecha.Text = DateTime.Now.ToString("dd/MMM/yyyy");
+
+            decimal ventasTotales = 0.00m;
+            decimal ganancia = 0.00m;
 
             lblVentasTotalesValor.Text = ventasTotales.ToString("C2");
             lblGananciaValor.Text = ganancia.ToString("C2");
 
-            SetMoneyLabel(lblFondoCajaValor, 500.00m);
-            SetMoneyLabel(lblVentasEfectivoValor, 9850.50m);
-            SetMoneyLabel(lblAbonosEfectivoValor, 650.00m);
-            SetMoneyLabel(lblEntradasValor, 120.00m);
-            SetMoneyLabel(lblSalidasValor, -80.00m);
-            SetMoneyLabel(lblDevolucionesEfectivoValor, -35.00m);
-            SetMoneyLabel(lblTotalFinalValor, 11005.50m);
-
-            SetMoneyLabel(lblVentaEfectivoValor, 9850.50m);
-            SetMoneyLabel(lblTarjetaCreditoValor, 2500.25m);
-            SetMoneyLabel(lblACreditoValor, 500.00m);
+            SetMoneyLabel(lblVentaEfectivoValor, 0.00m);
+            SetMoneyLabel(lblTarjetaCreditoValor, 0.00m);
+            SetMoneyLabel(lblACreditoValor, 0.00m);
             SetMoneyLabel(lblValesDespensaValor, 0.00m);
             SetMoneyLabel(lblTransferenciaValor, 0.00m);
             SetMoneyLabel(lblChequeValor, 0.00m);
-            SetMoneyLabel(lblDevolucionesVentasValor, -35.00m);
-            SetMoneyLabel(lblVentasTotalValor, 12815.75m);
+            SetMoneyLabel(lblDevolucionesVentasValor, -0.00m);
+            SetMoneyLabel(lblVentasTotalValor, 0.00m);
 
-            lblNoEntradasEfectivo.Text = "No hubo entradas en efectivo.";
-            lblNoVentasDepartamento.Text = "No se registró ninguna venta.";
-            lblNoImpuestos.Text = "No hubo ventas.";
+            lblNoEntradasEfectivo.Text = "- No hubo Entradas en Efectivo -";
+            lblNoIngresosContado.Text = "- No hubo ingresos de contado -";
 
-            lblNoIngresosContado.Text = "No hubo ingresos de contado.";
-            lblNoSalidasEfectivo.Text = "No hubo salidas en efectivo.";
-            lblNoPagosCreditos.Text = "No se recibieron pagos de créditos.";
-            lblNoClientesMasVentas.Text = "No hubo ventas.";
-            lblNoClientesMasGanancia.Text = "No hubo ventas.";
+            lblNoVentasDepartamento.Text = "- No se registró ninguna venta -";
+            lblNoGananciaDepartamento.Text = "- No se registró ninguna venta -";
+            lblNoSalidasEfectivo.Text = "- No hubo Salidas en Efectivo -";
+            lblNoPagosCreditos.Text = "- No se recibieron pagos de créditos -";
+            lblNoClientesMasVentas.Text = "- No hubo ventas -";
+            lblNoClientesMasGanancia.Text = "- No hubo ventas -";
         }
 
         private void SetMoneyLabel(Label label, decimal value)
@@ -136,22 +131,17 @@ namespace ProyectoEleventa
 
         private void btnCorteCajero_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Vista: Corte de cajero (ejemplo).", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnCorteDelDia_Click(object sender, EventArgs e)
-        {
             Control parent = this.Parent;
             if (parent == null)
             {
-                using (var f = new FrmCorteDelDia())
+                using (var f = new FrmCorteCaja())
                 {
                     f.ShowDialog(this);
                 }
                 return;
             }
 
-            var childForm = new FrmCorteDelDia();
+            var childForm = new FrmCorteCaja();
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
@@ -161,6 +151,11 @@ namespace ProyectoEleventa
             childForm.BringToFront();
             childForm.Show();
             this.Close();
+        }
+
+        private void btnCorteDelDia_Click(object sender, EventArgs e)
+        {
+            CargarDatosEjemplo();
         }
     }
 }
