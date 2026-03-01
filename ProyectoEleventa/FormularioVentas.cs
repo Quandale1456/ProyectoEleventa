@@ -18,6 +18,8 @@ namespace ProyectoEleventa
 
         private int _ticketActualIndex;
         private readonly DataTable[] _tickets = new DataTable[4];
+        private readonly int?[] _ticketClienteId = new int?[4];
+        private readonly string[] _ticketClienteNombre = new string[4];
 
         public FormularioVentas()
         {
@@ -102,6 +104,7 @@ namespace ProyectoEleventa
             }
 
             _ticketActualIndex = 0;
+            ActualizarTextoTicket(_ticketActualIndex);
             CargarTicket(_ticketActualIndex);
         }
 
@@ -110,6 +113,7 @@ namespace ProyectoEleventa
             if (nuevoIndex < 0 || nuevoIndex >= _tickets.Length) return;
             GuardarTicket(_ticketActualIndex);
             _ticketActualIndex = nuevoIndex;
+            ActualizarTextoTicket(_ticketActualIndex);
             CargarTicket(_ticketActualIndex);
             textBox1.Focus();
         }
@@ -153,8 +157,27 @@ namespace ProyectoEleventa
                     r["existencia"]);
             }
 
-            label10.Text = $"VENTA - Ticket {index + 1}";
+            ActualizarTextoTicket(index);
             RecalcularTotales();
+        }
+
+        private void ActualizarTextoTicket(int index)
+        {
+            if (index < 0 || index >= _tickets.Length) return;
+
+            var nombreCliente = _ticketClienteNombre[index];
+            var tieneCliente = !string.IsNullOrWhiteSpace(nombreCliente);
+
+            var tabText = tieneCliente ? nombreCliente : $"Ticket {index + 1}";
+            if (tabTickets != null && tabTickets.TabPages != null && tabTickets.TabPages.Count > index)
+            {
+                tabTickets.TabPages[index].Text = tabText;
+            }
+
+            if (label10 != null)
+            {
+                label10.Text = tieneCliente ? $"VENTA - {nombreCliente}" : $"VENTA - Ticket {index + 1}";
+            }
         }
 
         /// <summary>
@@ -173,6 +196,9 @@ namespace ProyectoEleventa
 
             // Botón Cobrar
             btnCobrar.Click += (s, e) => RealizarCobro();
+
+            // Asignar cliente (por ticket)
+            btnAsignarCliente.Click += (s, e) => AbrirAsignarCliente();
 
             // Botón Cambiar (btnCambiar = F5 Cambiar)
             btnCambiar.Click += (s, e) => CancelarVenta();
@@ -389,8 +415,8 @@ namespace ProyectoEleventa
                     return;
                 }
 
-                // Obtener cliente por defecto
-                int idCliente = ClienteDAL.ObtenerClientePorDefecto();
+                // Obtener cliente asignado al ticket actual (o por defecto)
+                int idCliente = _ticketClienteId[_ticketActualIndex] ?? ClienteDAL.ObtenerClientePorDefecto();
                 string metodoPago = "Efectivo";
 
                 // Extraer valores desde los labels
@@ -415,6 +441,39 @@ namespace ProyectoEleventa
             catch (Exception ex)
             {
                 MessageBox.Show($"Error realizando cobro: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void AbrirAsignarCliente()
+        {
+            try
+            {
+                using (var frm = new FrmAsignarVentaCliente())
+                {
+                    var r = frm.ShowDialog(this);
+                    if (r != DialogResult.OK)
+                    {
+                        return;
+                    }
+
+                    if (frm.Desasignar)
+                    {
+                        _ticketClienteId[_ticketActualIndex] = null;
+                        _ticketClienteNombre[_ticketActualIndex] = null;
+                    }
+                    else
+                    {
+                        _ticketClienteId[_ticketActualIndex] = frm.ClienteIdSeleccionado;
+                        _ticketClienteNombre[_ticketActualIndex] = frm.ClienteNombreSeleccionado;
+                    }
+                }
+
+                ActualizarTextoTicket(_ticketActualIndex);
+                textBox1.Focus();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error asignando cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -449,6 +508,10 @@ namespace ProyectoEleventa
             {
                 _tickets[_ticketActualIndex].Rows.Clear();
             }
+
+            _ticketClienteId[_ticketActualIndex] = null;
+            _ticketClienteNombre[_ticketActualIndex] = null;
+            ActualizarTextoTicket(_ticketActualIndex);
             textBox1.Focus();
         }
 

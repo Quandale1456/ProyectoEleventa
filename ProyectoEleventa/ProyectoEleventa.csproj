@@ -176,6 +176,12 @@
     <Compile Include="FrmReporteVentas.Designer.cs">
       <DependentUpon>FrmReporteVentas.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmAsignarVentaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAsignarVentaCliente.Designer.cs">
+      <DependentUpon>FrmAsignarVentaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmReportes.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -314,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmReporteVentas.resx">
       <DependentUpon>FrmReporteVentas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmAsignarVentaCliente.resx">
+      <DependentUpon>FrmAsignarVentaCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmReportes.resx">
       <DependentUpon>FrmReportes.cs</DependentUpon>
