@@ -32,7 +32,7 @@
             this.btnCobrar = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.button11 = new System.Windows.Forms.Button();
+            this.btnPendiente = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnEliminar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -103,15 +103,15 @@
             this.label7.TabIndex = 13;
             this.label7.Text = "$0.00";
             // 
-            // button11
+            // btnPendiente
             // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button11.Location = new System.Drawing.Point(119, 601);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(92, 23);
-            this.button11.TabIndex = 6;
-            this.button11.Text = "F6 - Pendiente";
-            this.button11.UseVisualStyleBackColor = true;
+            this.btnPendiente.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnPendiente.Location = new System.Drawing.Point(119, 601);
+            this.btnPendiente.Name = "btnPendiente";
+            this.btnPendiente.Size = new System.Drawing.Size(92, 23);
+            this.btnPendiente.TabIndex = 6;
+            this.btnPendiente.Text = "F6 - Pendiente";
+            this.btnPendiente.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -371,7 +371,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button11);
+            this.Controls.Add(this.btnPendiente);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label3);
@@ -398,7 +398,7 @@
         private System.Windows.Forms.Button btnCobrar;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button btnPendiente;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Label label5;
