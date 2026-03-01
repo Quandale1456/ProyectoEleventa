@@ -136,6 +136,12 @@
     <Compile Include="FrmCorteCajero.Designer.cs">
       <DependentUpon>FrmCorteCajero.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmReporteMovimientosInventario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReporteMovimientosInventario.Designer.cs">
+      <DependentUpon>FrmReporteMovimientosInventario.cs</DependentUpon>
+    </Compile>
     <Compile Include="INSVarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCorteCajero.resx">
       <DependentUpon>FrmCorteCajero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmReporteMovimientosInventario.resx">
+      <DependentUpon>FrmReporteMovimientosInventario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="INSVarios.resx">
       <DependentUpon>INSVarios.cs</DependentUpon>

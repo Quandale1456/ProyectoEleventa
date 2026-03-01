@@ -331,5 +331,10 @@ namespace ProyectoEleventa
         {
             OpenChildForm(new ReporteDeInv());
         }
+
+        private void btnReporteDeMovimientos_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FrmReporteMovimientosInventario());
+        }
     }
 }

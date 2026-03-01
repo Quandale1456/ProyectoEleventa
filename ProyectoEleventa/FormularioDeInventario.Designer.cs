@@ -83,6 +83,7 @@
             this.btnReporteDeMovimientos.TabIndex = 26;
             this.btnReporteDeMovimientos.Text = "Reporte De Movimientos";
             this.btnReporteDeMovimientos.UseVisualStyleBackColor = true;
+            this.btnReporteDeMovimientos.Click += new System.EventHandler(this.btnReporteDeMovimientos_Click);
             // 
             // btnReporteDeInv
             // 
