@@ -26,6 +26,8 @@ namespace ProyectoEleventa
             this.btnInventario.Click += new System.EventHandler(this.btnInventario_Click);
             // Suscribir evento del botón Creditos
             this.btnCreditos.Click += new System.EventHandler(this.btnCreditos_Click);
+            // Suscribir evento del botón Reportes
+            this.btnReportes.Click += new System.EventHandler(this.btnReportes_Click);
             // Suscribir evento del botón Corte
             this.btnCorte.Click += new System.EventHandler(this.btnCorte_Click);
             // Suscribir evento del botón Configuracion
@@ -98,6 +100,11 @@ namespace ProyectoEleventa
         private void btnCreditos_Click(object sender, EventArgs e)
         {
             OpenChildForm(new FrmCreditoClientes());
+        }
+
+        private void btnReportes_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FrmReportes());
         }
     }
 }
