@@ -65,6 +65,7 @@
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\ClienteDAL.cs" />
+    <Compile Include="Data\ClienteCreditoDAL.cs" />
     <Compile Include="Data\UsuarioDAL.cs" />
     <Compile Include="Data\DBConnection.cs" />
     <Compile Include="Data\DepartamentoDAL.cs" />
@@ -143,11 +144,35 @@
     <Compile Include="FrmCorteCajero.Designer.cs">
       <DependentUpon>FrmCorteCajero.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmCreditoClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCreditoClientes.Designer.cs">
+      <DependentUpon>FrmCreditoClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEstadoCuentaCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEstadoCuentaCliente.Designer.cs">
+      <DependentUpon>FrmEstadoCuentaCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmReporteMovimientosInventario.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmReporteMovimientosInventario.Designer.cs">
       <DependentUpon>FrmReporteMovimientosInventario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmReporteSaldos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReporteSaldos.Designer.cs">
+      <DependentUpon>FrmReporteSaldos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSeleccionClienteEstadoCuenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSeleccionClienteEstadoCuenta.Designer.cs">
+      <DependentUpon>FrmSeleccionClienteEstadoCuenta.cs</DependentUpon>
     </Compile>
     <Compile Include="INSVarios.cs">
       <SubType>Form</SubType>
@@ -254,6 +279,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCorteCajero.resx">
       <DependentUpon>FrmCorteCajero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCreditoClientes.resx">
+      <DependentUpon>FrmCreditoClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEstadoCuentaCliente.resx">
+      <DependentUpon>FrmEstadoCuentaCliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmReporteMovimientosInventario.resx">
       <DependentUpon>FrmReporteMovimientosInventario.cs</DependentUpon>
