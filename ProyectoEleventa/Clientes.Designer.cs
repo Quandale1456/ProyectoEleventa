@@ -36,8 +36,8 @@ namespace ProyectoEleventa
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelClientes = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.txtBuscar = new System.Windows.Forms.TextBox();
             this.listBoxClientes = new System.Windows.Forms.ListBox();
+            this.txtBuscar = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
@@ -72,6 +72,7 @@ namespace ProyectoEleventa
             this.label15 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.btnSalir = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelClientes.SuspendLayout();
@@ -123,6 +124,7 @@ namespace ProyectoEleventa
             // panelHeader
             // 
             this.panelHeader.BackColor = System.Drawing.Color.DarkSlateGray;
+            this.panelHeader.Controls.Add(this.btnSalir);
             this.panelHeader.Controls.Add(this.labelTitle);
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
@@ -161,6 +163,14 @@ namespace ProyectoEleventa
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(455, 602);
             this.panel4.TabIndex = 39;
+            // 
+            // listBoxClientes
+            // 
+            this.listBoxClientes.FormattingEnabled = true;
+            this.listBoxClientes.Location = new System.Drawing.Point(0, 38);
+            this.listBoxClientes.Name = "listBoxClientes";
+            this.listBoxClientes.Size = new System.Drawing.Size(455, 563);
+            this.listBoxClientes.TabIndex = 57;
             // 
             // txtBuscar
             // 
@@ -280,7 +290,7 @@ namespace ProyectoEleventa
             this.chkCredito.AutoSize = true;
             this.chkCredito.Location = new System.Drawing.Point(408, 121);
             this.chkCredito.Name = "chkCredito";
-            this.chkCredito.Size = new System.Drawing.Size(147, 17);
+            this.chkCredito.Size = new System.Drawing.Size(140, 17);
             this.chkCredito.TabIndex = 39;
             this.chkCredito.Text = "Tiene crédito autorizado";
             this.chkCredito.UseVisualStyleBackColor = true;
@@ -319,7 +329,7 @@ namespace ProyectoEleventa
             this.lblLimiteCredito.AutoSize = true;
             this.lblLimiteCredito.Location = new System.Drawing.Point(0, 8);
             this.lblLimiteCredito.Name = "lblLimiteCredito";
-            this.lblLimiteCredito.Size = new System.Drawing.Size(88, 13);
+            this.lblLimiteCredito.Size = new System.Drawing.Size(86, 13);
             this.lblLimiteCredito.TabIndex = 0;
             this.lblLimiteCredito.Text = "Límite de crédito";
             // 
@@ -498,13 +508,16 @@ namespace ProyectoEleventa
             this.label16.TabIndex = 51;
             this.label16.Text = "Nombre";
             // 
-            // listBoxClientes
+            // btnSalir
             // 
-            this.listBoxClientes.FormattingEnabled = true;
-            this.listBoxClientes.Location = new System.Drawing.Point(0, 38);
-            this.listBoxClientes.Name = "listBoxClientes";
-            this.listBoxClientes.Size = new System.Drawing.Size(455, 563);
-            this.listBoxClientes.TabIndex = 57;
+            this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalir.Location = new System.Drawing.Point(1404, 8);
+            this.btnSalir.Name = "btnSalir";
+            this.btnSalir.Size = new System.Drawing.Size(30, 23);
+            this.btnSalir.TabIndex = 1;
+            this.btnSalir.Text = "X";
+            this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // Clientes
             // 
@@ -580,5 +593,6 @@ namespace ProyectoEleventa
         private System.Windows.Forms.ComboBox comboEstado;
         private System.Windows.Forms.ComboBox comboMunicipio;
         private System.Windows.Forms.ListBox listBoxClientes;
+        private System.Windows.Forms.Button btnSalir;
     }
 }
