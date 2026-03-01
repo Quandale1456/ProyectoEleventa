@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,6 +8,9 @@ namespace ProyectoEleventa.Data
 {
     public class UsuarioDAL
     {
+        private static readonly ConcurrentDictionary<string, HashSet<string>> _columnsCache =
+            new ConcurrentDictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
+
         private static readonly HashSet<string> _permisosPermitidos = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
             "ventas_producto_comun",
@@ -67,9 +71,41 @@ namespace ProyectoEleventa.Data
             return result;
         }
 
+        private static HashSet<string> ObtenerColumnasUsuarios()
+        {
+            return _columnsCache.GetOrAdd("usuarios", _ =>
+            {
+                const string query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'usuarios'";
+                var dt = DBConnection.ExecuteQuery(query);
+                var cols = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        cols.Add(row["COLUMN_NAME"]?.ToString() ?? string.Empty);
+                    }
+                }
+                return cols;
+            });
+        }
+
+        private static string ColUsuario(HashSet<string> cols) => cols.Contains("usuario") ? "usuario" : (cols.Contains("nombre_usuario") ? "nombre_usuario" : null);
+        private static string ColPassword(HashSet<string> cols) => cols.Contains("password") ? "password" : (cols.Contains("contraseña") ? "contraseña" : null);
+        private static string ColNombreCompleto(HashSet<string> cols) => cols.Contains("nombre_completo") ? "nombre_completo" : null;
+        private static string ColEstado(HashSet<string> cols) => cols.Contains("estado") ? "estado" : null;
+
         public static DataTable ObtenerActivos()
         {
-            const string query = "SELECT * FROM usuarios WHERE estado = 1 ORDER BY usuario";
+            var cols = ObtenerColumnasUsuarios();
+            var colUsuario = ColUsuario(cols);
+            var colEstado = ColEstado(cols);
+
+            if (string.IsNullOrWhiteSpace(colUsuario) || string.IsNullOrWhiteSpace(colEstado))
+            {
+                throw new InvalidOperationException("La tabla 'usuarios' no tiene las columnas mínimas requeridas (usuario/nombre_usuario y estado). Ajusta el esquema o el DAL.");
+            }
+
+            var query = $"SELECT * FROM usuarios WHERE {colEstado} = 1 ORDER BY {colUsuario}";
             return DBConnection.ExecuteQuery(query);
         }
 
@@ -84,20 +120,49 @@ namespace ProyectoEleventa.Data
         {
             permisos = FiltrarPermisos(permisos);
 
-            var columnas = new List<string> { "usuario", "password", "nombre_completo", "estado" };
-            var valores = new List<string> { "@usuario", "@password", "@nombre_completo", "1" };
+            var cols = ObtenerColumnasUsuarios();
+            var colUsuario = ColUsuario(cols);
+            var colPassword = ColPassword(cols);
+            var colNombreCompleto = ColNombreCompleto(cols);
+            var colEstado = ColEstado(cols);
+
+            if (string.IsNullOrWhiteSpace(colUsuario) || string.IsNullOrWhiteSpace(colEstado))
+            {
+                throw new InvalidOperationException("La tabla 'usuarios' no tiene las columnas mínimas requeridas (usuario/nombre_usuario y estado). Ajusta el esquema o el DAL.");
+            }
+
+            var columnas = new List<string> { colUsuario };
+            var valores = new List<string> { "@usuario" };
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@usuario", usuario),
-                new SqlParameter("@password", password ?? string.Empty),
-                new SqlParameter("@nombre_completo", (object)nombreCompleto ?? DBNull.Value)
             };
+
+            if (!string.IsNullOrWhiteSpace(colPassword))
+            {
+                columnas.Add(colPassword);
+                valores.Add("@password");
+                parameters.Add(new SqlParameter("@password", password ?? string.Empty));
+            }
+
+            if (!string.IsNullOrWhiteSpace(colNombreCompleto))
+            {
+                columnas.Add(colNombreCompleto);
+                valores.Add("@nombre_completo");
+                parameters.Add(new SqlParameter("@nombre_completo", (object)nombreCompleto ?? DBNull.Value));
+            }
+
+            columnas.Add(colEstado);
+            valores.Add("1");
 
             foreach (var kvp in permisos)
             {
-                columnas.Add(kvp.Key);
-                valores.Add("@" + kvp.Key);
-                parameters.Add(new SqlParameter("@" + kvp.Key, kvp.Value));
+                if (cols.Contains(kvp.Key))
+                {
+                    columnas.Add(kvp.Key);
+                    valores.Add("@" + kvp.Key);
+                    parameters.Add(new SqlParameter("@" + kvp.Key, kvp.Value));
+                }
             }
 
             var query = $"INSERT INTO usuarios ({string.Join(", ", columnas)}) VALUES ({string.Join(", ", valores)}); SELECT SCOPE_IDENTITY();";
@@ -109,25 +174,46 @@ namespace ProyectoEleventa.Data
         {
             permisos = FiltrarPermisos(permisos);
 
+            var cols = ObtenerColumnasUsuarios();
+            var colUsuario = ColUsuario(cols);
+            var colPassword = ColPassword(cols);
+            var colNombreCompleto = ColNombreCompleto(cols);
+
+            if (string.IsNullOrWhiteSpace(colUsuario))
+            {
+                throw new InvalidOperationException("La tabla 'usuarios' no tiene la columna usuario/nombre_usuario. Ajusta el esquema o el DAL.");
+            }
+
             var sets = new List<string>
             {
-                "usuario = @usuario",
-                "password = @password",
-                "nombre_completo = @nombre_completo"
+                $"{colUsuario} = @usuario"
             };
 
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@id_usuario", idUsuario),
                 new SqlParameter("@usuario", usuario),
-                new SqlParameter("@password", password ?? string.Empty),
-                new SqlParameter("@nombre_completo", (object)nombreCompleto ?? DBNull.Value)
             };
+
+            if (!string.IsNullOrWhiteSpace(colPassword))
+            {
+                sets.Add($"{colPassword} = @password");
+                parameters.Add(new SqlParameter("@password", password ?? string.Empty));
+            }
+
+            if (!string.IsNullOrWhiteSpace(colNombreCompleto))
+            {
+                sets.Add($"{colNombreCompleto} = @nombre_completo");
+                parameters.Add(new SqlParameter("@nombre_completo", (object)nombreCompleto ?? DBNull.Value));
+            }
 
             foreach (var kvp in permisos)
             {
-                sets.Add(kvp.Key + " = @" + kvp.Key);
-                parameters.Add(new SqlParameter("@" + kvp.Key, kvp.Value));
+                if (cols.Contains(kvp.Key))
+                {
+                    sets.Add(kvp.Key + " = @" + kvp.Key);
+                    parameters.Add(new SqlParameter("@" + kvp.Key, kvp.Value));
+                }
             }
 
             var query = $"UPDATE usuarios SET {string.Join(", ", sets)} WHERE id_usuario = @id_usuario";
@@ -136,13 +222,27 @@ namespace ProyectoEleventa.Data
 
         public static int DarDeBaja(int idUsuario)
         {
-            const string query = "UPDATE usuarios SET estado = 0 WHERE id_usuario = @id_usuario";
+            var cols = ObtenerColumnasUsuarios();
+            var colEstado = ColEstado(cols);
+            if (string.IsNullOrWhiteSpace(colEstado))
+            {
+                throw new InvalidOperationException("La tabla 'usuarios' no tiene la columna estado.");
+            }
+
+            var query = $"UPDATE usuarios SET {colEstado} = 0 WHERE id_usuario = @id_usuario";
             return DBConnection.ExecuteNonQuery(query, new SqlParameter("@id_usuario", idUsuario));
         }
 
         public static bool ExisteUsuario(string usuario, int? ignorarIdUsuario = null)
         {
-            string query = "SELECT COUNT(*) FROM usuarios WHERE usuario = @usuario";
+            var cols = ObtenerColumnasUsuarios();
+            var colUsuario = ColUsuario(cols);
+            if (string.IsNullOrWhiteSpace(colUsuario))
+            {
+                throw new InvalidOperationException("La tabla 'usuarios' no tiene la columna usuario/nombre_usuario.");
+            }
+
+            string query = $"SELECT COUNT(*) FROM usuarios WHERE {colUsuario} = @usuario";
             var parameters = new List<SqlParameter> { new SqlParameter("@usuario", usuario) };
 
             if (ignorarIdUsuario.HasValue)

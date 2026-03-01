@@ -107,9 +107,17 @@ namespace ProyectoEleventa
             var cajero = new CajeroConfig();
 
             cajero.IdUsuario = row.Table.Columns.Contains("id_usuario") ? ConvertToInt(row["id_usuario"]) : 0;
-            cajero.Usuario = row.Table.Columns.Contains("usuario") ? (row["usuario"]?.ToString() ?? string.Empty) : string.Empty;
-            cajero.Contrasena = row.Table.Columns.Contains("password") ? (row["password"]?.ToString() ?? string.Empty) : string.Empty;
-            cajero.NombreCompleto = row.Table.Columns.Contains("nombre_completo") ? (row["nombre_completo"]?.ToString() ?? string.Empty) : string.Empty;
+            cajero.Usuario = row.Table.Columns.Contains("usuario")
+                ? (row["usuario"]?.ToString() ?? string.Empty)
+                : (row.Table.Columns.Contains("nombre_usuario") ? (row["nombre_usuario"]?.ToString() ?? string.Empty) : string.Empty);
+
+            cajero.Contrasena = row.Table.Columns.Contains("password")
+                ? (row["password"]?.ToString() ?? string.Empty)
+                : (row.Table.Columns.Contains("contraseña") ? (row["contraseña"]?.ToString() ?? string.Empty) : string.Empty);
+
+            cajero.NombreCompleto = row.Table.Columns.Contains("nombre_completo")
+                ? (row["nombre_completo"]?.ToString() ?? string.Empty)
+                : string.Empty;
             if (string.IsNullOrWhiteSpace(cajero.NombreCompleto))
             {
                 cajero.NombreCompleto = cajero.Usuario;
