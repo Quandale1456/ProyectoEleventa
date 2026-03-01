@@ -65,6 +65,7 @@
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\ClienteDAL.cs" />
+    <Compile Include="Data\UsuarioDAL.cs" />
     <Compile Include="Data\DBConnection.cs" />
     <Compile Include="Data\DepartamentoDAL.cs" />
     <Compile Include="Data\ProductoDAL.cs" />
