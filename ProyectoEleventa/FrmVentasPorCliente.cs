@@ -84,10 +84,35 @@ namespace ProyectoEleventa
 
         public void Cargar(DateTime? desde = null, DateTime? hasta = null)
         {
-            var d = desde ?? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-            var h = hasta ?? DateTime.Today.AddDays(1).AddSeconds(-1);
+            DateTime d;
+            DateTime h;
+
+            if (desde.HasValue && hasta.HasValue)
+            {
+                d = desde.Value;
+                h = hasta.Value;
+            }
+            else
+            {
+                var rango = ReporteVentasDAL.ObtenerRangoFechasVentas();
+                if (rango != null && rango.Table.Columns.Contains("min_fecha") && rango.Table.Columns.Contains("max_fecha")
+                    && rango["min_fecha"] != DBNull.Value && rango["max_fecha"] != DBNull.Value)
+                {
+                    d = Convert.ToDateTime(rango["min_fecha"]).Date;
+                    h = Convert.ToDateTime(rango["max_fecha"]).Date.AddDays(1).AddSeconds(-1);
+                }
+                else
+                {
+                    d = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    h = DateTime.Today.AddDays(1).AddSeconds(-1);
+                }
+            }
 
             DataTable dt = ReporteVentasDAL.ObtenerVentasPorCliente(d, h);
+            if (dt.Rows.Count == 0 && !desde.HasValue && !hasta.HasValue)
+            {
+                dt = ReporteVentasDAL.ObtenerVentasPorCliente(new DateTime(1753, 1, 1), DateTime.Today.AddDays(1).AddSeconds(-1));
+            }
 
             if (!dt.Columns.Contains("folio"))
             {
@@ -107,6 +132,8 @@ namespace ProyectoEleventa
             }
 
             dgv.DataSource = dt;
+
+            lblSinDatos.Visible = dt.Rows.Count == 0;
         }
 
         private void dgv_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

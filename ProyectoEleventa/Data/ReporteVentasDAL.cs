@@ -66,6 +66,23 @@ ORDER BY CAST(fecha_venta AS date)";
                 new SqlParameter("@hasta", hasta));
         }
 
+        public static DataRow ObtenerRangoFechasVentas()
+        {
+            var colsVentas = ObtenerColumnas("ventas");
+            if (!colsVentas.Contains("fecha_venta"))
+            {
+                return null;
+            }
+
+            var filtroEstado = colsVentas.Contains("estado")
+                ? " WHERE (estado IS NULL OR estado NOT LIKE 'Cancel%')"
+                : string.Empty;
+
+            var query = "SELECT MIN(fecha_venta) AS min_fecha, MAX(fecha_venta) AS max_fecha FROM ventas" + filtroEstado;
+            var dt = DBConnection.ExecuteQuery(query);
+            return (dt != null && dt.Rows.Count > 0) ? dt.Rows[0] : null;
+        }
+
         public static DataTable ObtenerVentasPorMes(DateTime desde, DateTime hasta)
         {
             var colsVentas = ObtenerColumnas("ventas");
