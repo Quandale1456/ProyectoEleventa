@@ -130,6 +130,12 @@
     <Compile Include="FrmCorteDelDia.Designer.cs">
       <DependentUpon>FrmCorteDelDia.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmCorteCajero.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCorteCajero.Designer.cs">
+      <DependentUpon>FrmCorteCajero.cs</DependentUpon>
+    </Compile>
     <Compile Include="INSVarios.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -229,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmCorteDelDia.resx">
       <DependentUpon>FrmCorteDelDia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCorteCajero.resx">
+      <DependentUpon>FrmCorteCajero.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="INSVarios.resx">
       <DependentUpon>INSVarios.cs</DependentUpon>
