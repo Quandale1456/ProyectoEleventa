@@ -29,8 +29,8 @@ namespace ProyectoEleventa
             // 
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(92)))), ((int)(((byte)(160)))), ((int)(((byte)(144)))));
             this.panelTop.Controls.Add(this.btnReporteSaldos);
-            this.panelTop.Controls.Add(this.btnEstadoCuenta);
             this.panelTop.Controls.Add(this.lblTitulo);
+            this.panelTop.Controls.Add(this.btnEstadoCuenta);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
@@ -39,7 +39,7 @@ namespace ProyectoEleventa
             // 
             // btnReporteSaldos
             // 
-            this.btnReporteSaldos.Location = new System.Drawing.Point(160, 8);
+            this.btnReporteSaldos.Location = new System.Drawing.Point(310, 8);
             this.btnReporteSaldos.Name = "btnReporteSaldos";
             this.btnReporteSaldos.Size = new System.Drawing.Size(120, 23);
             this.btnReporteSaldos.TabIndex = 2;
@@ -48,7 +48,7 @@ namespace ProyectoEleventa
             // 
             // btnEstadoCuenta
             // 
-            this.btnEstadoCuenta.Location = new System.Drawing.Point(34, 8);
+            this.btnEstadoCuenta.Location = new System.Drawing.Point(184, 8);
             this.btnEstadoCuenta.Name = "btnEstadoCuenta";
             this.btnEstadoCuenta.Size = new System.Drawing.Size(120, 23);
             this.btnEstadoCuenta.TabIndex = 1;
@@ -62,7 +62,7 @@ namespace ProyectoEleventa
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
             this.lblTitulo.Location = new System.Drawing.Point(8, 11);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(142, 17);
+            this.lblTitulo.Size = new System.Drawing.Size(170, 17);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "CREDITO A CLIENTES";
             // 
