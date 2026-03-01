@@ -46,6 +46,7 @@
             this.btnProductos = new System.Windows.Forms.Button();
             this.btnVentas = new System.Windows.Forms.Button();
             this.panelContenedor = new System.Windows.Forms.Panel();
+            this.btnConfiguracion = new System.Windows.Forms.Button();
             this.panelSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxLogo)).BeginInit();
             this.panel1.SuspendLayout();
@@ -107,6 +108,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnConfiguracion);
             this.panel1.Controls.Add(this.btnSalir);
             this.panel1.Controls.Add(this.btnReportes);
             this.panel1.Controls.Add(this.btnCorte);
@@ -138,7 +140,7 @@
             // 
             this.btnReportes.Image = ((System.Drawing.Image)(resources.GetObject("btnReportes.Image")));
             this.btnReportes.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReportes.Location = new System.Drawing.Point(731, 6);
+            this.btnReportes.Location = new System.Drawing.Point(834, 4);
             this.btnReportes.Name = "btnReportes";
             this.btnReportes.Size = new System.Drawing.Size(75, 29);
             this.btnReportes.TabIndex = 9;
@@ -150,7 +152,7 @@
             // 
             this.btnCorte.Image = ((System.Drawing.Image)(resources.GetObject("btnCorte.Image")));
             this.btnCorte.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCorte.Location = new System.Drawing.Point(638, 6);
+            this.btnCorte.Location = new System.Drawing.Point(741, 4);
             this.btnCorte.Name = "btnCorte";
             this.btnCorte.Size = new System.Drawing.Size(87, 29);
             this.btnCorte.TabIndex = 8;
@@ -162,7 +164,7 @@
             // 
             this.btnFacturas.Image = ((System.Drawing.Image)(resources.GetObject("btnFacturas.Image")));
             this.btnFacturas.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFacturas.Location = new System.Drawing.Point(557, 6);
+            this.btnFacturas.Location = new System.Drawing.Point(660, 4);
             this.btnFacturas.Name = "btnFacturas";
             this.btnFacturas.Size = new System.Drawing.Size(75, 29);
             this.btnFacturas.TabIndex = 7;
@@ -254,6 +256,18 @@
             this.panelContenedor.TabIndex = 4;
             this.panelContenedor.Paint += new System.Windows.Forms.PaintEventHandler(this.panelContenedor_Paint);
             // 
+            // btnConfiguracion
+            // 
+            this.btnConfiguracion.Image = ((System.Drawing.Image)(resources.GetObject("btnConfiguracion.Image")));
+            this.btnConfiguracion.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnConfiguracion.Location = new System.Drawing.Point(557, 5);
+            this.btnConfiguracion.Name = "btnConfiguracion";
+            this.btnConfiguracion.Size = new System.Drawing.Size(97, 28);
+            this.btnConfiguracion.TabIndex = 11;
+            this.btnConfiguracion.Text = "Configuracion";
+            this.btnConfiguracion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnConfiguracion.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,6 +306,7 @@
         private System.Windows.Forms.Panel panelContenedor;
         private System.Windows.Forms.Button btnSalir;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnConfiguracion;
     }
 }
 
