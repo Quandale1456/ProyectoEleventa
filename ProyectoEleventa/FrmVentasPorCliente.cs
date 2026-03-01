@@ -181,7 +181,8 @@ namespace ProyectoEleventa
 
         private void btnExportar_Click(object sender, EventArgs e)
         {
-            if (dgv.DataSource is not DataTable dt || dt.Rows.Count == 0)
+            var dt = dgv.DataSource as DataTable;
+            if (dt == null || dt.Rows.Count == 0)
             {
                 MessageBox.Show("No hay datos para exportar.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
