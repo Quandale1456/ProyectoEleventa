@@ -26,6 +26,8 @@ namespace ProyectoEleventa
             this.btnInventario.Click += new System.EventHandler(this.btnInventario_Click);
             // Suscribir evento del botón Corte
             this.btnCorte.Click += new System.EventHandler(this.btnCorte_Click);
+            // Suscribir evento del botón Configuracion
+            this.btnConfiguracion.Click += new System.EventHandler(this.btnConfiguracion_Click);
             // Abrir FormularioVentas al iniciar
             OpenChildForm(new FormularioVentas());
         }
@@ -84,6 +86,11 @@ namespace ProyectoEleventa
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnConfiguracion_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FrmConfiguracion());
         }
     }
 }
