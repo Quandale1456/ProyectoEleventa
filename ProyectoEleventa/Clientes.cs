@@ -27,10 +27,55 @@ namespace ProyectoEleventa
                 ConfigurarDataGridView();
                 CargarClientes();
                 SuscribirEventos();
+                InicializarCreditoUI();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error cargando: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void InicializarCreditoUI()
+        {
+            panelCredito.Visible = false;
+
+            if (cmbTipoLimite.Items.Count == 0)
+            {
+                cmbTipoLimite.Items.AddRange(new object[] { "Ilimitado", "De máximo:" });
+            }
+
+            cmbTipoLimite.SelectedIndex = 0;
+            txtLimiteCredito.Enabled = false;
+            txtLimiteCredito.Clear();
+
+            chkCredito.CheckedChanged += (s, e) => ActualizarUICredito();
+            cmbTipoLimite.SelectedIndexChanged += (s, e) => ActualizarUICredito();
+
+            ActualizarUICredito();
+        }
+
+        private void ActualizarUICredito()
+        {
+            panelCredito.Visible = chkCredito.Checked;
+
+            if (!chkCredito.Checked)
+            {
+                cmbTipoLimite.SelectedIndex = 0;
+                txtLimiteCredito.Enabled = false;
+                txtLimiteCredito.Clear();
+                return;
+            }
+
+            string tipo = cmbTipoLimite.SelectedItem?.ToString() ?? "Ilimitado";
+
+            if (string.Equals(tipo, "De máximo:", StringComparison.OrdinalIgnoreCase))
+            {
+                txtLimiteCredito.Enabled = true;
+            }
+            else
+            {
+                txtLimiteCredito.Enabled = false;
+                txtLimiteCredito.Clear();
             }
         }
 
@@ -122,6 +167,7 @@ namespace ProyectoEleventa
         {
             button9.Click += (s, e) => NuevoCliente();
             btnGuardar.Click += (s, e) => GuardarCliente();
+            btnGuardar1.Click += (s, e) => GuardarCliente();
             btnEliminar.Click += (s, e) => EliminarCliente();
             txtBuscar.TextChanged += (s, e) => BuscarClientes();
         }
@@ -167,7 +213,40 @@ namespace ProyectoEleventa
                 comboMunicipio.Text = cliente["municipio"]?.ToString() ?? "";
                 comboEstado.Text = cliente["estado"]?.ToString() ?? "";
                 txtComentarios.Text = cliente["notas"]?.ToString() ?? "";
-                checkBox5.Checked = Convert.ToBoolean(cliente["tiene_credito_autorizado"]);
+                chkCredito.Checked = Convert.ToBoolean(cliente["tiene_credito_autorizado"]);
+
+                if (chkCredito.Checked)
+                {
+                    string tipoLimite = cliente.Table.Columns.Contains("tipo_limite_credito")
+                        ? (cliente["tipo_limite_credito"]?.ToString() ?? "Ilimitado")
+                        : "Ilimitado";
+
+                    if (string.Equals(tipoLimite, "Maximo", StringComparison.OrdinalIgnoreCase))
+                    {
+                        cmbTipoLimite.SelectedItem = "De máximo:";
+
+                        if (cliente.Table.Columns.Contains("limite_credito") && cliente["limite_credito"] != DBNull.Value)
+                        {
+                            txtLimiteCredito.Text = Convert.ToDecimal(cliente["limite_credito"]).ToString("0.##");
+                        }
+                        else
+                        {
+                            txtLimiteCredito.Clear();
+                        }
+                    }
+                    else
+                    {
+                        cmbTipoLimite.SelectedItem = "Ilimitado";
+                        txtLimiteCredito.Clear();
+                    }
+                }
+                else
+                {
+                    cmbTipoLimite.SelectedItem = "Ilimitado";
+                    txtLimiteCredito.Clear();
+                }
+
+                ActualizarUICredito();
             }
             catch (Exception ex)
             {
@@ -209,13 +288,39 @@ namespace ProyectoEleventa
                 string municipio = comboMunicipio.Text;
                 string estado = comboEstado.Text;
                 string comentarios = txtComentarios.Text.Trim();
-                bool tieneCredito = checkBox5.Checked;
+                bool tieneCredito = chkCredito.Checked;
+
+                string tipoLimiteCredito = null;
+                decimal? limiteCredito = null;
+
+                if (tieneCredito)
+                {
+                    string tipo = cmbTipoLimite.SelectedItem?.ToString() ?? "Ilimitado";
+
+                    if (string.Equals(tipo, "De máximo:", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!decimal.TryParse(txtLimiteCredito.Text.Trim(), out decimal monto) || monto <= 0)
+                        {
+                            MessageBox.Show("Ingrese un límite de crédito numérico y mayor que 0.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            txtLimiteCredito.Focus();
+                            return;
+                        }
+
+                        tipoLimiteCredito = "Maximo";
+                        limiteCredito = monto;
+                    }
+                    else
+                    {
+                        tipoLimiteCredito = "Ilimitado";
+                        limiteCredito = null;
+                    }
+                }
 
                 if (_idClienteSeleccionado == -1)
                 {
                     // Nuevo cliente
                     bool exito = ClienteDAL.Crear(nombre, apellido, telefono, domicilio1, 
-                        domicilio2, colonia, codigoPostal, municipio, estado, comentarios, tieneCredito);
+                        domicilio2, colonia, codigoPostal, municipio, estado, comentarios, tieneCredito, tipoLimiteCredito, limiteCredito);
 
                     if (exito)
                     {
@@ -228,7 +333,7 @@ namespace ProyectoEleventa
                 {
                     // Actualizar cliente
                     bool exito = ClienteDAL.Actualizar(_idClienteSeleccionado, nombre, apellido, telefono, 
-                        domicilio1, domicilio2, colonia, codigoPostal, municipio, estado, comentarios, tieneCredito);
+                        domicilio1, domicilio2, colonia, codigoPostal, municipio, estado, comentarios, tieneCredito, tipoLimiteCredito, limiteCredito);
 
                     if (exito)
                     {
@@ -331,7 +436,10 @@ namespace ProyectoEleventa
             comboMunicipio.SelectedIndex = -1;
             comboEstado.SelectedIndex = -1;
             txtComentarios.Clear();
-            checkBox5.Checked = false;
+            chkCredito.Checked = false;
+            cmbTipoLimite.SelectedIndex = 0;
+            txtLimiteCredito.Clear();
+            ActualizarUICredito();
         }
     }
 }

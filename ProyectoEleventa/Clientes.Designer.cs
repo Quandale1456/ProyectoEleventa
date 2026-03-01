@@ -45,7 +45,11 @@ namespace ProyectoEleventa
             this.label8 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnGuardar1 = new System.Windows.Forms.Button();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.chkCredito = new System.Windows.Forms.CheckBox();
+            this.panelCredito = new System.Windows.Forms.Panel();
+            this.txtLimiteCredito = new System.Windows.Forms.TextBox();
+            this.cmbTipoLimite = new System.Windows.Forms.ComboBox();
+            this.lblLimiteCredito = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.txtComentarios = new System.Windows.Forms.TextBox();
@@ -67,13 +71,13 @@ namespace ProyectoEleventa
             this.label15 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.listBoxClientes = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.panelClientes.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panelCredito.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -231,7 +235,8 @@ namespace ProyectoEleventa
             // panel2
             // 
             this.panel2.Controls.Add(this.btnGuardar1);
-            this.panel2.Controls.Add(this.checkBox5);
+            this.panel2.Controls.Add(this.chkCredito);
+            this.panel2.Controls.Add(this.panelCredito);
             this.panel2.Controls.Add(this.label19);
             this.panel2.Controls.Add(this.label18);
             this.panel2.Controls.Add(this.txtComentarios);
@@ -269,15 +274,53 @@ namespace ProyectoEleventa
             this.btnGuardar1.Text = "Guardar ";
             this.btnGuardar1.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // chkCredito
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(408, 121);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(147, 17);
-            this.checkBox5.TabIndex = 39;
-            this.checkBox5.Text = "Tiene Credito Actualizado";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.chkCredito.AutoSize = true;
+            this.chkCredito.Location = new System.Drawing.Point(408, 121);
+            this.chkCredito.Name = "chkCredito";
+            this.chkCredito.Size = new System.Drawing.Size(147, 17);
+            this.chkCredito.TabIndex = 39;
+            this.chkCredito.Text = "Tiene crédito autorizado";
+            this.chkCredito.UseVisualStyleBackColor = true;
+            // 
+            // panelCredito
+            // 
+            this.panelCredito.Controls.Add(this.txtLimiteCredito);
+            this.panelCredito.Controls.Add(this.cmbTipoLimite);
+            this.panelCredito.Controls.Add(this.lblLimiteCredito);
+            this.panelCredito.Location = new System.Drawing.Point(408, 144);
+            this.panelCredito.Name = "panelCredito";
+            this.panelCredito.Size = new System.Drawing.Size(320, 30);
+            this.panelCredito.TabIndex = 57;
+            // 
+            // txtLimiteCredito
+            // 
+            this.txtLimiteCredito.Location = new System.Drawing.Point(210, 5);
+            this.txtLimiteCredito.Name = "txtLimiteCredito";
+            this.txtLimiteCredito.Size = new System.Drawing.Size(100, 20);
+            this.txtLimiteCredito.TabIndex = 2;
+            // 
+            // cmbTipoLimite
+            // 
+            this.cmbTipoLimite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTipoLimite.FormattingEnabled = true;
+            this.cmbTipoLimite.Items.AddRange(new object[] {
+            "Ilimitado",
+            "De máximo:"});
+            this.cmbTipoLimite.Location = new System.Drawing.Point(94, 4);
+            this.cmbTipoLimite.Name = "cmbTipoLimite";
+            this.cmbTipoLimite.Size = new System.Drawing.Size(110, 21);
+            this.cmbTipoLimite.TabIndex = 1;
+            // 
+            // lblLimiteCredito
+            // 
+            this.lblLimiteCredito.AutoSize = true;
+            this.lblLimiteCredito.Location = new System.Drawing.Point(0, 8);
+            this.lblLimiteCredito.Name = "lblLimiteCredito";
+            this.lblLimiteCredito.Size = new System.Drawing.Size(88, 13);
+            this.lblLimiteCredito.TabIndex = 0;
+            this.lblLimiteCredito.Text = "Límite de crédito";
             // 
             // label19
             // 
@@ -484,6 +527,8 @@ namespace ProyectoEleventa
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panelCredito.ResumeLayout(false);
+            this.panelCredito.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -522,7 +567,11 @@ namespace ProyectoEleventa
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.Button btnGuardar1;
-        private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.CheckBox chkCredito;
+        private System.Windows.Forms.Panel panelCredito;
+        private System.Windows.Forms.Label lblLimiteCredito;
+        private System.Windows.Forms.ComboBox cmbTipoLimite;
+        private System.Windows.Forms.TextBox txtLimiteCredito;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtComentarios;

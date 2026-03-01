@@ -17,7 +17,8 @@ namespace ProyectoEleventa.Data
         {
             string query = @"
                 SELECT id_cliente, nombre, apellidos, telefono, domicilio1, domicilio2, colonia, 
-                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado
+                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado,
+                       tipo_limite_credito, limite_credito
                 FROM clientes
                 ORDER BY nombre";
 
@@ -31,7 +32,8 @@ namespace ProyectoEleventa.Data
         {
             string query = @"
                 SELECT id_cliente, nombre, apellidos, telefono, domicilio1, domicilio2, colonia, 
-                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado
+                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado,
+                       tipo_limite_credito, limite_credito
                 FROM clientes
                 WHERE id_cliente = @id";
 
@@ -51,9 +53,14 @@ namespace ProyectoEleventa.Data
         public static decimal ObtenerCreditoDisponible(int idCliente)
         {
             string query = @"
-                SELECT (limite_credito - ISNULL(credito_usado, 0)) as creditoDisponible
+                SELECT
+                    CASE
+                        WHEN tiene_credito_autorizado = 0 THEN 0
+                        WHEN tipo_limite_credito = 'Ilimitado' THEN 999999999.00
+                        ELSE ISNULL(limite_credito, 0)
+                    END as creditoDisponible
                 FROM clientes
-                WHERE id_cliente = @id AND estado = 1";
+                WHERE id_cliente = @id";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -71,7 +78,8 @@ namespace ProyectoEleventa.Data
         {
             string query = @"
                 SELECT id_cliente, nombre, apellidos, telefono, domicilio1, domicilio2, colonia, 
-                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado
+                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado,
+                       tipo_limite_credito, limite_credito
                 FROM clientes
                 WHERE nombre LIKE @nombre
                 ORDER BY nombre";
@@ -91,7 +99,8 @@ namespace ProyectoEleventa.Data
         {
             string query = @"
                 SELECT id_cliente, nombre, apellidos, telefono, domicilio1, domicilio2, colonia, 
-                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado
+                       codigo_postal, municipio, estado, notas, tiene_credito_autorizado,
+                       tipo_limite_credito, limite_credito
                 FROM clientes
                 WHERE (nombre LIKE @busqueda OR apellidos LIKE @busqueda OR telefono LIKE @busqueda)
                 ORDER BY nombre";
@@ -109,15 +118,15 @@ namespace ProyectoEleventa.Data
         /// </summary>
         public static bool Crear(string nombre, string apellido, string telefono, string domicilio1,
             string domicilio2, string colonia, string codigoPostal, string municipio, string estado, 
-            string comentarios, bool tieneCredito)
+            string comentarios, bool tieneCredito, string tipoLimiteCredito, decimal? limiteCredito)
         {
             try
             {
                 string query = @"
                     INSERT INTO clientes (nombre, apellidos, telefono, domicilio1, domicilio2, colonia, 
-                                         codigo_postal, municipio, estado, notas, tiene_credito_autorizado, fecha_creacion)
+                                         codigo_postal, municipio, estado, notas, tiene_credito_autorizado, tipo_limite_credito, limite_credito, fecha_creacion)
                     VALUES (@nombre, @apellido, @telefono, @domicilio1, @domicilio2, @colonia, 
-                            @codigoPostal, @municipio, @estado, @comentarios, @tieneCredito, GETDATE())";
+                            @codigoPostal, @municipio, @estado, @comentarios, @tieneCredito, @tipoLimite, @limiteCredito, GETDATE())";
 
                 SqlParameter[] parameters = new SqlParameter[]
                 {
@@ -131,7 +140,9 @@ namespace ProyectoEleventa.Data
                     new SqlParameter("@municipio", municipio ?? ""),
                     new SqlParameter("@estado", estado ?? ""),
                     new SqlParameter("@comentarios", comentarios ?? ""),
-                    new SqlParameter("@tieneCredito", tieneCredito)
+                    new SqlParameter("@tieneCredito", tieneCredito),
+                    new SqlParameter("@tipoLimite", (object)(tieneCredito ? (tipoLimiteCredito ?? "Ilimitado") : null) ?? DBNull.Value),
+                    new SqlParameter("@limiteCredito", (object)(tieneCredito ? (object)limiteCredito : null) ?? DBNull.Value)
                 };
 
                 return DBConnection.ExecuteNonQuery(query, parameters) > 0;
@@ -147,7 +158,7 @@ namespace ProyectoEleventa.Data
         /// </summary>
         public static bool Actualizar(int idCliente, string nombre, string apellido, string telefono, 
             string domicilio1, string domicilio2, string colonia, string codigoPostal, string municipio, 
-            string estado, string comentarios, bool tieneCredito)
+            string estado, string comentarios, bool tieneCredito, string tipoLimiteCredito, decimal? limiteCredito)
         {
             try
             {
@@ -156,6 +167,7 @@ namespace ProyectoEleventa.Data
                     SET nombre = @nombre, apellidos = @apellido, telefono = @telefono, domicilio1 = @domicilio1,
                         domicilio2 = @domicilio2, colonia = @colonia, codigo_postal = @codigoPostal,
                         municipio = @municipio, estado = @estado, notas = @comentarios, tiene_credito_autorizado = @tieneCredito,
+                        tipo_limite_credito = @tipoLimite, limite_credito = @limiteCredito,
                         fecha_actualizacion = GETDATE()
                     WHERE id_cliente = @idCliente";
 
@@ -172,7 +184,9 @@ namespace ProyectoEleventa.Data
                     new SqlParameter("@municipio", municipio ?? ""),
                     new SqlParameter("@estado", estado ?? ""),
                     new SqlParameter("@comentarios", comentarios ?? ""),
-                    new SqlParameter("@tieneCredito", tieneCredito)
+                    new SqlParameter("@tieneCredito", tieneCredito),
+                    new SqlParameter("@tipoLimite", (object)(tieneCredito ? (tipoLimiteCredito ?? "Ilimitado") : null) ?? DBNull.Value),
+                    new SqlParameter("@limiteCredito", (object)(tieneCredito ? (object)limiteCredito : null) ?? DBNull.Value)
                 };
 
                 return DBConnection.ExecuteNonQuery(query, parameters) > 0;
