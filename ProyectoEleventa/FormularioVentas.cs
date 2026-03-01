@@ -417,25 +417,51 @@ namespace ProyectoEleventa
 
                 // Obtener cliente asignado al ticket actual (o por defecto)
                 int idCliente = _ticketClienteId[_ticketActualIndex] ?? ClienteDAL.ObtenerClientePorDefecto();
-                string metodoPago = "Efectivo";
+                var tieneCliente = _ticketClienteId[_ticketActualIndex].HasValue;
 
                 // Extraer valores desde los labels
                 decimal subtotal = Convert.ToDecimal(label5.Text.Replace("$", ""));
                 decimal impuesto = Convert.ToDecimal(label7.Text.Replace("$", ""));
                 decimal total = Convert.ToDecimal(label9.Text.Replace("$", ""));
 
-                // Ejecutar transacción
-                bool exito = DBConnection.ExecuteTransaction((conn, trans) =>
+                using (var frmCobro = new FrmCobrarVenta(total, dataGridView1.Rows.Count, tieneCliente))
                 {
-                    int idVenta = VentaDAL.RegistrarVenta(idCliente, subtotal, impuesto, 0, total, 
-                        metodoPago, _idUsuario, dataGridView1, conn, trans);
-                });
+                    var r = frmCobro.ShowDialog(this);
+                    if (r != DialogResult.OK)
+                    {
+                        return;
+                    }
 
-                if (exito)
-                {
-                    MessageBox.Show("¡Venta registrada exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LimpiarTicket();
-                    textBox1.Focus();
+                    string metodoPago;
+                    switch ((frmCobro.MetodoPagoSeleccionado ?? "Efectivo").Trim())
+                    {
+                        case "Crédito":
+                            metodoPago = "CRÉDITO";
+                            break;
+                        case "Mixto":
+                            metodoPago = "MIXTO";
+                            break;
+                        case "Transferencia":
+                            metodoPago = "TRANSFERENCIA";
+                            break;
+                        default:
+                            metodoPago = "EFECTIVO";
+                            break;
+                    }
+
+                    // Ejecutar transacción
+                    bool exito = DBConnection.ExecuteTransaction((conn, trans) =>
+                    {
+                        int idVenta = VentaDAL.RegistrarVenta(idCliente, subtotal, impuesto, 0, total,
+                            metodoPago, _idUsuario, dataGridView1, conn, trans);
+                    });
+
+                    if (exito)
+                    {
+                        MessageBox.Show("¡Venta registrada exitosamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LimpiarTicket();
+                        textBox1.Focus();
+                    }
                 }
             }
             catch (Exception ex)
