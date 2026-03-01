@@ -16,6 +16,9 @@ namespace ProyectoEleventa
         private const decimal IMPUESTO = 0.16m; // IVA 16%
         private int _idUsuario = 1; // Usuario por defecto
 
+        private int _ticketActualIndex;
+        private readonly DataTable[] _tickets = new DataTable[4];
+
         public FormularioVentas()
         {
             InitializeComponent();
@@ -43,8 +46,12 @@ namespace ProyectoEleventa
                 // Configurar DataGridView
                 ConfigurarDataGridView();
 
+                InicializarTickets();
+
                 // Suscribir eventos de botones
                 SuscribirEventosBotones();
+
+                tabTickets.SelectedIndexChanged += (s, ev) => CambiarTicket(tabTickets.SelectedIndex);
 
                 // Enfocar al campo de código
                 textBox1.Focus();
@@ -78,6 +85,76 @@ namespace ProyectoEleventa
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.ReadOnly = true;
+        }
+
+        private void InicializarTickets()
+        {
+            for (int i = 0; i < _tickets.Length; i++)
+            {
+                var dt = new DataTable();
+                dt.Columns.Add("codigo", typeof(string));
+                dt.Columns.Add("nombre", typeof(string));
+                dt.Columns.Add("precio", typeof(decimal));
+                dt.Columns.Add("cantidad", typeof(decimal));
+                dt.Columns.Add("importe", typeof(decimal));
+                dt.Columns.Add("existencia", typeof(decimal));
+                _tickets[i] = dt;
+            }
+
+            _ticketActualIndex = 0;
+            CargarTicket(_ticketActualIndex);
+        }
+
+        private void CambiarTicket(int nuevoIndex)
+        {
+            if (nuevoIndex < 0 || nuevoIndex >= _tickets.Length) return;
+            GuardarTicket(_ticketActualIndex);
+            _ticketActualIndex = nuevoIndex;
+            CargarTicket(_ticketActualIndex);
+            textBox1.Focus();
+        }
+
+        private void GuardarTicket(int index)
+        {
+            if (index < 0 || index >= _tickets.Length) return;
+            var dt = _tickets[index];
+            dt.Rows.Clear();
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells[0].Value == null) continue;
+
+                var codigo = row.Cells[0].Value?.ToString() ?? "";
+                var nombre = row.Cells[1].Value?.ToString() ?? "";
+                var precio = row.Cells[2].Value != null ? Convert.ToDecimal(row.Cells[2].Value) : 0m;
+                var cantidad = row.Cells[3].Value != null ? Convert.ToDecimal(row.Cells[3].Value) : 0m;
+                var importe = row.Cells[4].Value != null ? Convert.ToDecimal(row.Cells[4].Value) : 0m;
+                var existencia = row.Cells[5].Value != null ? Convert.ToDecimal(row.Cells[5].Value) : 0m;
+
+                dt.Rows.Add(codigo, nombre, precio, cantidad, importe, existencia);
+            }
+        }
+
+        private void CargarTicket(int index)
+        {
+            if (index < 0 || index >= _tickets.Length) return;
+            dataGridView1.Rows.Clear();
+
+            var dt = _tickets[index];
+            foreach (DataRow r in dt.Rows)
+            {
+                dataGridView1.Rows.Add(
+                    r["codigo"],
+                    r["nombre"],
+                    r["precio"],
+                    r["cantidad"],
+                    r["importe"],
+                    r["existencia"]);
+            }
+
+            label10.Text = $"VENTA - Ticket {index + 1}";
+            RecalcularTotales();
         }
 
         /// <summary>
@@ -284,6 +361,13 @@ namespace ProyectoEleventa
                 label7.Text = $"${impuesto:F2}";         // Impuesto
                 label9.Text = $"${total:F2}";            // Total final
                 label3.Text = dataGridView1.Rows.Count.ToString(); // Cantidad de productos
+
+                if (lblTotalVenta != null)
+                {
+                    lblTotalVenta.Text = label9.Text;
+                }
+
+                GuardarTicket(_ticketActualIndex);
             }
             catch (Exception ex)
             {
@@ -357,6 +441,14 @@ namespace ProyectoEleventa
             label5.Text = "$0.00";
             label7.Text = "$0.00";
             label9.Text = "$0.00";
+            if (lblTotalVenta != null)
+            {
+                lblTotalVenta.Text = "$0.00";
+            }
+            if (_ticketActualIndex >= 0 && _ticketActualIndex < _tickets.Length)
+            {
+                _tickets[_ticketActualIndex].Rows.Clear();
+            }
             textBox1.Focus();
         }
 

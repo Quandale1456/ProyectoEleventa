@@ -57,8 +57,15 @@
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
+            this.tabTickets = new System.Windows.Forms.TabControl();
+            this.tabTicket1 = new System.Windows.Forms.TabPage();
+            this.tabTicket2 = new System.Windows.Forms.TabPage();
+            this.tabTicket3 = new System.Windows.Forms.TabPage();
+            this.tabTicket4 = new System.Windows.Forms.TabPage();
+            this.lblTotalVenta = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
+            this.tabTickets.SuspendLayout();
             this.SuspendLayout();
             // 
             // label9
@@ -223,9 +230,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 103);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 127);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1487, 450);
+            this.dataGridView1.Size = new System.Drawing.Size(1487, 426);
             this.dataGridView1.TabIndex = 0;
             // 
             // label1
@@ -347,11 +354,80 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "VENTA - Ticket 1";
             // 
+            // tabTickets
+            // 
+            this.tabTickets.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabTickets.Controls.Add(this.tabTicket1);
+            this.tabTickets.Controls.Add(this.tabTicket2);
+            this.tabTickets.Controls.Add(this.tabTicket3);
+            this.tabTickets.Controls.Add(this.tabTicket4);
+            this.tabTickets.Location = new System.Drawing.Point(0, 103);
+            this.tabTickets.Name = "tabTickets";
+            this.tabTickets.SelectedIndex = 0;
+            this.tabTickets.Size = new System.Drawing.Size(1487, 24);
+            this.tabTickets.TabIndex = 28;
+            // 
+            // tabTicket1
+            // 
+            this.tabTicket1.Location = new System.Drawing.Point(4, 22);
+            this.tabTicket1.Name = "tabTicket1";
+            this.tabTicket1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTicket1.Size = new System.Drawing.Size(1479, 0);
+            this.tabTicket1.TabIndex = 0;
+            this.tabTicket1.Text = "Ticket 1";
+            this.tabTicket1.UseVisualStyleBackColor = true;
+            // 
+            // tabTicket2
+            // 
+            this.tabTicket2.Location = new System.Drawing.Point(4, 22);
+            this.tabTicket2.Name = "tabTicket2";
+            this.tabTicket2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTicket2.Size = new System.Drawing.Size(1479, 0);
+            this.tabTicket2.TabIndex = 1;
+            this.tabTicket2.Text = "Ticket 2";
+            this.tabTicket2.UseVisualStyleBackColor = true;
+            // 
+            // tabTicket3
+            // 
+            this.tabTicket3.Location = new System.Drawing.Point(4, 22);
+            this.tabTicket3.Name = "tabTicket3";
+            this.tabTicket3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTicket3.Size = new System.Drawing.Size(1479, 0);
+            this.tabTicket3.TabIndex = 2;
+            this.tabTicket3.Text = "Ticket 3";
+            this.tabTicket3.UseVisualStyleBackColor = true;
+            // 
+            // tabTicket4
+            // 
+            this.tabTicket4.Location = new System.Drawing.Point(4, 22);
+            this.tabTicket4.Name = "tabTicket4";
+            this.tabTicket4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabTicket4.Size = new System.Drawing.Size(1479, 0);
+            this.tabTicket4.TabIndex = 3;
+            this.tabTicket4.Text = "Ticket 4";
+            this.tabTicket4.UseVisualStyleBackColor = true;
+            // 
+            // lblTotalVenta
+            // 
+            this.lblTotalVenta.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTotalVenta.BackColor = System.Drawing.Color.RoyalBlue;
+            this.lblTotalVenta.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalVenta.ForeColor = System.Drawing.Color.White;
+            this.lblTotalVenta.Location = new System.Drawing.Point(1304, 559);
+            this.lblTotalVenta.Name = "lblTotalVenta";
+            this.lblTotalVenta.Size = new System.Drawing.Size(183, 65);
+            this.lblTotalVenta.TabIndex = 29;
+            this.lblTotalVenta.Text = "$0.00";
+            this.lblTotalVenta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FormularioVentas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1499, 674);
+            this.Controls.Add(this.lblTotalVenta);
+            this.Controls.Add(this.tabTickets);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button12);
             this.Controls.Add(this.button10);
@@ -387,6 +463,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabTickets.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,5 +500,11 @@
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TabControl tabTickets;
+        private System.Windows.Forms.TabPage tabTicket1;
+        private System.Windows.Forms.TabPage tabTicket2;
+        private System.Windows.Forms.TabPage tabTicket3;
+        private System.Windows.Forms.TabPage tabTicket4;
+        private System.Windows.Forms.Label lblTotalVenta;
     }
 }
