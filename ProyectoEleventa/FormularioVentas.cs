@@ -772,5 +772,10 @@ namespace ProyectoEleventa
                 e.Handled = true;
             }
         }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -132,13 +132,13 @@
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnEliminar.Location = new System.Drawing.Point(222, 601);
+            this.btnEliminar.Location = new System.Drawing.Point(797, 74);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(92, 23);
+            this.btnEliminar.Size = new System.Drawing.Size(124, 23);
             this.btnEliminar.TabIndex = 5;
-            this.btnEliminar.Text = "Eliminar";
+            this.btnEliminar.Text = "DEL Borrar Art.";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // label5
             // 
@@ -307,12 +307,14 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(797, 74);
+            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button9.Location = new System.Drawing.Point(217, 601);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(124, 23);
+            this.button9.Size = new System.Drawing.Size(108, 23);
             this.button9.TabIndex = 24;
-            this.button9.Text = "DEL Borrar Art.";
+            this.button9.Text = "Eliminar";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // button10
             // 
