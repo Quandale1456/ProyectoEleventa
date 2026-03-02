@@ -52,6 +52,18 @@ namespace ProyectoEleventa.Data
         private static readonly ConcurrentDictionary<string, HashSet<string>> _columnsCache =
             new ConcurrentDictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
 
+        private static SqlParameter[] ClonarParametros(IEnumerable<SqlParameter> parameters)
+        {
+            if (parameters == null) return new SqlParameter[0];
+            var list = new List<SqlParameter>();
+            foreach (var p in parameters)
+            {
+                if (p == null) continue;
+                list.Add(new SqlParameter(p.ParameterName, p.Value ?? DBNull.Value));
+            }
+            return list.ToArray();
+        }
+
         private static HashSet<string> ObtenerColumnas(string tabla)
         {
             if (string.IsNullOrWhiteSpace(tabla))
@@ -307,7 +319,7 @@ GROUP BY " + metodoExpr;
             if (!string.IsNullOrWhiteSpace(colMetodo2))
             {
                 string qDevEf = @"SELECT ISNULL(SUM(ABS(v.total)),0) FROM ventas v WHERE v." + colFecha + " >= @desde AND v." + colFecha + " < @hasta" + filtroCajero + filtroEstado + " AND " + devolExpr + " = 1 AND UPPER(LTRIM(RTRIM(ISNULL(v." + colMetodo2 + ",'')))) IN ('EFECTIVO')";
-                var objDevEf = DBConnection.ExecuteScalar(qDevEf, parameters.ToArray());
+                var objDevEf = DBConnection.ExecuteScalar(qDevEf, ClonarParametros(parameters));
                 r.DevolucionesEfectivo = objDevEf == null || objDevEf == DBNull.Value ? 0m : Convert.ToDecimal(objDevEf);
             }
         }
