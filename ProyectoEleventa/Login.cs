@@ -124,6 +124,22 @@ namespace ProyectoEleventa
                 // Validar credenciales
                 if (ValidarCredenciales(usuario, password))
                 {
+                    // Guardar sesión del usuario logueado
+                    try
+                    {
+                        int idUsuario = 0;
+                        if (cmbUsuario.SelectedValue != null)
+                        {
+                            int.TryParse(cmbUsuario.SelectedValue.ToString(), out idUsuario);
+                        }
+                        Sesion.Iniciar(idUsuario, usuario);
+                    }
+                    catch
+                    {
+                        // Si no se puede obtener el ID, aún permitimos el acceso.
+                        Sesion.Iniciar(0, usuario);
+                    }
+
                     // Éxito - Establecer DialogResult y cerrar
                     this.DialogResult = DialogResult.OK;
                     this.Close();

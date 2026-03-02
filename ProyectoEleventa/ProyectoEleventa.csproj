@@ -65,9 +65,11 @@
     <Compile Include="Clientes.Designer.cs">
       <DependentUpon>Clientes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sesion.cs" />
     <Compile Include="Data\ClienteDAL.cs" />
     <Compile Include="Data\ClienteCreditoDAL.cs" />
     <Compile Include="Data\EfectivoDAL.cs" />
+    <Compile Include="Data\ServicioCorte.cs" />
     <Compile Include="Data\ReporteVentasDAL.cs" />
     <Compile Include="Data\UsuarioDAL.cs" />
     <Compile Include="Data\DBConnection.cs" />
