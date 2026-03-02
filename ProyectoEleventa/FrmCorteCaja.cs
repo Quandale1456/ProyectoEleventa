@@ -1,16 +1,22 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Drawing.Printing;
+using System.Text;
+using ProyectoEleventa.Data;
 
 namespace ProyectoEleventa
 {
     public partial class FrmCorteCaja : Form
     {
+        private readonly ServicioCorte _servicio = new ServicioCorte();
+        private ResumenCorte _ultimoResumen;
+
         public FrmCorteCaja()
         {
             InitializeComponent();
             ConfigurarEstilos();
-            CargarDatosEjemplo();
+            CargarCorteInicial();
         }
 
         private void ConfigurarEstilos()
@@ -70,40 +76,57 @@ namespace ProyectoEleventa
             panelColDer.BackColor = Color.White;
         }
 
-        private void CargarDatosEjemplo()
+        private void CargarCorteInicial()
         {
-            decimal ventasTotales = 12850.75m;
-            decimal ganancia = 3120.20m;
+            try
+            {
+                if (Sesion.IdUsuarioActual.HasValue)
+                {
+                    _ultimoResumen = _servicio.ObtenerResumenCorte(TipoCorte.Cajero, Sesion.IdUsuarioActual.Value, DateTime.Now);
+                }
+                else
+                {
+                    _ultimoResumen = _servicio.ObtenerResumenCorte(TipoCorte.Dia, null, DateTime.Now);
+                }
 
-            lblVentasTotalesValor.Text = ventasTotales.ToString("C2");
-            lblGananciaValor.Text = ganancia.ToString("C2");
+                lblVentasTotalesValor.Text = _ultimoResumen.VentasTotalesNetas.ToString("C2");
+                lblGananciaValor.Text = _ultimoResumen.GananciaTotal.ToString("C2");
 
-            SetMoneyLabel(lblFondoCajaValor, 500.00m);
-            SetMoneyLabel(lblVentasEfectivoValor, 9850.50m);
-            SetMoneyLabel(lblAbonosEfectivoValor, 650.00m);
-            SetMoneyLabel(lblEntradasValor, 120.00m);
-            SetMoneyLabel(lblSalidasValor, -80.00m);
-            SetMoneyLabel(lblDevolucionesEfectivoValor, -35.00m);
-            SetMoneyLabel(lblTotalFinalValor, 11005.50m);
+                SetMoneyLabel(lblFondoCajaValor, _ultimoResumen.FondoInicial);
+                SetMoneyLabel(lblVentasEfectivoValor, _ultimoResumen.VentasEfectivo);
+                SetMoneyLabel(lblAbonosEfectivoValor, _ultimoResumen.AbonosCreditoEfectivo);
+                SetMoneyLabel(lblEntradasValor, _ultimoResumen.EntradasEfectivo);
+                SetMoneyLabel(lblSalidasValor, -_ultimoResumen.SalidasEfectivo);
+                SetMoneyLabel(lblDevolucionesEfectivoValor, -_ultimoResumen.DevolucionesEfectivo);
+                SetMoneyLabel(lblTotalFinalValor, _ultimoResumen.DineroEnCajaFinal);
 
-            SetMoneyLabel(lblVentaEfectivoValor, 9850.50m);
-            SetMoneyLabel(lblTarjetaCreditoValor, 2500.25m);
-            SetMoneyLabel(lblACreditoValor, 500.00m);
-            SetMoneyLabel(lblValesDespensaValor, 0.00m);
-            SetMoneyLabel(lblTransferenciaValor, 0.00m);
-            SetMoneyLabel(lblChequeValor, 0.00m);
-            SetMoneyLabel(lblDevolucionesVentasValor, -35.00m);
-            SetMoneyLabel(lblVentasTotalValor, 12815.75m);
+                SetMoneyLabel(lblVentaEfectivoValor, _ultimoResumen.VentasEfectivo);
+                SetMoneyLabel(lblTarjetaCreditoValor, _ultimoResumen.VentasTarjetaCredito);
+                SetMoneyLabel(lblACreditoValor, _ultimoResumen.VentasCredito);
+                SetMoneyLabel(lblValesDespensaValor, _ultimoResumen.VentasVales);
+                SetMoneyLabel(lblTransferenciaValor, _ultimoResumen.VentasTransferencia);
+                SetMoneyLabel(lblChequeValor, _ultimoResumen.VentasCheque);
+                SetMoneyLabel(lblDevolucionesVentasValor, -_ultimoResumen.DevolucionesTotal);
+                SetMoneyLabel(lblVentasTotalValor, _ultimoResumen.VentasTotalesNetas);
 
-            lblNoEntradasEfectivo.Text = "No hubo entradas en efectivo.";
-            lblNoVentasDepartamento.Text = "No se registró ninguna venta.";
-            lblNoImpuestos.Text = "No hubo ventas.";
+                lblNoEntradasEfectivo.Text = _ultimoResumen.EntradasEfectivo > 0 ? "" : "No hubo entradas en efectivo.";
+                lblNoVentasDepartamento.Text = (_ultimoResumen.VentasPorDepartamento == null || _ultimoResumen.VentasPorDepartamento.Rows.Count == 0)
+                    ? "No se registró ninguna venta."
+                    : "";
+                lblNoImpuestos.Text = "";
 
-            lblNoIngresosContado.Text = "No hubo ingresos de contado.";
-            lblNoSalidasEfectivo.Text = "No hubo salidas en efectivo.";
-            lblNoPagosCreditos.Text = "No se recibieron pagos de créditos.";
-            lblNoClientesMasVentas.Text = "No hubo ventas.";
-            lblNoClientesMasGanancia.Text = "No hubo ventas.";
+                lblNoIngresosContado.Text = _ultimoResumen.VentasEfectivo > 0 ? "" : "No hubo ingresos de contado.";
+                lblNoSalidasEfectivo.Text = _ultimoResumen.SalidasEfectivo > 0 ? "" : "No hubo salidas en efectivo.";
+                lblNoPagosCreditos.Text = _ultimoResumen.AbonosCreditoEfectivo > 0 ? "" : "No se recibieron pagos de créditos.";
+                lblNoClientesMasVentas.Text = (_ultimoResumen.ClientesMasVentas == null || _ultimoResumen.ClientesMasVentas.Rows.Count == 0) ? "No hubo ventas." : "";
+                lblNoClientesMasGanancia.Text = (_ultimoResumen.ClientesMasGanancia == null || _ultimoResumen.ClientesMasGanancia.Rows.Count == 0) ? "No hubo ventas." : "";
+
+                btnCerrarTurno.Enabled = _ultimoResumen.Tipo == TipoCorte.Cajero && !_ultimoResumen.TurnoCerrado;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error cargando corte: {ex.Message}", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SetMoneyLabel(Label label, decimal value)
@@ -126,12 +149,107 @@ namespace ProyectoEleventa
 
         private void btnCerrarTurno_Click(object sender, EventArgs e)
         {
-            this.Close();
+            try
+            {
+                var idCajero = Sesion.IdUsuarioActual;
+                if (!idCajero.HasValue)
+                {
+                    MessageBox.Show("No hay cajero logueado.", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                var ok = _servicio.CerrarTurnoActual(idCajero.Value);
+                if (ok)
+                {
+                    MessageBox.Show("Turno cerrado correctamente.", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarCorteInicial();
+                }
+                else
+                {
+                    MessageBox.Show("No hay turnos configurados en la base de datos. Se usó un corte con valores predeterminados.", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error cerrando turno: {ex.Message}", "Corte", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnImprimir_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Función de impresión pendiente.", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                if (_ultimoResumen == null)
+                {
+                    MessageBox.Show("Primero genera el corte.", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string ticket = ConstruirTicket(_ultimoResumen);
+                ImprimirTexto(ticket);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error imprimiendo: {ex.Message}", "Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private static string ConstruirTicket(ResumenCorte r)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(r.Tipo == TipoCorte.Cajero ? "CORTE DE CAJERO" : "CORTE DEL DIA");
+            sb.AppendLine($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm}");
+            if (r.Tipo == TipoCorte.Cajero && !string.IsNullOrWhiteSpace(r.NombreCajero)) sb.AppendLine($"Cajero: {r.NombreCajero}");
+            sb.AppendLine($"Rango: {r.Desde:dd/MM HH:mm} - {r.Hasta:dd/MM HH:mm}");
+            sb.AppendLine(new string('-', 32));
+            sb.AppendLine($"Ventas netas: {r.VentasTotalesNetas:C2}");
+            sb.AppendLine($"Ganancia:    {r.GananciaTotal:C2}");
+            sb.AppendLine($"Devoluciones:{r.DevolucionesTotal:C2}");
+            sb.AppendLine(new string('-', 32));
+            sb.AppendLine("PAGOS");
+            sb.AppendLine($"Efectivo:   {r.VentasEfectivo:C2}");
+            sb.AppendLine($"Tarjeta:    {r.VentasTarjetaCredito:C2}");
+            sb.AppendLine($"Crédito:    {r.VentasCredito:C2}");
+            sb.AppendLine($"Vales:      {r.VentasVales:C2}");
+            sb.AppendLine($"Transfer.:  {r.VentasTransferencia:C2}");
+            sb.AppendLine($"Cheque:     {r.VentasCheque:C2}");
+            if (r.Tipo == TipoCorte.Cajero)
+            {
+                sb.AppendLine(new string('-', 32));
+                sb.AppendLine("CAJA");
+                sb.AppendLine($"Fondo ini:  {r.FondoInicial:C2}");
+                sb.AppendLine($"Ventas efec:{r.VentasEfectivo:C2}");
+                sb.AppendLine($"Abonos:     {r.AbonosCreditoEfectivo:C2}");
+                sb.AppendLine($"Entradas:   {r.EntradasEfectivo:C2}");
+                sb.AppendLine($"Salidas:    {r.SalidasEfectivo:C2}");
+                sb.AppendLine($"Dev. efec:  {r.DevolucionesEfectivo:C2}");
+                sb.AppendLine(new string('-', 32));
+                sb.AppendLine($"CAJA FINAL: {r.DineroEnCajaFinal:C2}");
+            }
+            sb.AppendLine(new string('-', 32));
+            return sb.ToString();
+        }
+
+        private static void ImprimirTexto(string texto)
+        {
+            var doc = new PrintDocument();
+            doc.DocumentName = "Corte";
+
+            doc.PrintPage += (s, e) =>
+            {
+                using (var font = new Font(FontFamily.GenericMonospace, 9f))
+                {
+                    e.Graphics.DrawString(texto ?? string.Empty, font, Brushes.Black, e.MarginBounds);
+                }
+            };
+
+            using (var dlg = new PrintPreviewDialog())
+            {
+                dlg.Document = doc;
+                dlg.Width = 900;
+                dlg.Height = 700;
+                dlg.ShowDialog();
+            }
         }
 
         private void btnCorteCajero_Click(object sender, EventArgs e)
