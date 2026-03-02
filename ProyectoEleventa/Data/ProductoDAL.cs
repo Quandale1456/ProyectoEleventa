@@ -145,13 +145,16 @@ namespace ProyectoEleventa.Data
         public static DataTable ObtenerTodos()
         {
             string query = @"
-                SELECT id_producto, codigo_barras, nombre, precio_compra, 
-                       porcentaje_ganancia, precio_venta, existencia, departamento,
-                       ISNULL(existencia_minima, 0) as existencia_minima,
-                       ISNULL(existencia_maxima, 0) as existencia_maxima
-                FROM productos
-                WHERE estado = 1
-                ORDER BY nombre";
+                SELECT p.id_producto, p.codigo_barras, p.nombre, p.precio_compra, 
+                       p.porcentaje_ganancia, p.precio_venta, p.existencia,
+                       ISNULL(p.existencia_minima, 0) as existencia_minima,
+                       ISNULL(p.existencia_maxima, 0) as existencia_maxima,
+                       COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') AS departamento,
+                       TRY_CONVERT(INT, p.departamento) AS departamento_id
+                FROM productos p
+                LEFT JOIN departamentos d ON TRY_CONVERT(INT, p.departamento) = d.id_departamento
+                WHERE p.estado = 1
+                ORDER BY p.nombre";
 
             return DBConnection.ExecuteQuery(query);
         }
@@ -162,10 +165,13 @@ namespace ProyectoEleventa.Data
         public static DataRow BuscarPorCodigo(string codigo)
         {
             string query = @"
-                SELECT id_producto, codigo_barras, nombre, precio_compra, 
-                       porcentaje_ganancia, precio_venta, existencia, departamento
-                FROM productos
-                WHERE codigo_barras = @codigo AND estado = 1";
+                SELECT p.id_producto, p.codigo_barras, p.nombre, p.precio_compra, 
+                       p.porcentaje_ganancia, p.precio_venta, p.existencia,
+                       COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') AS departamento,
+                       TRY_CONVERT(INT, p.departamento) AS departamento_id
+                FROM productos p
+                LEFT JOIN departamentos d ON TRY_CONVERT(INT, p.departamento) = d.id_departamento
+                WHERE p.codigo_barras = @codigo AND p.estado = 1";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -182,11 +188,14 @@ namespace ProyectoEleventa.Data
         public static DataTable BuscarPorNombre(string nombre)
         {
             string query = @"
-                SELECT TOP 100 id_producto, codigo_barras, nombre, precio_compra, 
-                       porcentaje_ganancia, precio_venta, existencia, departamento
-                FROM productos
-                WHERE nombre LIKE @nombre AND estado = 1
-                ORDER BY nombre";
+                SELECT TOP 100 p.id_producto, p.codigo_barras, p.nombre, p.precio_compra, 
+                       p.porcentaje_ganancia, p.precio_venta, p.existencia,
+                       COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') AS departamento,
+                       TRY_CONVERT(INT, p.departamento) AS departamento_id
+                FROM productos p
+                LEFT JOIN departamentos d ON TRY_CONVERT(INT, p.departamento) = d.id_departamento
+                WHERE p.nombre LIKE @nombre AND p.estado = 1
+                ORDER BY p.nombre";
 
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -340,9 +349,10 @@ namespace ProyectoEleventa.Data
         public static DataTable ObtenerDepartamentosUnicos()
         {
             string query = @"
-                SELECT DISTINCT departamento
-                FROM productos
-                WHERE estado = 1 AND departamento IS NOT NULL
+                SELECT DISTINCT COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') AS departamento
+                FROM productos p
+                LEFT JOIN departamentos d ON TRY_CONVERT(INT, p.departamento) = d.id_departamento
+                WHERE p.estado = 1
                 ORDER BY departamento";
 
             return DBConnection.ExecuteQuery(query);

@@ -231,5 +231,74 @@ namespace ProyectoEleventa.Data
 
             return DBConnection.ExecuteQuery(query, parameters);
         }
+
+        public static DataTable ObtenerMovimientosInventario(DateTime dia, string tipoMovimiento, string criterio, string valor)
+        {
+            string whereTipo = "";
+            if (!string.IsNullOrWhiteSpace(tipoMovimiento) && !tipoMovimiento.Equals("- Todos -", StringComparison.OrdinalIgnoreCase))
+            {
+                // En la BD guardamos: Entrada/Salida/Ajuste. En UI tenemos: Entradas/Salidas/Ventas.
+                // Ventas se registran como 'Salida' con referencia 'VENTA_x'.
+                if (tipoMovimiento.Equals("Entradas", StringComparison.OrdinalIgnoreCase))
+                    whereTipo = " AND mi.tipo_movimiento = 'Entrada'";
+                else if (tipoMovimiento.Equals("Salidas", StringComparison.OrdinalIgnoreCase))
+                    whereTipo = " AND mi.tipo_movimiento = 'Salida' AND (mi.referencia IS NULL OR mi.referencia NOT LIKE 'VENTA_%')";
+                else if (tipoMovimiento.Equals("Ventas", StringComparison.OrdinalIgnoreCase))
+                    whereTipo = " AND mi.tipo_movimiento = 'Salida' AND mi.referencia LIKE 'VENTA_%'";
+                else
+                    whereTipo = " AND mi.tipo_movimiento = @tipoMov";
+            }
+
+            string whereFiltro = "";
+            if (!string.IsNullOrWhiteSpace(valor))
+            {
+                string c = (criterio ?? "").Trim();
+                if (c.Equals("Cajero", StringComparison.OrdinalIgnoreCase))
+                    whereFiltro = " AND ISNULL(u.nombre_completo, u.nombre_usuario) LIKE @valor";
+                else if (c.Equals("Producto", StringComparison.OrdinalIgnoreCase))
+                    whereFiltro = " AND p.nombre LIKE @valor";
+                else if (c.Equals("Departamento", StringComparison.OrdinalIgnoreCase))
+                    whereFiltro = " AND COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') LIKE @valor";
+                else
+                    whereFiltro = " AND (p.nombre LIKE @valor OR COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') LIKE @valor OR ISNULL(u.nombre_completo, u.nombre_usuario) LIKE @valor)";
+            }
+
+            string query = @"
+                SELECT
+                    mi.fecha_movimiento,
+                    p.nombre AS producto,
+                    mi.tipo_movimiento,
+                    mi.referencia,
+                    mi.cantidad,
+                    COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') AS departamento,
+                    ISNULL(u.nombre_completo, u.nombre_usuario) AS cajero
+                FROM movimientos_inventario mi
+                INNER JOIN productos p ON mi.id_producto = p.id_producto
+                LEFT JOIN departamentos d ON TRY_CONVERT(INT, p.departamento) = d.id_departamento
+                OUTER APPLY (
+                    SELECT
+                        CASE
+                            WHEN mi.referencia LIKE 'VENTA_%' THEN TRY_CONVERT(INT, SUBSTRING(mi.referencia, 6, 50))
+                            ELSE NULL
+                        END AS id_venta
+                ) ref
+                LEFT JOIN ventas v ON ref.id_venta = v.id_venta
+                LEFT JOIN usuarios u ON v.id_usuario = u.id_usuario
+                WHERE mi.fecha_movimiento >= @desde AND mi.fecha_movimiento < @hasta" + whereTipo + whereFiltro + @"
+                ORDER BY mi.fecha_movimiento DESC";
+
+            var desde = dia.Date;
+            var hasta = dia.Date.AddDays(1);
+
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@desde", desde),
+                new SqlParameter("@hasta", hasta),
+                new SqlParameter("@tipoMov", (object)(tipoMovimiento ?? "") ?? DBNull.Value),
+                new SqlParameter("@valor", "%" + (valor ?? "") + "%")
+            };
+
+            return DBConnection.ExecuteQuery(query, parameters);
+        }
     }
 }
