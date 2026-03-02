@@ -219,6 +219,16 @@ namespace ProyectoEleventa
                     e.Handled = true;
                 }
             };
+
+            // Tecla DEL en el ticket
+            dataGridView1.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Delete)
+                {
+                    EliminarProductoDelTicket();
+                    e.Handled = true;
+                }
+            };
         }
 
         /// <summary>
@@ -710,8 +720,15 @@ namespace ProyectoEleventa
 
         private void AbrirVerificador()
         {
-            Verificador formVerificador = new Verificador();
-            formVerificador.ShowDialog();
+            using (var formVerificador = new Verificador())
+            {
+                var r = formVerificador.ShowDialog(this);
+                if (r == DialogResult.OK && formVerificador.Aceptado && !string.IsNullOrWhiteSpace(formVerificador.CodigoProducto))
+                {
+                    textBox1.Text = formVerificador.CodigoProducto;
+                    AgregarProductoAlTicket();
+                }
+            }
         }
 
         /// <summary>
@@ -747,6 +764,11 @@ namespace ProyectoEleventa
             else if (e.KeyCode == Keys.F9)
             {
                 AbrirVerificador();
+                e.Handled = true;
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                EliminarProductoDelTicket();
                 e.Handled = true;
             }
         }
