@@ -261,7 +261,6 @@ WHERE v." + colFecha + " >= @desde AND v." + colFecha + " < @hasta"
 + filtroCajero + filtroEstado + @"
 GROUP BY " + metodoExpr;
 
-";
 
             var parameters = new List<SqlParameter>
             {
