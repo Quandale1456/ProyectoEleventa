@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Data\ClienteDAL.cs" />
     <Compile Include="Data\ClienteCreditoDAL.cs" />
+    <Compile Include="Data\EfectivoDAL.cs" />
     <Compile Include="Data\ReporteVentasDAL.cs" />
     <Compile Include="Data\UsuarioDAL.cs" />
     <Compile Include="Data\DBConnection.cs" />
