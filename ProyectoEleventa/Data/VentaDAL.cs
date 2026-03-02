@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -11,6 +13,41 @@ namespace ProyectoEleventa.Data
     /// </summary>
     public class VentaDAL
     {
+        private static readonly ConcurrentDictionary<string, HashSet<string>> _columnsCache =
+            new ConcurrentDictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
+
+        private static HashSet<string> ObtenerColumnasTabla(string tabla)
+        {
+            if (string.IsNullOrWhiteSpace(tabla))
+                return new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            return _columnsCache.GetOrAdd(tabla, _ =>
+            {
+                const string q = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = @t";
+                var dt = DBConnection.ExecuteQuery(q, new SqlParameter("@t", tabla));
+                var cols = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (dt != null)
+                {
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        cols.Add(row["COLUMN_NAME"]?.ToString() ?? string.Empty);
+                    }
+                }
+                return cols;
+            });
+        }
+
+        private static string ColUsuario(HashSet<string> cols)
+        {
+            if (cols == null) return null;
+            if (cols.Contains("nombre_completo")) return "nombre_completo";
+            if (cols.Contains("usuario")) return "usuario";
+            if (cols.Contains("nombre_usuario")) return "nombre_usuario";
+            if (cols.Contains("username")) return "username";
+            if (cols.Contains("nombre")) return "nombre";
+            return null;
+        }
+
         /// <summary>
         /// Registra una venta completa dentro de una transacción.
         /// Inserta en ventas, detalle_ventas, actualiza productos y movimientos_inventario.
@@ -234,6 +271,10 @@ namespace ProyectoEleventa.Data
 
         public static DataTable ObtenerMovimientosInventario(DateTime dia, string tipoMovimiento, string criterio, string valor)
         {
+            var colsUsuarios = ObtenerColumnasTabla("usuarios");
+            var colUsuario = ColUsuario(colsUsuarios);
+            string cajeroExpr = string.IsNullOrWhiteSpace(colUsuario) ? "''" : ("u." + colUsuario);
+
             string whereTipo = "";
             if (!string.IsNullOrWhiteSpace(tipoMovimiento) && !tipoMovimiento.Equals("- Todos -", StringComparison.OrdinalIgnoreCase))
             {
@@ -254,13 +295,15 @@ namespace ProyectoEleventa.Data
             {
                 string c = (criterio ?? "").Trim();
                 if (c.Equals("Cajero", StringComparison.OrdinalIgnoreCase))
-                    whereFiltro = " AND ISNULL(u.nombre_completo, u.nombre_usuario) LIKE @valor";
+                    whereFiltro = string.IsNullOrWhiteSpace(colUsuario) ? "" : (" AND " + cajeroExpr + " LIKE @valor");
                 else if (c.Equals("Producto", StringComparison.OrdinalIgnoreCase))
                     whereFiltro = " AND p.nombre LIKE @valor";
                 else if (c.Equals("Departamento", StringComparison.OrdinalIgnoreCase))
                     whereFiltro = " AND COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') LIKE @valor";
                 else
-                    whereFiltro = " AND (p.nombre LIKE @valor OR COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') LIKE @valor OR ISNULL(u.nombre_completo, u.nombre_usuario) LIKE @valor)";
+                    whereFiltro = string.IsNullOrWhiteSpace(colUsuario)
+                        ? " AND (p.nombre LIKE @valor OR COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') LIKE @valor)"
+                        : (" AND (p.nombre LIKE @valor OR COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') LIKE @valor OR " + cajeroExpr + " LIKE @valor)");
             }
 
             string query = @"
@@ -271,7 +314,7 @@ namespace ProyectoEleventa.Data
                     mi.referencia,
                     mi.cantidad,
                     COALESCE(d.nombre, CONVERT(NVARCHAR(100), p.departamento), '') AS departamento,
-                    ISNULL(u.nombre_completo, u.nombre_usuario) AS cajero
+                    " + cajeroExpr + @" AS cajero
                 FROM movimientos_inventario mi
                 INNER JOIN productos p ON mi.id_producto = p.id_producto
                 LEFT JOIN departamentos d ON TRY_CONVERT(INT, p.departamento) = d.id_departamento
