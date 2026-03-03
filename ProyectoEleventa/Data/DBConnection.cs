@@ -13,7 +13,7 @@ namespace ProyectoEleventa.Data
     {
         // Cadena de conexión - cambiar según tu servidor
         private static readonly string _connectionString =
-            @"Server=DESKTOP-6QV8JQ9\SQLEXPRESS;Database=sistema_ventas;Integrated Security=true;";
+            @"Server=localhost\SQLEXPRESS;Database=sistema_ventas;Integrated Security=true;";
 
         /// <summary>
         /// Obtiene la cadena de conexión configurada.

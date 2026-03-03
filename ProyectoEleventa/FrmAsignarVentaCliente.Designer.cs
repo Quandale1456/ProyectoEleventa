@@ -39,8 +39,9 @@ namespace ProyectoEleventa
             this.panelTop.Controls.Add(this.lblTitulo);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(460, 44);
+            this.panelTop.Size = new System.Drawing.Size(690, 68);
             this.panelTop.TabIndex = 0;
             // 
             // lblTitulo
@@ -48,9 +49,10 @@ namespace ProyectoEleventa
             this.lblTitulo.AutoSize = true;
             this.lblTitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold);
             this.lblTitulo.ForeColor = System.Drawing.Color.White;
-            this.lblTitulo.Location = new System.Drawing.Point(12, 10);
+            this.lblTitulo.Location = new System.Drawing.Point(18, 15);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(265, 24);
+            this.lblTitulo.Size = new System.Drawing.Size(415, 32);
             this.lblTitulo.TabIndex = 0;
             this.lblTitulo.Text = "ASIGNAR VENTA A CLIENTE";
             // 
@@ -60,38 +62,44 @@ namespace ProyectoEleventa
             this.panelBuscar.Controls.Add(this.txtBuscar);
             this.panelBuscar.Controls.Add(this.lblIconoBuscar);
             this.panelBuscar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelBuscar.Location = new System.Drawing.Point(0, 44);
+            this.panelBuscar.Location = new System.Drawing.Point(0, 68);
+            this.panelBuscar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelBuscar.Name = "panelBuscar";
-            this.panelBuscar.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
-            this.panelBuscar.Size = new System.Drawing.Size(460, 38);
+            this.panelBuscar.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.panelBuscar.Size = new System.Drawing.Size(690, 58);
             this.panelBuscar.TabIndex = 1;
             // 
             // txtBuscar
             // 
             this.txtBuscar.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtBuscar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtBuscar.Location = new System.Drawing.Point(30, 6);
+            this.txtBuscar.Location = new System.Drawing.Point(45, 9);
+            this.txtBuscar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtBuscar.Name = "txtBuscar";
-            this.txtBuscar.Size = new System.Drawing.Size(424, 13);
+            this.txtBuscar.Size = new System.Drawing.Size(636, 19);
             this.txtBuscar.TabIndex = 0;
             this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             // 
             // lblIconoBuscar
             // 
             this.lblIconoBuscar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblIconoBuscar.Location = new System.Drawing.Point(6, 6);
+            this.lblIconoBuscar.Location = new System.Drawing.Point(9, 9);
+            this.lblIconoBuscar.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIconoBuscar.Name = "lblIconoBuscar";
-            this.lblIconoBuscar.Size = new System.Drawing.Size(24, 26);
+            this.lblIconoBuscar.Size = new System.Drawing.Size(36, 40);
             this.lblIconoBuscar.TabIndex = 1;
             this.lblIconoBuscar.Text = "🔍";
             this.lblIconoBuscar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dgv
             // 
+            this.dgv.ColumnHeadersHeight = 34;
             this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv.Location = new System.Drawing.Point(0, 82);
+            this.dgv.Location = new System.Drawing.Point(0, 126);
+            this.dgv.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(460, 376);
+            this.dgv.RowHeadersWidth = 62;
+            this.dgv.Size = new System.Drawing.Size(690, 579);
             this.dgv.TabIndex = 2;
             // 
             // panelBottom
@@ -101,17 +109,19 @@ namespace ProyectoEleventa
             this.panelBottom.Controls.Add(this.btnNuevoCliente);
             this.panelBottom.Controls.Add(this.btnAsignar);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelBottom.Location = new System.Drawing.Point(0, 458);
+            this.panelBottom.Location = new System.Drawing.Point(0, 705);
+            this.panelBottom.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Padding = new System.Windows.Forms.Padding(8, 8, 8, 8);
-            this.panelBottom.Size = new System.Drawing.Size(460, 54);
+            this.panelBottom.Padding = new System.Windows.Forms.Padding(12, 12, 12, 12);
+            this.panelBottom.Size = new System.Drawing.Size(690, 83);
             this.panelBottom.TabIndex = 3;
             // 
             // btnDesasignar
             // 
-            this.btnDesasignar.Location = new System.Drawing.Point(10, 14);
+            this.btnDesasignar.Location = new System.Drawing.Point(15, 22);
+            this.btnDesasignar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnDesasignar.Name = "btnDesasignar";
-            this.btnDesasignar.Size = new System.Drawing.Size(120, 28);
+            this.btnDesasignar.Size = new System.Drawing.Size(180, 43);
             this.btnDesasignar.TabIndex = 0;
             this.btnDesasignar.Text = "Des-asignar";
             this.btnDesasignar.UseVisualStyleBackColor = true;
@@ -119,9 +129,10 @@ namespace ProyectoEleventa
             // 
             // btnNuevoCliente
             // 
-            this.btnNuevoCliente.Location = new System.Drawing.Point(150, 14);
+            this.btnNuevoCliente.Location = new System.Drawing.Point(225, 22);
+            this.btnNuevoCliente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnNuevoCliente.Name = "btnNuevoCliente";
-            this.btnNuevoCliente.Size = new System.Drawing.Size(140, 28);
+            this.btnNuevoCliente.Size = new System.Drawing.Size(210, 43);
             this.btnNuevoCliente.TabIndex = 1;
             this.btnNuevoCliente.Text = "F1 - Nuevo cliente";
             this.btnNuevoCliente.UseVisualStyleBackColor = true;
@@ -130,9 +141,10 @@ namespace ProyectoEleventa
             // btnAsignar
             // 
             this.btnAsignar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAsignar.Location = new System.Drawing.Point(314, 14);
+            this.btnAsignar.Location = new System.Drawing.Point(471, 22);
+            this.btnAsignar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAsignar.Name = "btnAsignar";
-            this.btnAsignar.Size = new System.Drawing.Size(136, 28);
+            this.btnAsignar.Size = new System.Drawing.Size(204, 43);
             this.btnAsignar.TabIndex = 2;
             this.btnAsignar.Text = "ENTER - Asignar";
             this.btnAsignar.UseVisualStyleBackColor = true;
@@ -140,15 +152,16 @@ namespace ProyectoEleventa
             // 
             // FrmAsignarVentaCliente
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(460, 512);
+            this.ClientSize = new System.Drawing.Size(690, 788);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.panelBuscar);
             this.Controls.Add(this.panelTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmAsignarVentaCliente";
